@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas - Create Account</title>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="createacc.css">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="../image/holdinghands.png" alt="Caring hands">
+        </div>
+        
+        <div class="account-section">
+            <div class="logo">
+                <img src="../image/logo.jpg" alt="Estrellas Logo">
+            </div>
+            
+            <p class="tagline">Your Health is our Highly Priority</p>
+            
+            <div class="account-form">
+                <h1>Register</h1>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your Username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newpassword">New Password</label>
+                        <input type="password" id="newpassword" placeholder="••••••••••••••••" required minlength="8">
+                        <div class="password-strength mt-2">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="strengthBar"></div>
+                            </div>
+                            <small class="strength-text" id="strengthText"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmpassword">Confirm Password</label>
+                        <input type="password" id="confirmpassword" placeholder="••••••••••••••••" required>
+                        <div class="password-match" id="passwordMatch"></div>
+                    </div>
+                    
+                    <p class="remember-link">
+                        <a href="#">→ REMEMBER THIS</a>
+                    </p>
+                    
+                    <button type="submit" class="create-btn">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Pop-up -->
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-content">
+            <div class="notification-icon">
+                <span id="notificationIcon">✓</span>
+            </div>
+            <div class="notification-message">
+                <p id="notificationText">Message here</p>
+            </div>
+            <button class="notification-close" id="notificationClose">×</button>
+        </div>
+    </div>
+
+    <!-- Notification Pop-up -->
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-content">
+            <div class="notification-icon">
+                <span id="notificationIcon">✓</span>
+            </div>
+            <div class="notification-message">
+                <p id="notificationText">Message here</p>
+            </div>
+            <button class="notification-close" id="notificationClose">×</button>
+        </div>
+    </div>
+
+    <!-- Success Notification Modal -->
+    <div class="notification-overlay" id="notificationOverlay">
+        <div class="notification-modal">
+            <div class="notification-icon-success">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                    <circle cx="30" cy="30" r="28" stroke="#28a745" stroke-width="4" fill="#d4edda"/>
+                    <path d="M17 30L26 39L43 22" stroke="#28a745" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2>Account Created Successfully!</h2>
+            <p>Your account has been created. You can now login to continue.</p>
+            <button class="continue-login-btn" id="continueLoginBtn">Continue to Login</button>
+        </div>
+    </div>
+
+    <script>
+        function showNotification(message, type = 'success') {
+            const popup = document.getElementById('notificationPopup');
+            document.getElementById('notificationText').textContent = message;
+            document.getElementById('notificationIcon').textContent = type === 'success' ? '✓' : '!';
+            popup.classList.toggle('success', type === 'success');
+            popup.classList.toggle('error', type !== 'success');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4000);
+        }
+
+        document.getElementById('notificationClose').addEventListener('click', () => {
+            document.getElementById('notificationPopup').classList.remove('show');
+        });
+
+        // Password strength checker
+        const newPasswordInput = document.getElementById('newpassword');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+
+        newPasswordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+                strengthBar.className = 'progress-bar';
+                strengthText.textContent = '';
+                return;
+            }
+
+            if (password.length >= 8)          strength += 25;
+            if (password.length >= 12)         strength += 10;
+            if (/[a-z]/.test(password))        strength += 15;
+            if (/[A-Z]/.test(password))        strength += 15;
+            if (/[0-9]/.test(password))        strength += 15;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+
+            const levels = { weak: [0, 40], medium: [40, 70], strong: [70, 101] };
+            const label = Object.keys(levels).find(k => strength >= levels[k][0] && strength < levels[k][1]);
+
+            strengthBar.style.width = strength + '%';
+            strengthBar.className = 'progress-bar ' + label;
+            strengthText.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+        });
+
+        const confirmPasswordInput = document.getElementById('confirmpassword');
+        const passwordMatch = document.getElementById('passwordMatch');
+
+        function checkPasswordMatch() {
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (!confirmPassword) {
+                passwordMatch.textContent = '';
+                passwordMatch.className = 'password-match';
+                return;
+            }
+
+            const match = newPassword === confirmPassword;
+            passwordMatch.textContent = match ? '✓ Passwords match' : '✗ Passwords do not match';
+            passwordMatch.className = 'password-match ' + (match ? 'match' : 'no-match');
+        }
+
+        newPasswordInput.addEventListener('input', checkPasswordMatch);
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+
+        document.querySelector('form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username        = document.getElementById('username').value.trim();
+            const newPassword     = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (newPassword.length < 8) {
+                showNotification('Password must be at least 8 characters long', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', newPassword);
+
+            try {
+                const response = await fetch('../php/register.php', { method: 'POST', body: formData });
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('notificationOverlay').classList.add('show');
+                    setTimeout(() => window.location.href = 'Login1stpage.html', 3000);
+                    document.getElementById('continueLoginBtn').addEventListener('click', () => {
+                        window.location.href = 'Login1stpage.html';
+                    });
+                } else {
+                    showNotification(result.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Something went wrong: ' + error.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>

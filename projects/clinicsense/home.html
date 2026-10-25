@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicSense</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; height: 100%; }
+        body {
+            min-height: 100vh;
+            background: #000;
+            color: #fff;
+            font-family: "Segoe UI", sans-serif;
+            display: grid;
+            grid-template-columns: 272px 1fr;
+        }
+        .switcher {
+            min-height: 100vh;
+            padding: 22px 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 4px 6px 14px;
+        }
+        .brand strong {
+            display: block;
+            font-size: 16px;
+            letter-spacing: -0.02em;
+        }
+        .brand span {
+            display: block;
+            margin-top: 2px;
+            color: #9aa4ae;
+            font-size: 12px;
+        }
+        .group {
+            margin: 10px 8px 2px;
+            color: #8b95a0;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .switcher button {
+            border: 0;
+            width: 100%;
+            min-height: 42px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: transparent;
+            color: #f2f4f6;
+            font: 600 14px/1.2 "Segoe UI", sans-serif;
+            text-align: left;
+            cursor: pointer;
+        }
+        .switcher button:hover { background: rgba(255, 255, 255, 0.08); }
+        .switcher button.is-active {
+            background: #fff;
+            color: #1d4f86;
+            box-shadow: 0 8px 18px rgba(36, 70, 110, 0.1);
+        }
+        .switcher button.is-active:hover { background: #fff; }
+        .stage { padding: 16px 16px 16px 0; }
+        .stage iframe {
+            width: 100%;
+            height: calc(100vh - 32px);
+            border: 0;
+            border-radius: 22px;
+            background: #fff;
+            box-shadow: 0 18px 44px rgba(20, 40, 70, 0.12);
+        }
+        .portfolio-back {
+            margin: auto 6px 4px;
+            width: fit-content;
+            background: #fff;
+            color: #141414;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 999px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+        }
+        @media (max-width: 860px) {
+            body { display: block; }
+            .switcher { min-height: 0; }
+            .portfolio-back { margin-top: 16px; }
+            .stage { padding: 0 12px 16px; }
+            .stage iframe { height: 72vh; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="switcher" aria-label="ClinicSense pages">
+        <div class="brand">
+            <div>
+                <strong>ClinicSense</strong>
+                <span>Estrellas Clinic</span>
+            </div>
+        </div>
+        <p class="group">Pages</p>
+        <button type="button" class="is-active" data-src="registration/home.html">Home Page</button>
+        <button type="button" data-src="registration/Login1stpage.html">Login Page</button>
+        <button type="button" data-src="registration/registrationform1.html">Sign up Page</button>
+        <p class="group">Dashboards</p>
+        <button type="button" data-src="registration/dashboard.html" data-email="guardian@estrellas.com">Guardian</button>
+        <button type="button" data-src="admin/admindashboard.html" data-email="admin@estrellas.com">Admin</button>
+        <button type="button" data-src="doctor/doctordashboard.html" data-email="doctor@estrellas.com">Doctor</button>
+        <button type="button" data-src="nurse/nursedashboard.html" data-email="nurse@estrellas.com">Nurse</button>
+        <button type="button" data-src="finance/finances.html" data-email="finance@estrellas.com">Finance</button>
+        <button type="button" data-src="receptionist/receptionistdashboard.html" data-email="receptionist@estrellas.com">Receptionist</button>
+        <a class="portfolio-back" href="../../index.html#projects">← Portfolio</a>
+    </nav>
+    <div class="stage">
+        <iframe id="screen" title="ClinicSense" src="registration/home.html"></iframe>
+    </div>
+    <script>
+        const screen = document.getElementById("screen");
+        const buttons = Array.from(document.querySelectorAll(".switcher button"));
+
+        function hideInnerPortfolioLink() {
+            try {
+                const back = screen.contentDocument.querySelector(".portfolio-back");
+                if (back) back.style.display = "none";
+            } catch (error) {}
+        }
+
+        async function openPage(button) {
+            buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+            const email = button.dataset.email;
+            if (email) {
+                try {
+                    const body = new FormData();
+                    body.append("email", email);
+                    await fetch("php/hardcoded_session.php", {
+                        method: "POST",
+                        body,
+                        credentials: "include"
+                    });
+                } catch (error) {}
+            }
+            screen.src = button.dataset.src;
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => openPage(button));
+        });
+        screen.addEventListener("load", hideInnerPortfolioLink);
+    </script>
+</body>
+</html>

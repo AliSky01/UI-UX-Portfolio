@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas Homecare Clinic - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="scheduleappointment.css">
+</head>
+<body>
+<script src="../demo-data.js"></script>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center g-0 py-2">
+                <div class="col-md-6">
+                    <a href="dashboard.html" class="header-logo-link">
+                        <div class="header-logo d-flex align-items-center gap-3">
+                            <img src="../image/logo.jpg" alt="Estrellas Logo" class="logo-img">
+                            <div>
+                                <h4 class="logo-text mb-0">ESTRELLAS</h4>
+                                <p class="logo-subtext mb-0">HOMECARE CLINIC, INC.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="header-user d-flex align-items-center justify-content-end gap-3 pe-4">
+                        <div class="notification-wrapper position-relative">
+                            <i class="bi bi-bell notification-icon"></i>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </div>
+                        <div class="user-menu-wrapper position-relative">
+                            <div class="user-box-content" onclick="toggleUserMenu(event)">
+                                <span class="user-greeting" id="userGreeting"><strong id="headerName">Loading...</strong></span>
+                                <div class="user-avatar"></div>
+                            </div>
+                            <div class="user-dropdown-menu" id="userDropdown">
+                                <a href="AccountProfile.html" class="dropdown-item">
+                                    <i class="bi bi-person"></i> Profile
+                                </a>
+                                <a href="Settings.html" class="dropdown-item">
+                                    <i class="bi bi-gear"></i> Settings
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item" id="logoutBtn">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-divider"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="hero" id="home">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h2>Welcome, <span id="welcomeName">...</span>!</h2>
+                <p class="tagline-cursive">Where healing feels like home</p>
+                <h1>& Your Health<br>is Highly Priority</h1>
+                
+                <div class="dashboard-buttons mt-4">
+                    <button class="btn action-btn appointment-btn" id="appointmentBtn">
+                        <i class="bi bi-calendar-check appointment-icon"></i>
+                        <span>APPOINTMENT</span>
+                    </button>
+                    <button class="btn action-btn patient-btn" id="patientBtn" type="button" onclick="handlePatient()" hidden>
+                        <img src="../image/image 85.png" alt="Patient" class="patient-logo">
+                        <span>PATIENT</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="container-fluid">
+            <div class="row align-items-start py-5">
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-logo-section text-center text-md-start">
+                        <div class="footer-logo-circle mb-3">
+                            <img src="../image/logowestrellas.png" alt="Estrellas Logo" class="footer-logo-img">
+                            <div class="logo-motto">WHERE YOUR HEALTH IS HIGH PRIORITY</div>
+                        </div>
+                        <h4 class="footer-logo-text mb-1">ESTRELLAS</h4>
+                        <p class="footer-logo-subtext mb-0">HOMECARE CLINIC, INC.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-contact">
+                        <h5 class="footer-section-title mb-4">CONTACT US</h5>
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-telephone-fill contact-icon"></i>
+                            <p class="mb-0">0977 491 2942</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-facebook contact-icon"></i>
+                            <p class="mb-0">Estrellas Homecare Clinic Inc.</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3">
+                            <i class="bi bi-envelope-fill contact-icon"></i>
+                            <p class="mb-0">estrellashomecareclinic@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-location">
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-geo-alt-fill contact-icon"></i>
+                            <p class="mb-0">177 Kamias Road, Quezon City, Philippines</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3">
+                            <i class="bi bi-clock-fill contact-icon"></i>
+                            <p class="mb-0">Office Schedule: Monday - Friday (8:00AM - 5:00PM)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
+        <div class="notification-header">
+            <h6 class="mb-0">Notifications</h6>
+            <button class="btn-close-notifications" onclick="closeNotifications()">×</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <p class="text-center text-muted py-4">No notifications yet</p>
+        </div>
+    </div>
+
+    <!-- Appointments Modal -->
+    <div class="modal fade" id="appointmentsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Appointments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="appointmentsList"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="scheduleNewAppointment()">
+                        <i class="bi bi-plus-circle"></i> Schedule New Appointment
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Detail Modal -->
+    <div class="modal fade" id="appointmentDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header align-items-start">
+                    <div>
+                        <h5 class="modal-title mb-1" id="detailModalTitle">Appointment Details</h5>
+                        <div id="detailStatusBadge"></div>
+                    </div>
+                    <div class="ms-auto"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="card form-card mb-0">
+                        <div class="card-body">
+                            <div id="appointmentDetailBody" class="container-fluid">
+                                <!-- Full appointment details will be rendered here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="detailCancelBtn">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Info Modal -->
+    <div class="modal fade" id="statusInfoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Appointment Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="statusInfoText" class="mb-0"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="cancelConfirmMessage" class="mb-0">Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelConfirmNo">No</button>
+                    <button type="button" class="btn btn-danger" id="cancelConfirmYes">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load user info
+        async function loadUserInfo() {
+            try {
+                const response = await fetch('../php/get_user.php');
+                const result   = await response.json();
+
+                if (result.success) {
+                    const fullName = result.user.firstname + ' ' + result.user.lastname;
+                    document.getElementById('headerName').textContent  = fullName;
+                    document.getElementById('welcomeName').textContent = fullName;
+                }
+            } catch (error) {
+                console.error('Error loading user info:', error);
+            }
+        }
+
+        async function updatePatientButtonVisibility() {
+            const patientButton = document.getElementById('patientBtn');
+
+            if (!patientButton) {
+                return;
+            }
+
+            try {
+                const response = await fetch('../php/get_guardian_admitted_patient.php');
+                const result = await response.json();
+
+                if (response.ok && result.success && result.hasAdmittedPatient) {
+                    patientButton.hidden = false;
+                    return;
+                }
+            } catch (error) {
+                console.error('Error checking admitted patient visibility:', error);
+            }
+
+            patientButton.hidden = true;
+        }
+
+        // Load appointments from database
+        async function loadAppointments() {
+            try {
+                const response = await fetch('../php/get_guardians_appointment.php');
+                const result   = await response.json();
+
+                if (!result.success || !Array.isArray(result.appointments)) {
+                    return [];
+                }
+
+                return result.appointments;
+            } catch (error) {
+                console.error('Error loading appointments:', error);
+                return [];
+            }
+        }
+
+        // Appointment button
+        document.getElementById('appointmentBtn').addEventListener('click', async function() {
+            const appointments = await loadAppointments();
+            const existingStatuses = new Set(['pending', 'confirmed', 'cancelled']);
+            const existingAppointments = appointments.filter(appointment => {
+                const status = String(appointment.Status || '').toLowerCase();
+                return existingStatuses.has(status);
+            });
+
+            if (existingAppointments.length > 0) {
+                showAppointmentsModal(existingAppointments);
+            } else {
+                window.location.href = 'scheduleappointment.html';
+            }
+        });
+
+        // Show appointments modal
+        function showAppointmentsModal(appointments) {
+            const appointmentsList = document.getElementById('appointmentsList');
+
+                if (appointments.length === 0) {
+                appointmentsList.innerHTML = '<p class="text-center text-muted py-4">No existing appointments found</p>';
+            } else {
+                appointmentsList.innerHTML = appointments.map(a => {
+                    const status = String(a.Status || '').toLowerCase();
+                    const statusClass = status === 'confirmed' ? 'success' : status === 'cancelled' ? 'danger' : 'warning';
+                    const appointmentId = a.Appointment_ID || a.id || 'N/A';
+                    const patientFirstName = a.PatientFirstName || a.Patient_FName || '';
+                    const patientLastName = a.PatientLastName || a.Patient_LName || '';
+                    const patientAge = a.Age || a.Patient_Age || 'N/A';
+                    const appointmentDate = a.AppointmentDate || a.Date || '';
+                    const appointmentTime = a.AppointmentTime || a.Time || '';
+                    const appointmentData = encodeURIComponent(JSON.stringify(a));
+
+                    return `
+                        <div class="appointment-card mb-3" data-appointment="${appointmentData}" style="cursor: pointer;">
+                            <div class="appointment-card-header d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Appointment #${appointmentId}</h6>
+                                    <span class="badge bg-${statusClass}">${formatStatusLabel(status)}</span>
+                                </div>
+                                
+                            </div>
+                            <div class="appointment-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-2"><strong>Patient:</strong> ${patientFirstName} ${patientLastName}</p>
+                                        <p class="mb-2"><strong>Age:</strong> ${patientAge}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-2"><strong>Date:</strong> ${formatAppointmentDate(appointmentDate)}</p>
+                                        <p class="mb-2"><strong>Time:</strong> ${formatAppointmentTime(appointmentTime)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // attach click handler for cancel buttons (event delegation)
+            appointmentsList.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    const id = this.getAttribute('data-appointment-id');
+                    if (!id) return;
+                    const proceed = await showConfirm('Are you sure you want to cancel appointment #' + id + '?');
+                    if (!proceed) return;
+                    try {
+                        const result = await fetchJsonSafe('../php/cancel_appointment.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ appointmentId: id })
+                        });
+
+                        if (result.json) {
+                            if (result.json.success) {
+                                // hide detail modal if open
+                                const detailModalEl = document.getElementById('appointmentDetailModal');
+                                const detailModal = bootstrap.Modal.getInstance(detailModalEl);
+                                if (detailModal) detailModal.hide();
+                                // reload appointments in modal
+                                const appointments = await loadAppointments();
+                                showAppointmentsModal(appointments);
+                            } else {
+                                showAlert('Cancel failed: ' + (result.json.message || 'Unknown error'));
+                            }
+                        } else if (result.text) {
+                            showAlert('Error cancelling appointment: ' + result.text);
+                        } else {
+                            showAlert('Error cancelling appointment: Unknown error');
+                        }
+                    } catch (err) {
+                        showAlert('Error cancelling appointment: ' + String(err.message || err));
+                    }
+                });
+            });
+
+            // appointment card click -> show detail modal in-place (no redirect)
+            appointmentsList.querySelectorAll('.appointment-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // prevent if clicking cancel button
+                    if (e.target.closest('.cancel-btn')) return;
+                    const encoded = this.getAttribute('data-appointment');
+                    if (!encoded) return;
+                    let obj = null;
+                    try {
+                        obj = JSON.parse(decodeURIComponent(encoded));
+                    } catch (err) {
+                        console.error('Failed to parse appointment data', err);
+                        return;
+                    }
+                    showAppointmentDetail(obj);
+                });
+            });
+
+            const modal = new bootstrap.Modal(document.getElementById('appointmentsModal'));
+            modal.show();
+        }
+
+        function scheduleNewAppointment() {
+            window.location.href = 'scheduleappointment.html';
+        }
+
+        function formatStatusLabel(status) {
+            if (!status) {
+                return 'Unknown';
+            }
+
+            return status.charAt(0).toUpperCase() + status.slice(1);
+        }
+
+        function formatAppointmentDate(dateValue) {
+            if (!dateValue) {
+                return 'N/A';
+            }
+
+            const parsedDate = new Date(dateValue);
+            return Number.isNaN(parsedDate.getTime()) ? dateValue : parsedDate.toLocaleDateString();
+        }
+
+        function formatAppointmentTime(timeValue) {
+            if (!timeValue) {
+                return 'N/A';
+            }
+
+            const normalizedTime = String(timeValue).trim();
+            const timeMatch = normalizedTime.match(/^(\d{1,2}):(\d{2})(?::\d{2})?$/);
+
+            if (!timeMatch) {
+                return normalizedTime;
+            }
+
+            const hours = Number.parseInt(timeMatch[1], 10);
+            const minutes = timeMatch[2];
+            const suffix = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+
+            return `${displayHours}:${minutes} ${suffix}`;
+        }
+
+        function formatAppointmentType(typeValue) {
+            const normalizedType = String(typeValue || '').toLowerCase().trim();
+
+            if (normalizedType === 'consultation') {
+                return 'Consultation';
+            }
+
+            if (normalizedType === 'follow-up') {
+                return 'Follow-up';
+            }
+
+            return normalizedType || 'N/A';
+        }
+
+        // utility: fetch and attempt to parse JSON, otherwise return text
+        async function fetchJsonSafe(url, options) {
+            try {
+                const res = await fetch(url, options);
+                const ct = (res.headers.get('content-type') || '').toLowerCase();
+                if (ct.includes('application/json')) {
+                    const json = await res.json();
+                    return { ok: res.ok, json, text: null };
+                }
+                const text = await res.text();
+                return { ok: res.ok, json: null, text };
+            } catch (err) {
+                return { ok: false, json: null, text: String(err.message || err) };
+            }
+        }
+
+        // utility: show a confirmation modal, returns Promise<boolean>
+        function showConfirm(message) {
+            return new Promise((resolve) => {
+                const modalEl = document.getElementById('cancelConfirmModal');
+                const msgEl = document.getElementById('cancelConfirmMessage');
+                const yesBtn = document.getElementById('cancelConfirmYes');
+                const noBtn = document.getElementById('cancelConfirmNo');
+                if (msgEl) msgEl.textContent = message || 'Are you sure?';
+                const bsModal = new bootstrap.Modal(modalEl);
+
+                function cleanup() {
+                    yesBtn.removeEventListener('click', onYes);
+                    noBtn.removeEventListener('click', onNo);
+                    modalEl.removeEventListener('hidden.bs.modal', onHidden);
+                }
+
+                function onYes() {
+                    cleanup();
+                    bsModal.hide();
+                    resolve(true);
+                }
+
+                function onNo() {
+                    cleanup();
+                    bsModal.hide();
+                    resolve(false);
+                }
+
+                function onHidden() {
+                    // if closed by backdrop or X, treat as No
+                    cleanup();
+                    resolve(false);
+                }
+
+                yesBtn.addEventListener('click', onYes);
+                noBtn.addEventListener('click', onNo);
+                modalEl.addEventListener('hidden.bs.modal', onHidden);
+                bsModal.show();
+            });
+        }
+
+        // utility: show a simple alert modal (reuses status modal UI)
+        function showAlert(message) {
+            const el = document.getElementById('statusInfoModal');
+            const text = document.getElementById('statusInfoText');
+            if (text) text.textContent = message || '';
+            const bs = new bootstrap.Modal(el);
+            bs.show();
+        }
+
+        function handlePatient() {
+            window.location.href = 'patientprofile.html';
+        }
+
+        // Notification bell
+        document.querySelector('.notification-icon').addEventListener('click', async function() {
+            const dropdown = document.getElementById('notificationDropdown');
+            // toggle
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            // load notifications for this user role
+            try {
+                const res = await fetch('../php/get_user_notifications.php?limit=50');
+                const data = await res.json();
+                const list = document.getElementById('notificationList');
+                const badge = document.getElementById('notificationBadge');
+                list.innerHTML = '';
+                if (data.success && Array.isArray(data.notifications) && data.notifications.length > 0) {
+                    data.notifications.forEach(n => {
+                        const item = document.createElement('div');
+                        item.className = 'notification-item d-flex justify-content-between align-items-start p-2';
+                        item.innerHTML = `
+                            <div>
+                                <div class="fw-bold">${n.title}</div>
+                                <div class="small text-muted">${n.message}</div>
+                                <div class="small text-muted">${new Date(n.created_at).toLocaleString()}</div>
+                            </div>
+                            <div class="ms-2">
+                                <button class="btn btn-sm btn-link mark-read" data-id="${n.notification_id}">Mark</button>
+                            </div>
+                        `;
+                        list.appendChild(item);
+                    });
+                } else {
+                    list.innerHTML = '<p class="text-center text-muted py-4">No notifications yet</p>';
+                }
+
+                // show badge
+                if (data.unreadCount && Number(data.unreadCount) > 0) {
+                    badge.textContent = data.unreadCount;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+
+                // attach handlers to mark-read buttons
+                list.querySelectorAll('.mark-read').forEach(btn => {
+                    btn.addEventListener('click', async function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        try {
+                            const form = new FormData();
+                            form.append('notification_id', id);
+                            const r = await fetch('../php/mark_user_notification_read.php', { method: 'POST', body: form });
+                            const j = await r.json();
+                            if (j.success) {
+                                // refresh list
+                                document.querySelector('.notification-icon').click();
+                            }
+                        } catch (err) {
+                            console.error('Failed to mark read', err);
+                        }
+                    });
+                });
+
+                dropdown.style.display = 'block';
+            } catch (err) {
+                console.error('Failed to load notifications', err);
+                dropdown.style.display = 'block';
+            }
+        });
+
+        function closeNotifications() {
+            document.getElementById('notificationDropdown').style.display = 'none';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown    = document.getElementById('notificationDropdown');
+            const notifIcon   = document.querySelector('.notification-icon');
+            const userWrapper = document.querySelector('.user-menu-wrapper');
+            const userDropdown = document.getElementById('userDropdown');
+
+            if (!dropdown.contains(event.target) && !notifIcon.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+
+            if (userWrapper && !userWrapper.contains(event.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // User menu toggle
+        function toggleUserMenu(event) {
+            event.preventDefault();
+            document.getElementById('userDropdown').classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            updatePatientButtonVisibility();
+        });
+
+        // Show appointment detail modal populated with appointment object (styled like Review & Confirm)
+        function showAppointmentDetail(a) {
+            const appointmentId = a.Appointment_ID || a.id || 'N/A';
+            const status = String(a.Status || a.status || '').toLowerCase();
+            const detailBody = document.getElementById('appointmentDetailBody');
+            detailBody.innerHTML = '';
+
+            // build patient section
+            const patientHtml = document.createElement('div');
+            patientHtml.innerHTML = `
+                <h5 class="review-section-title">Patient Information</h5>
+                <div class="review-content">
+                    <div class="review-item"><span class="review-label">Name:</span><span class="review-value">${[(a.PatientFirstName||a.Patient_FName||''), (a.PatientMiddleName||a.Patient_MName||''), (a.PatientLastName||a.Patient_LName||'')].filter(Boolean).join(' ')}</span></div>
+                    <div class="review-item"><span class="review-label">Address:</span><span class="review-value">${a.PatientAddress||a.patientAddress||'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Age:</span><span class="review-value">${a.Age||a.Patient_Age||'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Sex:</span><span class="review-value">${a.Sex||a.sex||(a.Gender||'')}</span></div>
+                    <div class="review-item"><span class="review-label">Reason:</span><span class="review-value">${(a.Symptoms||a.Reason||a.ReasonForAppointment||a.Reason_for_Appointment||'') || 'Not provided'}</span></div>
+                    <div class="review-item"><span class="review-label">Past Laboratory:</span><span class="review-value">${a.PastLaboratories||a.PastLaboratory||a.Diagnosis||a.ExistingDiagnosis||a.PastDiagnoses||'None'}</span></div>
+                    <div class="review-item"><span class="review-label">Attachment:</span><span class="review-value">${a.Attachment || a.FileName ? `<a href="../uploads/${encodeURIComponent(a.Attachment||a.FileName)}" target="_blank">${a.Attachment||a.FileName}</a>` : 'None'}</span></div>
+                </div>
+            `;
+            detailBody.appendChild(patientHtml);
+
+            // guardian section
+            const guardianHtml = document.createElement('div');
+            guardianHtml.innerHTML = `
+                <h5 class="review-section-title mt-4">Guardian Information</h5>
+                <div class="review-content">
+                    <div class="review-item"><span class="review-label">Name:</span><span class="review-value">${[(a.GuardianFirstName||a.Guardian_FName||''), (a.GuardianMiddleName||a.Guardian_MName||''), (a.GuardianLastName||a.Guardian_LName||'')].filter(Boolean).join(' ') || 'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Address:</span><span class="review-value">${a.GuardianAddress||a.guardianAddress||a.address||'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Contact:</span><span class="review-value">${a.GuardianContact||a.Contact||'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Relationship:</span><span class="review-value">${a.GuardianRelation||a.Relation||a.guardian_relation||'N/A'}</span></div>
+                    <div class="review-item"><span class="review-label">Monthly Income:</span><span class="review-value">${a.GuardianIncome||a.IncomeRange||a.income||'N/A'}</span></div>
+                </div>
+            `;
+            detailBody.appendChild(guardianHtml);
+
+            // appointment details
+            const appointmentHtml = document.createElement('div');
+            appointmentHtml.innerHTML = `
+                <h5 class="review-section-title mt-4">Appointment Details</h5>
+                <div class="review-content">
+                    <div class="review-item"><span class="review-label">Appointment ID:</span><span class="review-value">${appointmentId}</span></div>
+                    <div class="review-item"><span class="review-label">Status:</span><span class="review-value">${formatStatusLabel(String(a.Status||a.status||''))}</span></div>
+                    <div class="review-item"><span class="review-label">Date:</span><span class="review-value">${formatAppointmentDate(a.AppointmentDate||a.Date||a.date||'')}</span></div>
+                    <div class="review-item"><span class="review-label">Time:</span><span class="review-value">${formatAppointmentTime(a.AppointmentTime||a.Time||a.time||'')}</span></div>
+                    <div class="review-item"><span class="review-label">Type:</span><span class="review-value">${formatAppointmentType(a.Type||a.AppointmentType||a.type||'')}</span></div>
+                </div>
+            `;
+            detailBody.appendChild(appointmentHtml);
+
+            // notes
+            const notesHtml = document.createElement('div');
+            notesHtml.innerHTML = `
+                <h5 class="review-section-title mt-4">Notes</h5>
+                <div class="review-content">
+                    <div class="review-item"><span class="review-value">${(a.Notes||a.notes||a.ReasonNotes||'No additional notes provided').replace(/\n/g, '<br>')}</span></div>
+                </div>
+            `;
+            detailBody.appendChild(notesHtml);
+
+            // wire modal cancel buttons (header and footer)
+            const detailCancelBtn = document.getElementById('detailCancelBtn');
+            const detailCancelHeaderBtn = document.getElementById('detailCancelHeaderBtn');
+            async function doCancel() {
+                const proceed = await showConfirm('Are you sure you want to cancel appointment #' + appointmentId + '?');
+                if (!proceed) return;
+                try {
+                    const result = await fetchJsonSafe('../php/cancel_appointment.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ appointmentId: appointmentId })
+                    });
+
+                    if (result.json) {
+                        if (result.json.success) {
+                            const detailModal = bootstrap.Modal.getInstance(document.getElementById('appointmentDetailModal'));
+                            if (detailModal) detailModal.hide();
+                            const appointments = await loadAppointments();
+                            showAppointmentsModal(appointments);
+                        } else {
+                            showAlert('Cancel failed: ' + (result.json.message || 'Unknown error'));
+                        }
+                    } else if (result.text) {
+                        showAlert('Error cancelling appointment: ' + result.text);
+                    } else {
+                        showAlert('Error cancelling appointment: Unknown error');
+                    }
+                } catch (err) {
+                    showAlert('Error cancelling appointment: ' + String(err.message || err));
+                }
+            }
+            if (detailCancelBtn) {
+                detailCancelBtn.onclick = doCancel;
+                detailCancelBtn.style.display = (status === 'cancelled' || status === 'canceled' || status === 'confirmed') ? 'none' : '';
+            }
+            if (detailCancelHeaderBtn) {
+                detailCancelHeaderBtn.onclick = doCancel;
+                detailCancelHeaderBtn.style.display = (status === 'cancelled' || status === 'canceled' || status === 'confirmed') ? 'none' : '';
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('appointmentDetailModal'));
+            modal.show();
+            // update header title and badge
+            const titleEl = document.getElementById('detailModalTitle');
+            const badgeEl = document.getElementById('detailStatusBadge');
+            if (titleEl) titleEl.textContent = 'Appointment #' + appointmentId;
+            if (badgeEl) {
+                badgeEl.innerHTML = `<span class="badge bg-${status === 'confirmed' ? 'success' : status === 'cancelled' ? 'danger' : 'warning'}">${formatStatusLabel(status)}</span>`;
+                badgeEl.style.cursor = 'pointer';
+                badgeEl.onclick = function(evt) {
+                    evt && evt.preventDefault && evt.preventDefault();
+                    const statusText = formatStatusLabel(status) || 'Unknown';
+                    const statusInfoText = document.getElementById('statusInfoText');
+                    if (statusInfoText) statusInfoText.textContent = 'Current status: ' + statusText;
+                    const statusModal = new bootstrap.Modal(document.getElementById('statusInfoModal'));
+                    statusModal.show();
+                };
+            }
+        }
+    </script>
+
+    <!-- Shared Logout Script -->
+    <script src="../shared_logout.js"></script>
+    <script>
+        // Ensure logout is initialized after page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initLogout();
+            attachLogoutLinkHandlers();
+        });
+    </script>
+</body>
+</html>

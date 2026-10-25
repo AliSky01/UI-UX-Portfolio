@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas - Login</title>
+    <link rel="stylesheet" href="Login1stpage.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-section">
+            <img src="../image/holdinghands.png" alt="Caring hands">
+        </div>
+        
+        <div class="login-section">
+            <div class="logo">
+                <img src="../image/logo.jpg" alt="Estrellas Logo">
+            </div>
+            
+            <p class="tagline">Your Health is our Highly Priority</p>
+            
+            <div class="login-form">
+                <h1>LOGIN</h1>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" placeholder="guardian@estrellas.com" required autocomplete="username">
+                        <small class="error-msg" id="emailError"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="••••••••••••••••" required>
+                        <small class="error-msg" id="passwordError"></small>
+                    </div>
+                        
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="remember">
+                                Remember me
+                            </label>
+                            <a href="resetpass.html" class="forgot-password">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="login-btn">LOGIN</button>
+                </form>
+                
+                <p class="register-link">
+                    Don't have an account yet? <a href="registrationform1.html">Register now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const roles = [
+            { match: /guardian|patient|rossy/, page: "dashboard.html" },
+            { match: /receptionist|markcastillo/, page: "../receptionist/receptionistdashboard.html" },
+            { match: /nurse|rachelmendoza/, page: "../nurse/nursedashboard.html" },
+            { match: /doctor|raven/, page: "../doctor/doctordashboard.html" },
+            { match: /finance/, page: "../finance/finances.html" },
+            { match: /admin|alexestrellas/, page: "../admin/admindashboard.html" }
+        ];
+
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.add("input-error");
+            error.textContent = message;
+            error.style.display = "block";
+        }
+
+        function clearErrors() {
+            document.getElementById("email").classList.remove("input-error");
+            document.getElementById("password").classList.remove("input-error");
+            ["emailError", "passwordError"].forEach((id) => {
+                const el = document.getElementById(id);
+                el.textContent = "";
+                el.style.display = "none";
+            });
+        }
+
+        document.querySelector("form").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            clearErrors();
+
+            const email = document.getElementById("email").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+
+            if (!email) {
+                showError("email", "emailError", "Please enter an email");
+                return;
+            }
+
+            if (!password) {
+                showError("password", "passwordError", "Please enter your password");
+                return;
+            }
+
+            const role = roles.find((item) => item.match.test(email));
+            let page = role ? role.page : "";
+
+            try {
+                const body = new FormData();
+                body.append("email", email);
+                const response = await fetch("../php/hardcoded_session.php", {
+                    method: "POST",
+                    body,
+                    credentials: "include"
+                });
+                const result = await response.json();
+                if (result.success && result.page) {
+                    page = result.page;
+                } else if (!page) {
+                    showError("email", "emailError", result.message || "Use an email with Guardian, Admin, Doctor, Nurse, Finance, or Receptionist.");
+                    return;
+                }
+            } catch (error) {
+                if (!page) {
+                    showError("email", "emailError", "Use an email with Guardian, Admin, Doctor, Nurse, Finance, or Receptionist.");
+                    return;
+                }
+            }
+
+            window.location.href = page;
+        });
+    </script>
+</body>
+</html>

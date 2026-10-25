@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas Homecare Clinic - Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="afterbookingdashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center g-0 py-2">
+                <div class="col-md-6">
+                    <div class="header-logo d-flex align-items-center gap-3 ps-3">
+                        <img src="logo.jpg" alt="Estrellas Logo" class="logo-img">
+                        <div>
+                            <h4 class="logo-text mb-0">ESTRELLAS</h4>
+                            <p class="logo-subtext mb-0">HOMECARE CLINIC, INC.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="header-user d-flex align-items-center justify-content-end gap-3 pe-4">
+                        <div class="notification-wrapper position-relative">
+                            <i class="bi bi-bell notification-icon"></i>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </div>
+                        <div class="user-menu-wrapper position-relative">
+                            <div class="user-box-content" onclick="toggleUserMenu(event)">
+                                <span class="user-greeting" id="userGreeting"><strong>Rossy Alberto</strong></span>
+                                <div class="user-avatar"></div>
+                            </div>
+                            <div class="user-dropdown-menu" id="userDropdown">
+                                <a href="Settings.html" class="dropdown-item">
+                                    <i class="bi bi-gear"></i> Settings
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="Login1stpage.html" class="dropdown-item">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-divider"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="hero">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h2 class="welcome-label">Welcome back, Rossy Alberto!</h2>
+                <p class="tagline-cursive">Where healing feels like home</p>
+                <h1>& Your Health<br>is Highly Priority</h1>
+                
+                <div class="dashboard-buttons mt-5">
+                    <button class="btn action-btn appointment-btn" onclick="handleAppointment()">
+                        <i class="bi bi-calendar-check appointment-icon"></i>
+                        <span>APPOINTMENT</span>
+                    </button>
+                    
+                    <button class="btn action-btn patient-btn" onclick="handlePatient()">
+                        <img src="image 85.png" alt="Logo" class="patient-logo">
+                        <span>PATIENT</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="container-fluid">
+            <div class="row align-items-start py-5">
+                <!-- Left: Logo -->
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-logo-section text-center text-md-start">
+                        <div class="footer-logo-circle mb-3">
+                            <img src="logo.jpg" alt="Estrellas Logo" class="footer-logo-img">
+                            <div class="logo-motto">WHERE YOUR HEALTH IS HIGH PRIORITY</div>
+                        </div>
+                        <h4 class="footer-logo-text mb-1">ESTRELLAS</h4>
+                        <p class="footer-logo-subtext mb-0">HOMECARE CLINIC, INC.</p>
+                    </div>
+                </div>
+                
+                <!-- Middle: Contact Us -->
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-contact">
+                        <h5 class="footer-section-title mb-4">CONTACT US</h5>
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-telephone-fill contact-icon"></i>
+                            <p class="mb-0">0977 491 2942</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-facebook contact-icon"></i>
+                            <p class="mb-0">Estrellas Homecare Clinic Inc.</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3">
+                            <i class="bi bi-envelope-fill contact-icon"></i>
+                            <p class="mb-0">estrellashomecareclinic@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right: Location and Schedule -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-location">
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-geo-alt-fill contact-icon"></i>
+                            <p class="mb-0">177 Kamias Road, Quezon City, Philippines</p>
+                        </div>
+                        <div class="contact-item d-flex align-items-start gap-3 mb-3">
+                            <i class="bi bi-clock-fill contact-icon"></i>
+                            <div>
+                                <p class="mb-1 fw-semibold">Office Schedule</p>
+                                <p class="mb-0">Monday - Friday (8:00 AM - 5:00 PM)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
+        <div class="notification-header">
+            <h6 class="mb-0">Notifications</h6>
+            <button class="btn-close-notifications" onclick="closeNotifications()">×</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <p class="text-center text-muted py-4">No notifications yet</p>
+        </div>
+    </div>
+
+    <!-- Current Appointments Modal -->
+    <div class="modal fade" id="appointmentsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Your Appointments</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="appointmentsList"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="scheduleNewAppointment()">
+                        <i class="bi bi-plus-circle"></i> Schedule New Appointment
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Go to Schedule Appointment page
+        function handleAppointment() {
+            const appointments = getActiveAppointments();
+            
+            if (appointments.length > 0) {
+                // Show existing appointments
+                showAppointmentsModal();
+            } else {
+                // No appointments, go to schedule page
+                window.location.href = 'scheduleappointment.html';
+            }
+        }
+
+        // Go to Patient Profile page
+        function handlePatient() {
+            window.location.href = 'patientprofile.html';
+        }
+
+        // Get active appointments (only complete ones)
+        function getActiveAppointments() {
+            // Hardcoded appointment for Carlos Alberto
+            return [{
+                id: Date.now(),
+                type: 'appointment',
+                data: {
+                    firstName: 'Carlos',
+                    lastName: 'Alberto',
+                    age: '72',
+                    type: 'consultation',
+                    date: new Date().toISOString().split('T')[0],
+                    time: '10:00',
+                    reason: 'Regular check-up',
+                    status: 'complete'
+                },
+                message: 'Appointment scheduled successfully',
+                date: new Date().toISOString(),
+                read: false
+            }];
+        }
+
+        // Show appointments modal
+        function showAppointmentsModal() {
+            const appointments = getActiveAppointments();
+            const appointmentsList = document.getElementById('appointmentsList');
+            
+            if (appointments.length === 0) {
+                appointmentsList.innerHTML = '<p class="text-center text-muted py-4">No appointments found</p>';
+            } else {
+                appointmentsList.innerHTML = appointments.map((appointment, index) => {
+                    const data = appointment.data;
+                    const status = 'complete'; // Always show as complete
+                    const statusClass = 'success';
+                    const statusText = 'Complete';
+                    
+                    return `
+                        <div class="appointment-card mb-3">
+                            <div class="appointment-card-header">
+                                <div>
+                                    <h6 class="mb-1">Appointment #${appointment.id}</h6>
+                                    <span class="badge bg-${statusClass}">${statusText}</span>
+                                </div>
+                            </div>
+                            <div class="appointment-card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-2"><strong>Patient:</strong> ${data.firstName} ${data.lastName}</p>
+                                        <p class="mb-2"><strong>Age:</strong> ${data.age}</p>
+                                        <p class="mb-2"><strong>Type:</strong> ${data.type || 'consultation'}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-2"><strong>Date:</strong> ${new Date(data.date).toLocaleDateString()}</p>
+                                        <p class="mb-2"><strong>Time:</strong> ${formatTime(data.time)}</p>
+                                        <p class="mb-2"><strong>Reason:</strong> ${data.reason || 'N/A'}</p>
+                                    </div>
+                                </div>
+                                ${data.notes ? `<p class="mb-0 mt-2"><strong>Notes:</strong> ${data.notes}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('appointmentsModal'));
+            modal.show();
+        }
+
+        // Format time helper
+        function formatTime(time) {
+            if (!time) return '';
+            const [hours, minutes] = time.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const displayHour = hour % 12 || 12;
+            return `${displayHour}:${minutes} ${ampm}`;
+        }
+
+        // Schedule new appointment
+        function scheduleNewAppointment() {
+            window.location.href = 'scheduleappointment.html';
+        }
+
+        // Load and display notification count
+        function updateNotificationBadge() {
+            const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+            const completeAppointments = notifications.filter(n => n.type === 'appointment' && n.data && n.data.status === 'complete');
+            const unreadCount = completeAppointments.filter(n => !n.read).length;
+            const badge = document.getElementById('notificationBadge');
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'block';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // Notification bell click handler
+        document.querySelector('.notification-icon').addEventListener('click', function() {
+            const dropdown = document.getElementById('notificationDropdown');
+            const isVisible = dropdown.style.display === 'block';
+            
+            if (isVisible) {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+                displayNotifications();
+            }
+        });
+
+        // Display notifications
+        function displayNotifications() {
+            const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+            const completeAppointments = notifications.filter(n => n.type === 'appointment' && n.data && n.data.status === 'complete');
+            const notificationList = document.getElementById('notificationList');
+            
+            if (completeAppointments.length === 0) {
+                notificationList.innerHTML = '<p class="text-center text-muted py-4">No notifications yet</p>';
+                return;
+            }
+            
+            notificationList.innerHTML = completeAppointments.map(notification => `
+                <div class="notification-item ${notification.read ? 'read' : 'unread'}">
+                    <div class="notification-content">
+                        <i class="bi bi-calendar-check text-success me-2"></i>
+                        <div>
+                            <p class="mb-1">${notification.message} <span class="badge bg-success ms-2">Complete</span></p>
+                            <small class="text-muted">${new Date(notification.date).toLocaleString()}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Mark all as read
+            completeAppointments.forEach(n => n.read = true);
+            notifications.forEach(n => {
+                if (n.type === 'appointment' && n.data && n.data.status === 'complete') {
+                    n.read = true;
+                }
+            });
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+        }
+
+        // Close notifications
+        function closeNotifications() {
+            document.getElementById('notificationDropdown').style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('notificationDropdown');
+            const notificationIcon = document.querySelector('.notification-icon');
+            
+            if (dropdown && notificationIcon && !dropdown.contains(event.target) && !notificationIcon.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Notification bell click handler
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize notification badge
+            updateNotificationBadge();
+            
+            // Show appointments modal automatically on page load
+            setTimeout(function() {
+                showAppointmentsModal();
+            }, 500);
+        });
+
+        // User menu dropdown toggle
+        function toggleUserMenu(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenuWrapper = document.querySelector('.user-menu-wrapper');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userMenuWrapper && !userMenuWrapper.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+

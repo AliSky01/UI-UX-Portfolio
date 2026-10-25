@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard - Estrellas Homecare Clinic</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="receptionistdashboard.css">
+</head>
+<body>
+<script src="../demo-data.js"></script>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="receptionistdashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="receptionistpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calendar.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="logout-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div class="search-container" style="margin-left: 50px;">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" class="form-control search-input" placeholder="Search">
+                    </div>
+                    <div class="header-user d-flex align-items-center gap-3">
+                        <i class="bi bi-bell notification-icon me-3"></i>
+                        <div class="user-box-content">
+                                <span class="user-greeting"><strong id="headerName">Loading...</strong></span>
+                            <div class="user-avatar"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container-fluid">
+                    <!-- Welcome Section -->
+                    <div class="welcome-section mb-4">
+                        <div class="welcome-copy">
+                            <h1 class="welcome-title">Welcome back, <span id="welcomeName">Loading...</span>!</h1>
+                            <p class="welcome-subtitle">Here's your dashboard.</p>
+                        </div>
+                        <button type="button" class="summary-new-appointment-btn welcome-action-btn" onclick="window.location.href='calendar.html'">
+                            <i class="bi bi-plus-lg"></i>
+                            <span>New Appointment</span>
+                        </button>
+                    </div>
+
+                    <!-- Dashboard Summary Cards -->
+                    <section class="dashboard-summary-section">
+                        <div class="summary-metrics-grid">
+                            <article class="summary-metric-card metric-blue">
+                                <div class="summary-metric-icon">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+                                <div class="summary-metric-content">
+                                    <p class="summary-metric-label">Active Patients</p>
+                                    <p class="summary-metric-value" id="activePatientCount">0</p>
+                                    <p class="summary-metric-subtext">&nbsp;</p>
+                                </div>
+                            </article>
+
+                            <article class="summary-metric-card metric-green">
+                                <div class="summary-metric-icon">
+                                    <i class="bi bi-calendar-check-fill"></i>
+                                </div>
+                                <div class="summary-metric-content">
+                                    <p class="summary-metric-label">Today's Appointments</p>
+                                    <p class="summary-metric-value" id="todayAppointmentsCount">0</p>
+                                    <p class="summary-metric-subtext" id="todayAppointmentsBreakdown">0 confirmed, 0 pending</p>
+                                </div>
+                            </article>
+
+                            <article class="summary-metric-card metric-amber">
+                                <div class="summary-metric-icon">
+                                    <i class="bi bi-hourglass-split"></i>
+                                </div>
+                                <div class="summary-metric-content">
+                                    <p class="summary-metric-label">Pending Follow-ups</p>
+                                    <p class="summary-metric-value" id="pendingFollowUpsCount">0</p>
+                                    <p class="summary-metric-subtext">Requires action today</p>
+                                </div>
+                            </article>
+
+                            <article class="summary-metric-card metric-red">
+                                <div class="summary-metric-icon">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                </div>
+                                <div class="summary-metric-content">
+                                    <p class="summary-metric-label">Cancellations</p>
+                                    <p class="summary-metric-value" id="cancellationsCount">0</p>
+                                    <p class="summary-metric-subtext">This week</p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- Tables Row -->
+                    <div class="row align-items-stretch dashboard-inline-panels">
+                        <!-- Upcoming Appointment Booking -->
+                        <div class="col-lg-8 mb-4">
+                            <div class="section-header">
+                                <h2 class="section-title">UPCOMING APPOINTMENTS</h2>
+                                <select class="form-select status-filter" id="upcomingStatusFilter">
+                                    <option value="all" selected>All</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="confirmed">Confirmed</option>
+                                </select>
+                            </div>
+                            <div class="card table-card">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>GUARDIAN NAME</th>
+                                                    <th>DATE</th>
+                                                    <th>TIME</th>
+                                                    <th>CONTACT NO.</th>
+                                                    <th>STATUS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="pendingAppointmentsTableBody">
+                                                <tr>
+                                                    <td colspan="6">Loading pending appointments...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Today's Schedule -->
+                        <div class="col-lg-4 mb-4">
+                            <div class="today-schedule-card">
+                                <div class="today-schedule-header">
+                                    <h3 class="today-schedule-title">Today's Schedule</h3>
+                                    <p class="today-schedule-meta" id="todayScheduleMeta">Loading...</p>
+                                </div>
+
+                                <div class="today-schedule-list" id="todayScheduleList">
+                                    <p class="today-schedule-empty">Loading today's appointments...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared_logout.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Sidebar navigation active state
+        document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Only prevent default for links with href="#"
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+                document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.closest('.nav-item').classList.add('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        const upcomingStatusFilter = document.getElementById('upcomingStatusFilter');
+        let dashboardAppointments = [];
+
+        if (searchInput) {
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    alert('Searching for: ' + this.value);
+                }
+            });
+        }
+
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"]/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;'
+            }[character] || character));
+        }
+
+        function formatAppointmentDate(dateString) {
+            if (!dateString) return '-';
+
+            const date = new Date(`${dateString}T00:00:00`);
+            if (Number.isNaN(date.getTime())) return dateString;
+
+            return `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        function formatAppointmentTime(timeString) {
+            if (!timeString) return '-';
+
+            const [hours = '0', minutes = '00'] = timeString.split(':');
+            const parsedHours = Number.parseInt(hours, 10);
+            if (Number.isNaN(parsedHours)) return timeString;
+
+            const period = parsedHours >= 12 ? 'PM' : 'AM';
+            const normalizedHours = parsedHours % 12 || 12;
+            return `${normalizedHours}:${minutes} ${period}`;
+        }
+
+        function isSameDate(dateString, targetDate) {
+            if (!dateString || !targetDate) return false;
+            const date = new Date(`${dateString}T00:00:00`);
+            if (Number.isNaN(date.getTime())) return false;
+            return date.toDateString() === targetDate.toDateString();
+        }
+
+        function isSameWeek(dateString, referenceDate) {
+            if (!dateString || !referenceDate) return false;
+
+            const date = new Date(`${dateString}T00:00:00`);
+            if (Number.isNaN(date.getTime())) return false;
+
+            const startOfWeek = new Date(referenceDate);
+            const day = startOfWeek.getDay();
+            const offset = day === 0 ? -6 : 1 - day;
+            startOfWeek.setDate(startOfWeek.getDate() + offset);
+            startOfWeek.setHours(0, 0, 0, 0);
+
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+            endOfWeek.setHours(23, 59, 59, 999);
+
+            return date >= startOfWeek && date <= endOfWeek;
+        }
+
+        function getAppointmentName(appointment) {
+            const guardianName = [appointment.GuardianFirstName, appointment.GuardianLastName]
+                .filter(Boolean)
+                .join(' ')
+                .trim();
+
+            if (guardianName) {
+                return guardianName;
+            }
+
+            return [appointment.PatientFirstName, appointment.PatientLastName]
+                .filter(Boolean)
+                .join(' ')
+                .trim() || 'Unknown';
+        }
+
+        function formatLongDate(value) {
+            const date = value instanceof Date ? value : new Date(value);
+            if (Number.isNaN(date.getTime())) return '--';
+
+            return date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function getScheduleNote(appointment) {
+            const source = String(appointment.Symptoms || appointment.Notes || '').trim();
+            const label = source ? source.split(/[,.;]/)[0].trim() : 'General';
+            const cleanLabel = label || 'General';
+            return `${cleanLabel} - 30 min`;
+        }
+
+        function getScheduleStatusClass(status) {
+            const normalized = normalizeAppointmentStatus(status);
+            if (normalized === 'confirmed') return 'status-confirmed';
+            if (normalized === 'pending') return 'status-pending';
+            if (normalized === 'cancelled') return 'status-cancelled';
+            if (normalized === 'completed') return 'status-complete';
+            return '';
+        }
+
+        function normalizeAppointmentStatus(status) {
+            const normalized = String(status || '').trim().toLowerCase();
+
+            if (['canceled', 'cancelled', 'declined', 'not admitted', 'not_admitted'].includes(normalized)) {
+                return 'cancelled';
+            }
+
+            if (['complete', 'completed'].includes(normalized)) {
+                return 'completed';
+            }
+
+            if (['for admission', 'for_admission'].includes(normalized)) {
+                return 'for_admission';
+            }
+
+            return normalized;
+        }
+
+        function parseAppointmentDate(dateString) {
+            const parsed = new Date(`${dateString}T00:00:00`);
+            return Number.isNaN(parsed.getTime()) ? null : parsed;
+        }
+
+        function getUpcomingAppointments(appointments, selectedStatus = 'all') {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            return appointments
+                .filter(appointment => {
+                    const appointmentDate = parseAppointmentDate(appointment.AppointmentDate);
+                    if (!appointmentDate) return false;
+
+                    if (appointmentDate < today) return false;
+
+                    if (selectedStatus === 'all') {
+                        return true;
+                    }
+
+                    return normalizeAppointmentStatus(appointment.Status) === selectedStatus;
+                })
+                .sort((left, right) => {
+                    const leftDate = parseAppointmentDate(left.AppointmentDate);
+                    const rightDate = parseAppointmentDate(right.AppointmentDate);
+                    if (!leftDate || !rightDate) return 0;
+
+                    const dateDiff = leftDate.getTime() - rightDate.getTime();
+                    if (dateDiff !== 0) return dateDiff;
+
+                    return String(left.AppointmentTime || '').localeCompare(String(right.AppointmentTime || ''));
+                });
+        }
+
+        function getStatusBadge(status) {
+            const normalized = normalizeAppointmentStatus(status);
+
+            if (normalized === 'confirmed') {
+                return '<span class="badge bg-success">Confirmed</span>';
+            }
+
+            if (normalized === 'completed') {
+                return '<span class="badge bg-primary">Completed</span>';
+            }
+
+            if (normalized === 'cancelled') {
+                return '<span class="badge bg-danger">Cancelled</span>';
+            }
+
+            return '<span class="badge bg-warning">Pending</span>';
+        }
+
+        function renderTodaySchedule(appointments, referenceDate = new Date()) {
+            const scheduleMeta = document.getElementById('todayScheduleMeta');
+            const scheduleList = document.getElementById('todayScheduleList');
+            if (!scheduleMeta || !scheduleList) return;
+
+            const total = appointments.length;
+            scheduleMeta.textContent = `${formatLongDate(referenceDate)} - ${total} appointment${total === 1 ? '' : 's'}`;
+
+            if (!total) {
+                scheduleList.innerHTML = '<p class="today-schedule-empty">No appointments scheduled for today.</p>';
+                return;
+            }
+
+            const visibleAppointments = appointments
+                .slice()
+                .sort((left, right) => String(left.AppointmentTime || '').localeCompare(String(right.AppointmentTime || '')))
+                .slice(0, 4);
+
+            scheduleList.innerHTML = visibleAppointments.map(appointment => {
+                const statusClass = getScheduleStatusClass(appointment.Status);
+                return `
+                    <div class="today-schedule-item">
+                        <div class="today-schedule-time">${escapeHtml(formatAppointmentTime(appointment.AppointmentTime))}</div>
+                        <div class="today-schedule-details">
+                            <p class="today-schedule-name">${escapeHtml(getAppointmentName(appointment))}</p>
+                            <p class="today-schedule-note">${escapeHtml(getScheduleNote(appointment))}</p>
+                        </div>
+                        <span class="today-schedule-status-dot ${statusClass}"></span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderScheduleFromAppointments(appointments) {
+            const scheduleMeta = document.getElementById('todayScheduleMeta');
+            const scheduleList = document.getElementById('todayScheduleList');
+
+            const now = new Date();
+            now.setHours(0, 0, 0, 0);
+            const todayAppointments = appointments.filter(appointment => isSameDate(appointment.AppointmentDate, now));
+            renderTodaySchedule(todayAppointments, now);
+
+            if (todayAppointments.length === 0 && scheduleMeta && scheduleList) {
+                scheduleMeta.textContent = `${formatLongDate(new Date())} - 0 appointments`;
+            }
+        }
+
+        function renderUpcomingAppointments(appointments, selectedStatus = 'all') {
+            const tbody = document.getElementById('pendingAppointmentsTableBody');
+            if (!tbody) return;
+
+            const filtered = getUpcomingAppointments(appointments, selectedStatus);
+
+            let emptyText = 'No upcoming appointments found.';
+            if (selectedStatus === 'pending') emptyText = 'No pending appointments found.';
+            if (selectedStatus === 'confirmed') emptyText = 'No confirmed appointments found.';
+            if (selectedStatus === 'completed') emptyText = 'No completed appointments found.';
+            if (selectedStatus === 'cancelled') emptyText = 'No cancelled appointments found.';
+
+            if (!filtered.length) {
+                tbody.innerHTML = `<tr><td colspan="6">${emptyText}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.slice(0, 20).map((appointment, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${escapeHtml(getAppointmentName(appointment))}</td>
+                    <td>${escapeHtml(formatAppointmentDate(appointment.AppointmentDate))}</td>
+                    <td>${escapeHtml(formatAppointmentTime(appointment.AppointmentTime))}</td>
+                    <td>${escapeHtml(appointment.GuardianContact || '-')}</td>
+                    <td>${getStatusBadge(appointment.Status)}</td>
+                </tr>
+            `).join('');
+        }
+
+        async function fetchAppointments(status = '') {
+            const params = new URLSearchParams();
+            if (status) {
+                params.set('status', status);
+            }
+
+            const endpoint = params.toString()
+                ? `../php/get_appointments.php?${params.toString()}`
+                : '../php/get_appointments.php';
+
+            const response = await fetch(endpoint, {
+                credentials: 'include'
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || `HTTP ${response.status}`);
+            }
+
+            return Array.isArray(data.appointments) ? data.appointments : [];
+        }
+
+        async function loadDashboardAppointments() {
+            try {
+                const [allAppointments, upcomingAppointments] = await Promise.all([
+                    fetchAppointments(),
+                    fetchAppointments('pending,confirmed')
+                ]);
+
+                dashboardAppointments = upcomingAppointments;
+
+                renderUpcomingAppointments(dashboardAppointments, upcomingStatusFilter?.value || 'all');
+                renderScheduleFromAppointments(allAppointments);
+                loadSummaryMetrics(allAppointments);
+            } catch (error) {
+                console.error('Failed to load dashboard appointments:', error);
+
+                const tbody = document.getElementById('pendingAppointmentsTableBody');
+                if (tbody) {
+                    tbody.innerHTML = '<tr><td colspan="6">Unable to load upcoming appointments.</td></tr>';
+                }
+
+                const scheduleMeta = document.getElementById('todayScheduleMeta');
+                const scheduleList = document.getElementById('todayScheduleList');
+                if (scheduleMeta) {
+                    scheduleMeta.textContent = `${formatLongDate(new Date())} - 0 appointments`;
+                }
+                if (scheduleList) {
+                    scheduleList.innerHTML = '<p class="today-schedule-empty">Unable to load today\'s schedule.</p>';
+                }
+
+                loadSummaryMetrics([]);
+            }
+        }
+
+        async function loadActivePatientCount() {
+            const activePatientCount = document.getElementById('activePatientCount');
+            if (!activePatientCount) return;
+
+            try {
+                const response = await fetch('../php/get_active_patient_count.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                activePatientCount.textContent = data.count ?? 0;
+            } catch (error) {
+                console.error('Failed to load active patient count:', error);
+                activePatientCount.textContent = '0';
+            }
+        }
+
+        function loadSummaryMetrics(appointments = []) {
+            const todayAppointmentsCount = document.getElementById('todayAppointmentsCount');
+            const todayAppointmentsBreakdown = document.getElementById('todayAppointmentsBreakdown');
+            const pendingFollowUpsCount = document.getElementById('pendingFollowUpsCount');
+            const cancellationsCount = document.getElementById('cancellationsCount');
+
+            const now = new Date();
+            const today = new Date(now);
+            today.setHours(0, 0, 0, 0);
+
+            const todayAppointments = appointments.filter(appointment => isSameDate(appointment.AppointmentDate, today));
+            const confirmedToday = todayAppointments.filter(appointment => normalizeAppointmentStatus(appointment.Status) === 'confirmed').length;
+            const pendingToday = todayAppointments.filter(appointment => normalizeAppointmentStatus(appointment.Status) === 'pending').length;
+            const pendingFollowUps = appointments.filter(appointment => normalizeAppointmentStatus(appointment.Status) === 'pending').length;
+            const weeklyCancellations = appointments.filter(appointment => {
+                return normalizeAppointmentStatus(appointment.Status) === 'cancelled' && isSameWeek(appointment.AppointmentDate, now);
+            }).length;
+
+            if (todayAppointmentsCount) todayAppointmentsCount.textContent = String(todayAppointments.length);
+            if (todayAppointmentsBreakdown) {
+                todayAppointmentsBreakdown.textContent = `${confirmedToday} confirmed, ${pendingToday} pending`;
+            }
+            if (pendingFollowUpsCount) pendingFollowUpsCount.textContent = String(pendingFollowUps);
+            if (cancellationsCount) cancellationsCount.textContent = String(weeklyCancellations);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            loadActivePatientCount();
+            loadDashboardAppointments();
+
+            upcomingStatusFilter?.addEventListener('change', function() {
+                renderUpcomingAppointments(dashboardAppointments, this.value || 'all');
+            });
+        });
+    </script>
+</body>
+</html>

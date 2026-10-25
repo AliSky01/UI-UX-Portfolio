@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage User - ClinicSense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="manageuser.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="admindashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patient</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminappointment.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Appointment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminfinances.html" class="nav-link">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer">
+                    <a href="manageuser.html" class="nav-link active">
+                        <i class="bi bi-person-gear"></i>
+                        <span>Manage User</span>
+                    </a>
+                    <a href="#" class="logout-link" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="container-fluid">
+                    <div class="header-content">
+                        <div class="header-search">
+                            <i class="bi bi-search"></i>
+                            <input type="text" class="search-input" placeholder="Search">
+                        </div>
+                        <div class="header-user">
+                            <i class="bi bi-bell notification-icon me-4"></i>
+                            <img src="../image/raven.jpg" alt="User Avatar" class="user-avatar me-3">
+                            <span class="user-name" id="adminName">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container-fluid">
+                    <!-- Register Form Card -->
+                    <div class="register-container">
+                        <div class="register-card">
+                            <h1 class="register-title">Register</h1>
+                            
+                            <form id="registerForm">
+                                <div class="form-group">
+                                    <label class="form-label">Account Type <span class="required">*</span></label>
+                                    <select class="form-control" id="accountType" required>
+                                        <option value="" selected disabled>Please Select</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Doctor">Doctor</option>
+                                        <option value="Nurse">Nurse</option>
+                                        <option value="Receptionist">Receptionist</option>
+                                        <option value="Finance">Finance</option>
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">First Name <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="firstName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Last Name <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="lastName" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Contact Number <span class="required">*</span></label>
+                                    <input type="tel" class="form-control" id="contactNumber"
+                                           placeholder="09XX XXX XXXX"
+                                           pattern="^(09|\+639)\d{9}$"
+                                           maxlength="11"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Username <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="username" required>
+                                </div>
+
+                                <!-- Password with strength indicator -->
+                                <div class="form-group">
+                                    <label class="form-label">Password <span class="required">*</span></label>
+                                    <input type="password" class="form-control" id="password" required>
+                                    <div class="mt-2">
+                                        <div class="progress" style="height: 4px;">
+                                            <div class="progress-bar" id="strengthBar" style="width: 0%"></div>
+                                        </div>
+                                        <small id="strengthText"></small>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm Password with match indicator -->
+                                <div class="form-group">
+                                    <label class="form-label">Confirm Password <span class="required">*</span></label>
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                    <small id="matchText"></small>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-create">Create Account</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- User List Table -->
+                    <div class="users-table-container mt-5">
+                        <div class="table-header">
+                            <h3 class="table-title">Registered Users</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Account Type</th>
+                                        <th>Username</th>
+                                        <th>Contact Number</th>
+                                        <th>Date Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted">Loading...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Password strength checker
+        const passwordInput = document.getElementById('password');
+        const strengthBar   = document.getElementById('strengthBar');
+        const strengthText  = document.getElementById('strengthText');
+        const confirmInput  = document.getElementById('confirmPassword');
+        const matchText     = document.getElementById('matchText');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength   = 0;
+
+            if (password.length === 0) {
+                strengthBar.style.width  = '0%';
+                strengthBar.className    = 'progress-bar';
+                strengthText.textContent = '';
+                return;
+            }
+
+            if (password.length >= 8)          strength += 25;
+            if (password.length >= 12)         strength += 10;
+            if (/[a-z]/.test(password))        strength += 15;
+            if (/[A-Z]/.test(password))        strength += 15;
+            if (/[0-9]/.test(password))        strength += 15;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+
+            let color = 'bg-danger';
+            let label = 'Weak';
+
+            if (strength >= 70) {
+                color = 'bg-success';
+                label = 'Strong';
+            } else if (strength >= 40) {
+                color = 'bg-warning';
+                label = 'Medium';
+            }
+
+            strengthBar.style.width  = strength + '%';
+            strengthBar.className    = 'progress-bar ' + color;
+            strengthText.textContent = label;
+            strengthText.className   = color === 'bg-danger' ? 'text-danger' : color === 'bg-warning' ? 'text-warning' : 'text-success';
+        });
+
+        // Password match checker
+        confirmInput.addEventListener('input', function() {
+            if (!this.value) {
+                matchText.textContent = '';
+                return;
+            }
+            if (this.value === passwordInput.value) {
+                matchText.textContent = '✓ Passwords match';
+                matchText.className   = 'text-success';
+            } else {
+                matchText.textContent = '✗ Passwords do not match';
+                matchText.className   = 'text-danger';
+            }
+        });
+
+        // Load admin info
+        async function loadAdminInfo() {
+            try {
+                const response = await fetch('../php/get_user.php');
+                const result   = await response.json();
+
+                if (result.success) {
+                    document.getElementById('adminName').textContent = result.user.firstname + ' ' + result.user.lastname;
+                } else {
+                    window.location.href = '../registration/Login1stpage.html';
+                }
+            } catch (error) {
+                console.error('Error loading admin info:', error);
+            }
+        }
+
+        // Load staffs from database
+        async function loadStaffs() {
+            try {
+                const response = await fetch('../php/get_staff.php');
+                const result   = await response.json();
+
+                if (result.success) {
+                    renderStaffsTable(result.staffs);
+                }
+            } catch (error) {
+                console.error('Error loading staffs:', error);
+            }
+        }
+
+        // Render staffs table
+        function renderStaffsTable(staffs) {
+            const tbody = document.getElementById('usersTableBody');
+
+            if (staffs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No staff accounts found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = staffs.map(staff => `
+                <tr>
+                    <td>${staff.FirstName} ${staff.LastName}</td>
+                    <td><span class="badge badge-${staff.Role.toLowerCase()}">${staff.Role}</span></td>
+                    <td>${staff.Username}</td>
+                    <td>${staff.Contact_No}</td>
+                    <td>${new Date(staff.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStaff(${staff.Staff_ID})">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Delete staff account
+        async function deleteStaff(staffId) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+
+            try {
+                const response = await fetch('../php/delete_staff.php', {
+                    method: 'POST',
+                    body: new URLSearchParams({ staff_id: staffId })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('User deleted successfully!');
+                    loadStaffs();
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                alert('Something went wrong: ' + error.message);
+            }
+        }
+
+        // Create staff account
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const password        = passwordInput.value;
+            const confirmPassword = confirmInput.value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters!');
+                return;
+            }
+
+            // ✅ Phone number validation
+            const contact    = document.getElementById('contactNumber').value;
+            const phoneRegex = /^(09|\+639)\d{9}$/;
+
+            if (!phoneRegex.test(contact)) {
+                alert('Please enter a valid Philippine phone number (e.g. 09XX XXX XXXX)');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('role',      document.getElementById('accountType').value);
+            formData.append('firstname', document.getElementById('firstName').value);
+            formData.append('lastname',  document.getElementById('lastName').value);
+            formData.append('contact',   document.getElementById('contactNumber').value);
+            formData.append('username',  document.getElementById('username').value);
+            formData.append('password',  password);
+
+            try {
+                const response = await fetch('../php/admin_create_staffs.php', { method: 'POST', body: formData });
+                const result   = await response.json();
+
+                if (result.success) {
+                    alert('Account created successfully!');
+                    this.reset();
+                    strengthBar.style.width  = '0%';
+                    strengthBar.className    = 'progress-bar';
+                    strengthText.textContent = '';
+                    matchText.textContent    = '';
+                    loadStaffs();
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                alert('Something went wrong: ' + error.message);
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async function(e) {
+            e.preventDefault();
+            await fetch('../php/logout.php', { method: 'POST' });
+            window.location.href = '../registration/Login1stpage.html';
+        });
+
+        loadAdminInfo();
+        loadStaffs();
+    </script>
+</body>
+</html>

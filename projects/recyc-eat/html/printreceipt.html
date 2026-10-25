@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Printing Receipt</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/kiosk.css">
+  <link rel="stylesheet" href="../css/printreceipt.css" />
+  <!-- QR code generator (free, no install needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <div class="leaf-layer" aria-hidden="true">
+    <span class="leaf leaf-1"></span>
+    <span class="leaf leaf-2"></span>
+    <span class="leaf leaf-3"></span>
+    <span class="leaf leaf-4"></span>
+    <span class="leaf leaf-5"></span>
+    <span class="leaf leaf-6"></span>
+  </div>
+  <div class="kiosk-backdrop" aria-hidden="true"></div>
+
+  <div class="kiosk-shell">
+    <header class="kiosk-header">
+      <img src="../images/logo.png" class="kiosk-logo" alt="EcoNova">
+    </header>
+
+    <main class="kiosk-main">
+      <ol class="kiosk-progress" aria-label="Recycling progress">
+        <li class="is-done"><span class="step-dot" aria-hidden="true">1</span>Prepare</li>
+        <li class="is-done"><span class="step-dot" aria-hidden="true">2</span>Insert</li>
+        <li class="is-current"><span class="step-dot" aria-hidden="true">3</span>Redeem</li>
+      </ol>
+
+      <div class="page-heading">
+        <h1 class="kiosk-title">Printing <em>Receipt</em></h1>
+        <p class="kiosk-sub">Please wait while we print your QR voucher.</p>
+      </div>
+
+      <div class="printer">
+        <span class="printer__lid" aria-hidden="true"></span>
+        <div class="printer__body">
+          <span class="printer__screen" aria-hidden="true"></span>
+          <div class="printer__paper">
+            <span class="printer__line" aria-hidden="true"></span>
+            <!-- Real QR code will be generated here -->
+            <div id="qrcode" class="qr-display"></div>
+          </div>
+          <span class="printer__light" aria-hidden="true"></span>
+          <span class="printer__slot" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="print-status">
+        <p class="print-status__text" id="statusText" role="status" aria-live="polite">
+          Saving your points to the database...
+        </p>
+        <div class="print-progress" aria-hidden="true">
+          <div class="print-progress__fill"></div>
+        </div>
+        <p class="print-status__id" id="voucherDisplay"></p>
+        <div class="print-actions" id="printActions" hidden>
+          <button type="button" class="kiosk-btn kiosk-btn--primary" id="retryPrint">Print again</button>
+          <button type="button" class="kiosk-btn kiosk-btn--ghost" id="skipPrint">Continue without paper</button>
+        </div>
+      </div>
+
+      <aside class="kiosk-card print-notice">
+        <span class="print-notice__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <line x1="6" y1="9" x2="18" y2="9" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="6" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </span>
+        <span class="print-notice__text">
+          <strong>Don't forget your voucher!</strong>
+          <span>Scan this QR code on your next visit to keep earning points.</span>
+        </span>
+      </aside>
+    </main>
+  </div>
+
+  <footer class="kiosk-info">
+    <span class="info-icon" aria-hidden="true">i</span>
+    <span>Take the printed receipt from the slot below the screen.</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

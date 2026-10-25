@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Food Inventory — EcoNova Admin</title>
+  <link rel="stylesheet" href="../css/admin-shared.css" />
+  <link rel="stylesheet" href="../css/food-inventory.css" />
+  </head>
+<body>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="admin-app">
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-brand">
+        <img src="../images/logo.png" alt="EcoNova" />
+        <div class="sidebar-brand__text"><strong>EcoNova</strong></div>
+      </div>
+      <nav class="sidebar-nav" aria-label="Admin">
+        <p class="nav-section">Overview</p>
+        <a class="nav-link" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h6V4H4v9zm10 7h6V4h-6v16zM4 20h6v-5H4v5zm10-9h6V4h-6v7z"/></svg>Dashboard</a>
+        <p class="nav-section">Operations</p>
+        <a class="nav-link" href="items-collected.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>Items Collected</a>
+        <a class="nav-link" href="redemption-history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v8m-4-4h8M5 4h14l1 4H4l1-4zm0 4v11a1 1 0 001 1h12a1 1 0 001-1V8"/></svg>Redemptions</a>
+        <a class="nav-link is-active" href="food-inventory.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Food Inventory</a>
+        <p class="nav-section">Insights</p>
+        <a class="nav-link" href="participation-trends.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5m0 14h16M8 15l3-4 3 2 4-6"/></svg>Participation Trends</a>
+        <a class="nav-link" href="kiosk-settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9c.2.6.7 1 1.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>Kiosk Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <button class="sidebar-signout" type="button" id="signOutBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Sign out
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <h1 class="topbar-title">Food Inventory</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="admin-avatar">
+            <span class="admin-avatar__mark">AD</span>
+            <div class="admin-avatar__meta"><strong>Admin</strong><span>EcoNova Staff</span></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <ul class="breadcrumbs">
+          <li><a href="dashboard.html">Admin</a></li>
+          <li class="sep">/</li>
+          <li>Food Inventory</li>
+        </ul>
+
+        <div class="page-header">
+          <div>
+            <h1>Food Inventory</h1>
+            <p>Live stock for coils 1–4. Button 1 on the kiosk is always coil 1. Low stock uses the threshold in Kiosk Settings (or 20% of capacity). Out of stock is 0 — that coil’s button is disabled.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" type="button" id="addItemBtn">+ Add item</button>
+          </div>
+        </div>
+
+        <div class="stock-alert" id="stockAlert" role="alert" hidden>
+          <div class="stock-alert__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              <path d="M12 9v4M12 17h.01"/>
+            </svg>
+          </div>
+          <div class="stock-alert__body">
+            <strong class="stock-alert__title" id="stockAlertTitle">Stock reminder</strong>
+            <p class="stock-alert__text" id="stockAlertText">Alerts appear here when an item is low or empty.</p>
+          </div>
+          <div class="stock-alert__actions">
+            <button class="btn btn-ghost btn-sm" type="button" id="ignoreStockBtn">Ignore</button>
+            <button class="btn btn-primary btn-sm" type="button" id="addStockBtn">Restock</button>
+          </div>
+        </div>
+
+        <section class="stat-grid inventory-summary" id="invStats">
+          <article class="card stat-card">
+            <div class="stat-card__label">Total SKUs</div>
+            <div class="stat-card__value" id="statSkus">0</div>
+          </article>
+          <article class="card stat-card">
+            <div class="stat-card__label">Units remaining</div>
+            <div class="stat-card__value" id="statUnits">0</div>
+          </article>
+          <article class="card stat-card">
+            <div class="stat-card__label">Low stock</div>
+            <div class="stat-card__value" id="statLow">0</div>
+            <span class="stat-card__trend trend-flat" id="lowTrend">All healthy</span>
+          </article>
+          <article class="card stat-card">
+            <div class="stat-card__label">Out of stock</div>
+            <div class="stat-card__value" id="statOut">0</div>
+            <span class="stat-card__trend trend-flat" id="outTrend">None empty</span>
+          </article>
+        </section>
+
+        <section class="grid-2 inventory-panels">
+          <article class="card">
+            <div class="card-header"><h2>Current inventory</h2></div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>SKU</th>
+                    <th>Coil</th>
+                    <th>Cost</th>
+                    <th>Status</th>
+                    <th>Updated</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <h2>Recent inventory changes</h2>
+              <div class="log-filter">
+                <input class="input" type="date" id="logDate" aria-label="Filter changes by date" />
+                <button class="btn btn-ghost btn-sm" type="button" id="logDateClear" hidden>All dates</button>
+              </div>
+            </div>
+            <div class="table-wrap log-scroll">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Item</th>
+                    <th>Change</th>
+                    <th>Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="logBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add / Edit modal -->
+  <div class="modal-backdrop" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
+    <div class="modal modal--lg">
+      <div class="modal-header">
+        <h3 id="itemModalTitle">Add inventory item</h3>
+        <button class="btn btn-ghost btn-icon" type="button" data-close="itemModal" aria-label="Close">✕</button>
+      </div>
+      <form class="modal-body" id="itemForm">
+        <input type="hidden" id="itemId" />
+        <div class="field inventory-form-field">
+          <label for="itemName">Item name</label>
+          <input class="input" id="itemName" required />
+        </div>
+        <div class="field inventory-form-field">
+          <label for="itemSku">SKU</label>
+          <input class="input" id="itemSku" required />
+        </div>
+        <div class="inventory-form-grid">
+          <div class="field">
+            <label for="itemCoil">Coil (1–4)</label>
+            <input class="input" type="number" min="1" max="4" id="itemCoil" required />
+          </div>
+          <div class="field">
+            <label for="itemCost">Point cost</label>
+            <input class="input" type="number" min="1" id="itemCost" required />
+          </div>
+          <div class="field">
+            <label for="itemUnit">Unit</label>
+            <input class="input" id="itemUnit" placeholder="cans" required />
+          </div>
+        </div>
+        <div class="inventory-form-grid">
+          <div class="field">
+            <label for="itemQty">Quantity</label>
+            <input class="input" type="number" min="0" id="itemQty" required />
+          </div>
+          <div class="field">
+            <label for="itemCapacity">Capacity</label>
+            <input class="input" type="number" min="1" id="itemCapacity" required />
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" type="button" data-close="itemModal">Cancel</button>
+        <button class="btn btn-primary" type="submit" form="itemForm">Save item</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Restock -->
+  <div class="modal-backdrop" id="restockModal" role="dialog" aria-modal="true" aria-labelledby="restockTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="restockTitle">Restock item</h3>
+        <button class="btn btn-ghost btn-icon" type="button" data-close="restockModal" aria-label="Close">✕</button>
+      </div>
+      <form class="modal-body" id="restockForm">
+        <input type="hidden" id="restockId" />
+        <p id="restockMessage">Add units back into the machine.</p>
+        <div class="field">
+          <label for="restockAmount">Units to add</label>
+          <input class="input" type="number" min="1" id="restockAmount" value="12" required />
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" type="button" data-close="restockModal">Cancel</button>
+        <button class="btn btn-primary" type="submit" form="restockForm">Add stock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirm -->
+  <div class="modal-backdrop" id="deleteModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Remove inventory item?</h3>
+        <button class="btn btn-ghost btn-icon" type="button" data-close="deleteModal" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="deleteMessage">This will permanently remove the item from inventory.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" type="button" data-close="deleteModal">Cancel</button>
+        <button class="btn btn-danger" type="button" id="confirmDelete">Remove</button>
+      </div>
+    </div>
+  </div>
+
+    <script src="../demo-admin.js"></script>
+</body>
+</html>

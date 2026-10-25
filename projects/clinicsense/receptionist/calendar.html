@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - ClinicSense</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="calendar.css">
+    <style>
+        .action-modal .modal-content {
+            border: 0;
+            border-radius: 22px;
+            box-shadow: 0 24px 60px rgba(16, 24, 40, 0.18);
+        }
+
+        .action-modal .modal-header {
+            border-bottom: 0;
+            padding: 1.25rem 1.5rem 0;
+        }
+
+        .action-modal .modal-footer {
+            border-top: 0;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .action-modal-body {
+            padding: 0 1.75rem 1.5rem;
+            text-align: center;
+        }
+
+        .action-modal-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-modal-icon.success {
+            background: rgba(25, 135, 84, 0.14);
+            color: #198754;
+        }
+
+        .action-modal-icon.primary {
+            background: rgba(13, 110, 253, 0.14);
+            color: #0d6efd;
+        }
+
+        .action-modal-icon.danger {
+            background: rgba(220, 53, 69, 0.14);
+            color: #dc3545;
+        }
+
+        .action-modal-icon.warning {
+            background: rgba(255, 193, 7, 0.2);
+            color: #b58105;
+        }
+
+        .action-modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #163b63;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-modal-message {
+            color: #5b6777;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="receptionistdashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="receptionistpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="calendar.html" class="nav-link">
+                            <i class="bi bi-calendar3"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="logout-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="container-fluid">
+                    <div class="header-content" style="display: flex; justify-content: flex-end; align-items: center;">
+                        <div class="header-user">
+                            <i class="bi bi-bell notification-icon me-4"></i>
+                            <div class="user-box-content">
+                                <span class="user-greeting"><strong id="headerName">Loading...</strong></span>
+                                <div class="user-avatar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container-fluid">
+                    <!-- Calendar Header -->
+                    <div class="calendar-header">
+                        <h1 class="calendar-title">CALENDAR</h1>
+                        <div class="calendar-actions">
+                            <button class="btn btn-calendar-action" id="setScheduleBtn">
+                                <i class="bi bi-calendar-plus"></i> Set Schedule
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Card -->
+                    <div class="calendar-card">
+                            <!-- Calendar Navigation -->
+                            <div class="calendar-nav">
+                            <h3 class="calendar-month" id="calendarMonthYear">JANUARY 2026</h3>
+                                <div class="calendar-nav-buttons">
+                                    <button class="btn btn-nav" id="prevMonth">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+                                    <button class="btn btn-nav" id="nextMonth">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Calendar Grid -->
+                            <div class="calendar-grid">
+                                <div class="calendar-weekdays">
+                                    <div class="weekday">Sun</div>
+                                    <div class="weekday">Mon</div>
+                                    <div class="weekday">Tue</div>
+                                    <div class="weekday">Wed</div>
+                                    <div class="weekday">Thu</div>
+                                    <div class="weekday">Fri</div>
+                                    <div class="weekday">Sat</div>
+                                </div>
+
+                                <div class="calendar-days" id="calendarDaysContainer">
+                                    <!-- Week 1 -->
+                                    <div class="calendar-day empty"></div>
+                                    <div class="calendar-day empty"></div>
+                                    <div class="calendar-day empty"></div>
+                                    <div class="calendar-day empty"></div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">1</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">2</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">3</div>
+                                    </div>
+
+                                    <!-- Week 2 -->
+                                    <div class="calendar-day">
+                                        <div class="day-number">4</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">5</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">6</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">7</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">8</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">9</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">10</div>
+                                    </div>
+
+                                    <!-- Week 3 -->
+                                    <div class="calendar-day">
+                                        <div class="day-number">11</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">12</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">13</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">14</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">15</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">16</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">17</div>
+                                    </div>
+
+                                    <!-- Week 4 -->
+                                    <div class="calendar-day">
+                                        <div class="day-number">18</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">19</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">20</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">21</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">22</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">23</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">24</div>
+                                    </div>
+
+                                    <!-- Week 5 -->
+                                    <div class="calendar-day">
+                                        <div class="day-number">25</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">26</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">27</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">28</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">29</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">30</div>
+                                    </div>
+                                    <div class="calendar-day">
+                                        <div class="day-number">31</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search and Filter -->
+                    <div class="search-section">
+                        <div class="search-bar">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" class="form-control search-input" id="searchInput" placeholder="Search by client name...">
+                            <button class="btn btn-search" id="searchBtn">Search</button>
+                        </div>
+                        <select class="form-select status-filter-dropdown" id="statusFilter">
+                            <option value="all" selected>All Statuses</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="pending">Pending</option>
+                            <option value="complete">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <!-- Appointments Table -->
+                    <div class="card table-card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Patient Name</th>
+                                            <th>Relationship</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Contact No.</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="appointmentsTableBody">
+                                        <tr>
+                                            <td colspan="8" class="text-center py-4 text-muted">Loading appointments...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Appointment Details Modal -->
+    <div class="modal fade" id="appointmentDetailsModal" tabindex="-1" aria-labelledby="appointmentDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-flex align-items-center gap-3">
+                        <h5 class="modal-title" id="appointmentDetailsModalLabel">Appointment</h5>
+                        <span class="badge status-pending" id="appointmentStatusBadge">Pending</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Patient Information -->
+                    <div class="form-section mb-4">
+                        <h6 class="section-title">Patient Information</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="patientFirstName" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="patientMiddleName" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="patientLastName" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Age</label>
+                                <input type="number" class="form-control" id="patientAge" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Sex</label>
+                                <select class="form-select" id="patientSex" disabled>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Patient Address</label>
+                                <input type="text" class="form-control" id="patientAddress" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Reason for Appointment / Symptoms</label>
+                                <textarea class="form-control" id="reasonForAppointment" rows="3" readonly></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Past Laboratories / Existing Diagnosis</label>
+                                <select class="form-select" id="scheduleBehavior" disabled>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Guardian Information -->
+                    <div class="form-section mb-4">
+                        <h6 class="section-title">Guardian Information</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="guardianFirstName" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="guardianMiddleName" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="guardianLastName" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Contact Number</label>
+                                <input type="tel" class="form-control" id="guardianContact" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Relation to Patient</label>
+                                <select class="form-select" id="guardianRelation" disabled>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Monthly Income Range</label>
+                                <input type="text" class="form-control" id="incomeRange" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Guardian Address</label>
+                                <input type="text" class="form-control" id="guardianAddress" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointment Details -->
+                    <div class="form-section">
+                        <h6 class="section-title">Appointment Details</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" id="appointmentDate" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time" class="form-control" id="appointmentTime" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Appointment Type</label>
+                                <input type="text" class="form-control" id="appointmentType" readonly>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Notes</label>
+                                <textarea class="form-control" id="appointmentNotes" rows="3" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-modal-confirm" id="confirmAppointmentBtn"><i class="bi bi-check-circle-fill"></i><span>Confirm</span></button>
+                    <button type="button" class="btn btn-primary btn-modal-complete" id="completeAppointmentBtn"><i class="bi bi-award-fill"></i><span>Complete</span></button>
+                    <button type="button" class="btn btn-danger btn-modal-cancel" id="cancelAppointmentBtn"><i class="bi bi-x-circle-fill"></i><span>Cancel</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule Modal -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="scheduleForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="scheduleModalLabel">SET AVAILABLE SCHEDULE</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="schedule-helper-text">Choose one available date and one available time. Each save adds one schedule slot to the calendar.</p>
+                        <div id="scheduleFeedback" class="alert d-none" role="alert"></div>
+                        <div class="simple-schedule-form">
+                            <div class="mb-3">
+                                <label for="scheduleDate" class="form-label">Available Date</label>
+                                <input type="date" class="form-control" id="scheduleDate" required>
+                            </div>
+                            <div>
+                                <label for="scheduleTime" class="form-label">Available Time</label>
+                                <input type="time" class="form-control" id="scheduleTime" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-save-schedule" id="saveScheduleBtn">SAVE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade action-modal" id="appointmentActionConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="action-modal-body">
+                    <div class="action-modal-icon warning" id="appointmentActionConfirmIcon">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </div>
+                    <div class="action-modal-title" id="appointmentActionConfirmTitle">Confirm Action</div>
+                    <p class="action-modal-message" id="appointmentActionConfirmMessage">Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" id="appointmentActionConfirmNoBtn">No</button>
+                    <button type="button" class="btn btn-primary" id="appointmentActionConfirmYesBtn">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade action-modal" id="appointmentActionFeedbackModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="action-modal-body">
+                    <div class="action-modal-icon success" id="appointmentActionFeedbackIcon">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div class="action-modal-title" id="appointmentActionFeedbackTitle">Success</div>
+                    <p class="action-modal-message" id="appointmentActionFeedbackMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared_logout.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Real-time Calendar functionality
+        const today = new Date();
+        let currentDate = new Date(today);
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        // Generate calendar for current month
+        function generateCalendar(month, year) {
+            const monthNames = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+                               'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            
+            // Update month/year display
+            document.getElementById('calendarMonthYear').textContent = `${monthNames[month]} ${year}`;
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Clear existing calendar
+            const calendarContainer = document.getElementById('calendarDaysContainer');
+            calendarContainer.innerHTML = '';
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendarContainer.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+                
+                // Highlight today
+                if (day === today.getDate() && 
+                    month === today.getMonth() && 
+                    year === today.getFullYear()) {
+                    dayCell.classList.add('today');
+                }
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+                
+                // Add data attributes for date-specific scheduling
+                dayCell.setAttribute('data-day', day);
+                dayCell.setAttribute('data-month', month);
+                dayCell.setAttribute('data-year', year);
+                
+                // Allow clicking a day to prefill the schedule form.
+                dayCell.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('event') || e.target.closest('.event')) {
+                        return;
+                    }
+
+                    openScheduleModal(`${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+                });
+                
+                calendarContainer.appendChild(dayCell);
+            }
+            
+            // Re-render the calendar overlays after rebuilding the grid.
+            setTimeout(() => {
+                renderAvailableSchedules();
+            }, 100);
+        }
+
+        // Navigation buttons
+        document.getElementById('prevMonth').addEventListener('click', function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+            loadAvailableSchedules();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+            loadAvailableSchedules();
+        });
+
+        // Initialize calendar with current month
+        generateCalendar(currentMonth, currentYear);
+
+        // Search and Filter functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const statusFilter = document.getElementById('statusFilter');
+        const appointmentDetailsModalInstance = new bootstrap.Modal(document.getElementById('appointmentDetailsModal'));
+        const appointmentsTableBody = document.getElementById('appointmentsTableBody');
+        const paginationInfo = document.querySelector('.pagination-info');
+        const appointmentStatusBadge = document.getElementById('appointmentStatusBadge');
+        const confirmAppointmentBtn = document.getElementById('confirmAppointmentBtn');
+        const completeAppointmentBtn = document.getElementById('completeAppointmentBtn');
+        const cancelAppointmentBtn = document.getElementById('cancelAppointmentBtn');
+        const visibleAppointmentStatuses = new Set(['pending', 'confirmed', 'complete', 'completed']);
+        let appointments = [];
+        let activeAppointmentId = null;
+
+        function normalizeAppointmentStatus(status) {
+            return String(status || '').toLowerCase().trim().replace(/\s+/g, '_');
+        }
+
+        function isVisibleAppointmentStatus(status) {
+            return visibleAppointmentStatuses.has(normalizeAppointmentStatus(status));
+        }
+
+        function getVisibleAppointments(appointmentList = appointments) {
+            return appointmentList.filter(appointment => isVisibleAppointmentStatus(appointment.Status));
+        }
+
+        function toggleAppointmentActionButtons(status) {
+            const normalizedStatus = String(status || '').toLowerCase();
+
+            confirmAppointmentBtn.style.display = normalizedStatus === 'pending' ? '' : 'none';
+            cancelAppointmentBtn.style.display = normalizedStatus === 'pending' ? '' : 'none';
+            completeAppointmentBtn.style.display = normalizedStatus === 'confirmed' ? '' : 'none';
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(character) {
+                const replacements = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                };
+                return replacements[character] || character;
+            });
+        }
+
+        function getAppointmentName(appointment) {
+            const patientName = [
+                appointment.PatientFirstName,
+                appointment.PatientMiddleName,
+                appointment.PatientLastName
+            ].filter(Boolean).join(' ').trim();
+
+            if (patientName) {
+                return patientName;
+            }
+
+            return [
+                appointment.GuardianFirstName,
+                appointment.GuardianMiddleName,
+                appointment.GuardianLastName
+            ].filter(Boolean).join(' ').trim() || 'Unknown Patient';
+        }
+
+        function getGuardianName(appointment) {
+            return [
+                appointment.GuardianFirstName,
+                appointment.GuardianMiddleName,
+                appointment.GuardianLastName
+            ].filter(Boolean).join(' ').trim() || 'Not provided';
+        }
+
+        function formatDisplayDate(dateValue) {
+            if (!dateValue) return '-';
+
+            const date = new Date(dateValue + 'T00:00:00');
+            if (Number.isNaN(date.getTime())) return '-';
+
+            return `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${date.getFullYear()}`;
+        }
+
+        function getStatusClass(status) {
+            const normalizedStatus = normalizeAppointmentStatus(status);
+
+            if (normalizedStatus === 'confirmed') return 'status-confirmed';
+            if (normalizedStatus === 'pending') return 'status-pending';
+            if (normalizedStatus === 'cancelled') return 'status-cancelled';
+            if (normalizedStatus === 'complete' || normalizedStatus === 'completed') return 'status-complete';
+            return 'status-pending';
+        }
+
+        function formatStatusLabel(status) {
+            const normalizedStatus = normalizeAppointmentStatus(status);
+
+            if (normalizedStatus === 'complete' || normalizedStatus === 'completed') return 'Completed';
+            if (normalizedStatus === 'confirmed') return 'Confirmed';
+            if (normalizedStatus === 'cancelled') return 'Cancelled';
+            if (normalizedStatus === 'pending') return 'Pending';
+
+            const formattedStatus = normalizedStatus.replace(/_/g, ' ');
+            return formattedStatus ? formattedStatus.charAt(0).toUpperCase() + formattedStatus.slice(1) : 'Pending';
+        }
+
+        function normalizeStatusFilterValue(status) {
+            const normalizedStatus = normalizeAppointmentStatus(status);
+            if (normalizedStatus === 'completed') return 'complete';
+            return normalizedStatus === 'declined' ? 'not_admitted' : normalizedStatus;
+        }
+
+        function formatAppointmentType(type) {
+            const normalizedType = String(type || '').toLowerCase().trim();
+
+            if (normalizedType === 'consultation') return 'Consultation';
+            if (normalizedType === 'follow-up') return 'Follow-up';
+
+            return normalizedType
+                ? normalizedType.charAt(0).toUpperCase() + normalizedType.slice(1)
+                : '';
+        }
+
+        function setModalFieldValue(fieldId, value) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.value = value || '';
+            }
+        }
+
+        function setModalSelectValue(fieldId, value, fallback = 'Not provided') {
+            const field = document.getElementById(fieldId);
+            if (!field) return;
+
+            const displayValue = value || fallback;
+            field.innerHTML = '';
+
+            const option = document.createElement('option');
+            option.value = displayValue;
+            option.textContent = displayValue;
+            option.selected = true;
+            field.appendChild(option);
+        }
+
+        function setModalStatus(status) {
+            if (!appointmentStatusBadge) return;
+
+            appointmentStatusBadge.className = `badge ${getStatusClass(status)}`;
+            appointmentStatusBadge.textContent = formatStatusLabel(status);
+            toggleAppointmentActionButtons(status);
+        }
+
+        function syncAppointmentInMemory(appointmentId, status) {
+            appointments = appointments.map(appointment => {
+                const currentId = String(appointment.AppointmentID || appointment.Appointment_ID || '');
+                if (currentId !== String(appointmentId)) {
+                    return appointment;
+                }
+
+                return {
+                    ...appointment,
+                    Status: status
+                };
+            });
+        }
+
+        function renderAppointmentsTable(appointmentList = getVisibleAppointments()) {
+            if (!appointmentsTableBody) return;
+
+            const visibleAppointments = getVisibleAppointments();
+
+            appointmentsTableBody.innerHTML = '';
+
+            if (!appointmentList.length) {
+                appointmentsTableBody.innerHTML = '<tr><td colspan="8" class="text-center py-4 text-muted">No appointments found.</td></tr>';
+                if (paginationInfo) {
+                    paginationInfo.textContent = `Showing 0 to 0 of ${visibleAppointments.length} records`;
+                }
+                return;
+            }
+
+            appointmentList.forEach((appointment, index) => {
+                const appointmentId = Number(appointment.AppointmentID || appointment.Appointment_ID || 0);
+                const patientName = getAppointmentName(appointment);
+                const statusClass = getStatusClass(appointment.Status);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><a href="#" class="patient-name-link" onclick="openAppointmentDetails(${appointmentId}); return false;">${escapeHtml(patientName)}</a></td>
+                    <td>${escapeHtml(appointment.GuardianRelation || '-')}</td>
+                    <td>${escapeHtml(formatDisplayDate(appointment.AppointmentDate))}</td>
+                    <td>${escapeHtml(formatDatabaseTime(appointment.AppointmentTime))}</td>
+                    <td>${escapeHtml(appointment.GuardianContact || '-')}</td>
+                    <td><span class="badge ${statusClass}">${escapeHtml(formatStatusLabel(appointment.Status))}</span></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-action-menu" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="openAppointmentDetails(${appointmentId}); return false;">View Details</a></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="cancelAppointment(${appointmentId}); return false;">Cancel</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                `;
+                appointmentsTableBody.appendChild(row);
+            });
+
+            if (paginationInfo) {
+                paginationInfo.textContent = `Showing 1 to ${appointmentList.length} of ${visibleAppointments.length} records`;
+            }
+        }
+
+        async function loadAppointments() {
+            try {
+                const response = await fetch('../php/get_appointments.php', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                appointments = Array.isArray(data.appointments) ? data.appointments : [];
+                renderAppointmentsTable(getVisibleAppointments());
+            } catch (error) {
+                console.error('Failed to load appointments:', error);
+                appointments = [];
+                renderAppointmentsTable([]);
+            }
+        }
+
+        function openAppointmentDetails(appointmentId) {
+            const appointment = appointments.find(item => String(item.AppointmentID || item.Appointment_ID) === String(appointmentId));
+            if (!appointment) {
+                showActionFeedback('Appointment details were not found.', 'Not Found', 'warning');
+                return;
+            }
+
+            activeAppointmentId = appointmentId;
+
+            setModalFieldValue('patientFirstName', appointment.PatientFirstName || '');
+            setModalFieldValue('patientMiddleName', appointment.PatientMiddleName || '');
+            setModalFieldValue('patientLastName', appointment.PatientLastName || '');
+            setModalFieldValue('patientAge', appointment.Age || '');
+            setModalSelectValue('patientSex', appointment.Sex || 'Not provided');
+            setModalFieldValue('patientAddress', appointment.PatientAddress || '');
+            setModalFieldValue('reasonForAppointment', appointment.Symptoms || '');
+            setModalSelectValue('scheduleBehavior', appointment.PastLaboratories || 'Not provided');
+
+            setModalFieldValue('guardianFirstName', appointment.GuardianFirstName || '');
+            setModalFieldValue('guardianMiddleName', appointment.GuardianMiddleName || '');
+            setModalFieldValue('guardianLastName', appointment.GuardianLastName || '');
+            setModalFieldValue('guardianContact', appointment.GuardianContact || '');
+            setModalSelectValue('guardianRelation', appointment.GuardianRelation || 'Not provided');
+            setModalFieldValue('incomeRange', appointment.IncomeRange || appointment.GuardianMonthlyIncome || '');
+            setModalFieldValue('guardianAddress', appointment.GuardianAddress || '');
+
+            setModalFieldValue('appointmentDate', appointment.AppointmentDate || '');
+            setModalFieldValue('appointmentTime', (appointment.AppointmentTime || '').slice(0, 5));
+            setModalFieldValue('appointmentType', formatAppointmentType(appointment.AppointmentType));
+            setModalFieldValue('appointmentNotes', appointment.Notes || '');
+
+            document.getElementById('appointmentDetailsModalLabel').textContent = getAppointmentName(appointment);
+            setModalStatus(appointment.Status);
+            appointmentDetailsModalInstance.show();
+        }
+
+        async function updateAppointmentStatus(appointmentId, status) {
+            try {
+                const response = await fetch('../php/update_appointment_status.php', {
+                    method: 'POST',
+                    credentials: 'include',
+                    body: new URLSearchParams({
+                        appointment_id: appointmentId,
+                        status: status
+                    })
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                syncAppointmentInMemory(appointmentId, status);
+                setModalStatus(status);
+                filterTable();
+                return true;
+            } catch (error) {
+                console.error('Failed to update appointment status:', error);
+                showActionFeedback(error.message || 'Unable to update the appointment status.', 'Action Failed', 'danger');
+                return false;
+            }
+        }
+
+        // Filter table rows
+        function filterTable() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedStatus = statusFilter.value.toLowerCase();
+
+            const filteredAppointments = getVisibleAppointments().filter(appointment => {
+                const patientName = getAppointmentName(appointment).toLowerCase();
+                const guardianName = getGuardianName(appointment).toLowerCase();
+                const normalizedStatus = normalizeStatusFilterValue(appointment.Status);
+
+                const matchesSearch = !searchTerm || patientName.includes(searchTerm) || guardianName.includes(searchTerm);
+                const matchesStatus = selectedStatus === 'all' || normalizedStatus === selectedStatus;
+
+                return matchesSearch && matchesStatus;
+            });
+
+            renderAppointmentsTable(filteredAppointments);
+        }
+
+        // Search button click
+        searchBtn.addEventListener('click', function() {
+            filterTable();
+        });
+
+        // Search on Enter key
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                filterTable();
+            }
+        });
+
+        // Status filter change
+        statusFilter.addEventListener('change', function() {
+            filterTable();
+        });
+
+        const scheduleModalElement = document.getElementById('scheduleModal');
+        const scheduleForm = document.getElementById('scheduleForm');
+        const scheduleDateInput = document.getElementById('scheduleDate');
+        const scheduleTimeInput = document.getElementById('scheduleTime');
+        const scheduleFeedback = document.getElementById('scheduleFeedback');
+        const scheduleModalInstance = new bootstrap.Modal(scheduleModalElement);
+        const appointmentActionConfirmModalElement = document.getElementById('appointmentActionConfirmModal');
+        const appointmentActionFeedbackModalElement = document.getElementById('appointmentActionFeedbackModal');
+        const appointmentActionConfirmModalInstance = new bootstrap.Modal(appointmentActionConfirmModalElement);
+        const appointmentActionFeedbackModalInstance = new bootstrap.Modal(appointmentActionFeedbackModalElement);
+        let availableSchedules = [];
+
+        function setActionModalAppearance(prefix, variant, iconClass) {
+            const iconContainer = document.getElementById(`appointmentAction${prefix}Icon`);
+            if (!iconContainer) return;
+
+            iconContainer.className = `action-modal-icon ${variant}`;
+            iconContainer.innerHTML = `<i class="bi ${iconClass}"></i>`;
+        }
+
+        function showActionFeedback(message, title = 'Success', variant = 'success') {
+            const iconClassMap = {
+                success: 'bi-check-circle-fill',
+                primary: 'bi-award-fill',
+                danger: 'bi-x-circle-fill',
+                warning: 'bi-exclamation-circle-fill'
+            };
+
+            document.getElementById('appointmentActionFeedbackTitle').textContent = title;
+            document.getElementById('appointmentActionFeedbackMessage').textContent = message;
+            setActionModalAppearance('Feedback', variant, iconClassMap[variant] || iconClassMap.success);
+            appointmentActionFeedbackModalInstance.show();
+        }
+
+        function showActionConfirm(actionLabel, message, variant = 'warning') {
+            const iconClassMap = {
+                success: 'bi-check-circle-fill',
+                primary: 'bi-award-fill',
+                danger: 'bi-x-circle-fill',
+                warning: 'bi-exclamation-circle-fill'
+            };
+
+            document.getElementById('appointmentActionConfirmTitle').textContent = `${actionLabel} Appointment`;
+            document.getElementById('appointmentActionConfirmMessage').textContent = message;
+            setActionModalAppearance('Confirm', variant, iconClassMap[variant] || iconClassMap.warning);
+
+            const yesButton = document.getElementById('appointmentActionConfirmYesBtn');
+            const noButton = document.getElementById('appointmentActionConfirmNoBtn');
+            yesButton.className = `btn btn-${variant === 'warning' ? 'primary' : variant}`;
+
+            return new Promise(resolve => {
+                function cleanup() {
+                    yesButton.removeEventListener('click', handleYes);
+                    noButton.removeEventListener('click', handleNo);
+                    appointmentActionConfirmModalElement.removeEventListener('hidden.bs.modal', handleHidden);
+                }
+
+                function handleYes() {
+                    cleanup();
+                    appointmentActionConfirmModalInstance.hide();
+                    resolve(true);
+                }
+
+                function handleNo() {
+                    cleanup();
+                    appointmentActionConfirmModalInstance.hide();
+                    resolve(false);
+                }
+
+                function handleHidden() {
+                    cleanup();
+                    resolve(false);
+                }
+
+                yesButton.addEventListener('click', handleYes);
+                noButton.addEventListener('click', handleNo);
+                appointmentActionConfirmModalElement.addEventListener('hidden.bs.modal', handleHidden);
+                appointmentActionConfirmModalInstance.show();
+            });
+        }
+
+        function getTodayDateString() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function resetScheduleFeedback() {
+            scheduleFeedback.textContent = '';
+            scheduleFeedback.className = 'alert d-none';
+        }
+
+        function showScheduleFeedback(message, type) {
+            scheduleFeedback.textContent = message;
+            scheduleFeedback.className = `alert alert-${type}`;
+        }
+
+        function openScheduleModal(prefilledDate = '') {
+            resetScheduleFeedback();
+            scheduleForm.reset();
+
+            const minimumDate = getTodayDateString();
+            scheduleDateInput.min = minimumDate;
+
+            const selectedDate = prefilledDate && prefilledDate >= minimumDate ? prefilledDate : minimumDate;
+            scheduleDateInput.value = selectedDate;
+            scheduleTimeInput.value = '09:00';
+
+            scheduleModalInstance.show();
+        }
+
+        function formatDatabaseTime(timeValue) {
+            if (!timeValue) return '';
+
+            const [hoursText, minutesText] = timeValue.split(':');
+            const hours = parseInt(hoursText, 10);
+
+            if (Number.isNaN(hours)) {
+                return timeValue;
+            }
+
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHour = hours % 12 || 12;
+            return `${displayHour}:${minutesText} ${ampm}`;
+        }
+
+        function renderAvailableSchedules() {
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.empty)');
+            const schedulesByDate = new Map();
+
+            availableSchedules.forEach(schedule => {
+                if (!schedulesByDate.has(schedule.schedule_date)) {
+                    schedulesByDate.set(schedule.schedule_date, []);
+                }
+
+                schedulesByDate.get(schedule.schedule_date).push(schedule);
+            });
+
+            calendarDays.forEach(dayEl => {
+                const dayNumber = dayEl.querySelector('.day-number');
+                if (!dayNumber) return;
+
+                const dayNum = parseInt(dayNumber.textContent, 10);
+                if (Number.isNaN(dayNum)) return;
+
+                const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`;
+                const daySchedules = (schedulesByDate.get(dateKey) || []).slice().sort((left, right) => {
+                    return left.schedule_time.localeCompare(right.schedule_time);
+                });
+
+                dayEl.classList.remove('available-day', 'date-specific-schedule', 'occupied-day', 'unavailable-day');
+                dayEl.querySelectorAll('.schedule-info').forEach(info => info.remove());
+
+                if (daySchedules.length === 0) {
+                    return;
+                }
+
+                const hasAvailable = daySchedules.some(schedule => schedule.status === 'available');
+                dayEl.classList.add(hasAvailable ? 'available-day' : 'occupied-day');
+
+                daySchedules.forEach(schedule => {
+                    const scheduleInfo = document.createElement('div');
+                    scheduleInfo.className = `schedule-info ${schedule.status === 'occupied' ? 'occupied-slot' : 'available-slot'}`;
+                    scheduleInfo.textContent = formatDatabaseTime(schedule.schedule_time);
+                    dayEl.appendChild(scheduleInfo);
+                });
+            });
+        }
+
+        async function loadAvailableSchedules() {
+            try {
+                const params = new URLSearchParams({
+                    month: String(currentMonth + 1),
+                    year: String(currentYear)
+                });
+
+                const response = await fetch(`../php/available_schedule.php?${params.toString()}`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                availableSchedules = Array.isArray(data.schedules) ? data.schedules : [];
+            } catch (error) {
+                console.error('Failed to load available schedules:', error);
+                availableSchedules = [];
+            }
+
+            renderAvailableSchedules();
+        }
+
+        document.getElementById('setScheduleBtn').addEventListener('click', function() {
+            openScheduleModal();
+        });
+
+        async function cancelAppointment(appointmentId) {
+            const shouldCancel = await showActionConfirm('Cancel', 'Are you sure to Cancel this Appointment?', 'danger');
+            if (!shouldCancel) {
+                return;
+            }
+
+            const updated = await updateAppointmentStatus(appointmentId, 'cancelled');
+            if (updated) {
+                showActionFeedback('Appointment cancelled successfully.', 'Appointment Cancelled', 'danger');
+            }
+        }
+
+        confirmAppointmentBtn.addEventListener('click', async function() {
+            if (!activeAppointmentId) {
+                showActionFeedback('Appointment details were not found.', 'Not Found', 'warning');
+                return;
+            }
+
+            const shouldConfirm = await showActionConfirm('Confirm', 'Are you sure to Confirm this Appointment?', 'success');
+            if (!shouldConfirm) {
+                return;
+            }
+
+            const updated = await updateAppointmentStatus(activeAppointmentId, 'confirmed');
+            if (updated) {
+                showActionFeedback('Appointment confirmed successfully.', 'Appointment Confirmed', 'success');
+            }
+        });
+
+        completeAppointmentBtn.addEventListener('click', async function() {
+            if (!activeAppointmentId) {
+                showActionFeedback('Appointment details were not found.', 'Not Found', 'warning');
+                return;
+            }
+
+            const shouldComplete = await showActionConfirm('Complete', 'Are you sure to Complete this Appointment?', 'primary');
+            if (!shouldComplete) {
+                return;
+            }
+
+            const updated = await updateAppointmentStatus(activeAppointmentId, 'complete');
+            if (updated) {
+                showActionFeedback('Appointment marked as completed.', 'Appointment Completed', 'primary');
+            }
+        });
+
+        cancelAppointmentBtn.addEventListener('click', async function() {
+            if (!activeAppointmentId) {
+                showActionFeedback('Appointment details were not found.', 'Not Found', 'warning');
+                return;
+            }
+
+            const shouldCancel = await showActionConfirm('Cancel', 'Are you sure to Cancel this Appointment?', 'danger');
+            if (!shouldCancel) {
+                return;
+            }
+
+            const updated = await updateAppointmentStatus(activeAppointmentId, 'cancelled');
+            if (updated) {
+                showActionFeedback('Appointment cancelled successfully.', 'Appointment Cancelled', 'danger');
+            }
+        });
+
+        scheduleForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            resetScheduleFeedback();
+
+            const scheduleDate = scheduleDateInput.value;
+            const scheduleTime = scheduleTimeInput.value;
+
+            if (!scheduleDate || !scheduleTime) {
+                showScheduleFeedback('Please provide both a date and a time.', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch('../php/available_schedule.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        schedule_date: scheduleDate,
+                        schedule_time: scheduleTime
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                showScheduleFeedback(data.message || 'Available schedule saved.', 'success');
+                await loadAvailableSchedules();
+
+                window.setTimeout(() => {
+                    scheduleModalInstance.hide();
+                    resetScheduleFeedback();
+                }, 700);
+            } catch (error) {
+                console.error('Failed to save available schedule:', error);
+                showScheduleFeedback(error.message || 'Unable to save the available schedule.', 'danger');
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            loadAvailableSchedules();
+            loadAppointments();
+        });
+    </script>
+</body>
+</html>

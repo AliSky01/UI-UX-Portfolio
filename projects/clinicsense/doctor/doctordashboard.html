@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Estrellas Homecare Clinic</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="doctordashboard.css">
+</head>
+<body>
+<script src="../demo-data.js"></script>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item active">
+                        <a href="doctordashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="doctorpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <button id="logoutBtn" class="logout-link" style="background: none; border: none; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 10px; padding: 10px; width: 100%; color: inherit;">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div class="search-container">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text" class="search-input" id="headerSearch" placeholder="Search">
+                    </div>
+                    <div class="header-right">
+                        <div class="notification-wrapper">
+                            <i class="bi bi-bell notification-icon" id="notificationBell"></i>
+                            <span class="notification-badge" id="notificationBadge">3</span>
+                        </div>
+                        <div class="user-box-content">
+                            <span class="user-greeting" id="headerName"><strong>Loading...</strong></span>
+                            <div class="user-avatar"></div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Dashboard Content -->
+            <main class="dashboard-main">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1 class="welcome-title">Welcome back - Dr...</h1>
+                    <p class="welcome-subtitle">Here's your dashboard.</p>
+                </div>
+
+                <!-- Dashboard Cards Row -->
+                <div class="dashboard-cards-row">
+                    <!-- Patient Medication Activity Card -->
+                    <div class="card medication-activity-card">
+                        <div class="card-header-custom">
+                            <h5 class="card-title-custom">PATIENT MEDICATION ACTIVITY</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="medication-list scrollable" id="medicationList">
+                                <!-- Medication activity items will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Patient Card -->
+                    <div class="card active-patient-card">
+                        <div class="card-body-active">
+                            <div class="active-patient-header">
+                                <i class="bi bi-people-fill active-patient-icon"></i>
+                                <span class="active-patient-label">ACTIVE PATIENT</span>
+                            </div>
+                            <h1 class="active-patient-count" id="activePatientCount"></h1>
+                            <div class="patient-actions">
+                                <button class="btn-action btn-diagnosis" data-bs-toggle="modal" data-bs-target="#diagnosisModal">
+                                    Diagnosis
+                                </button>
+                                <button class="btn-action btn-prescription" data-bs-toggle="modal" data-bs-target="#prescriptionModal">
+                                    Prescription
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Chart Section -->
+                <div class="patient-chart-section">
+                    <div class="chart-header">
+                        <h2 class="chart-title">PATIENT CHART</h2>
+                        <div class="chart-pagination">
+                            <button class="btn-page" id="prevPage" disabled>
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button class="btn-page" id="nextPage">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="patient-table-container">
+                        <table class="table patient-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Age</th>
+                                    <th>Sex</th>
+                                    <th>Diagnosis</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientTableBody">
+                                <!-- Patient rows will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Diagnosis Modal -->
+    <div class="modal fade" id="diagnosisModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Diagnosis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="diagnosisForm">
+                        <div class="mb-3">
+                            <label class="form-label">Patient Name</label>
+                            <select class="form-select" id="diagnosisPatient" required>
+                                <option value="">Select Patient</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Diagnosis</label>
+                            <textarea class="form-control" id="diagnosisText" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" id="diagnosisDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" id="diagnosisNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDiagnosis()">Save Diagnosis</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prescription Modal -->
+    <div class="modal fade" id="prescriptionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Prescription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="prescriptionForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Patient Name</label>
+                                <select class="form-select" id="prescriptionPatient" required>
+                                    <option value="">Select Patient</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" id="prescriptionDate" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Medication Name</label>
+                            <input type="text" class="form-control" id="medicationName" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Dosage</label>
+                                <input type="text" class="form-control" id="medicationDosage" placeholder="e.g. - 10mg" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Frequency</label>
+                                <input type="text" class="form-control" id="medicationFrequency" placeholder="e.g. - Twice daily" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duration</label>
+                            <input type="text" class="form-control" id="medicationDuration" placeholder="e.g. - 30 days">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Special Instructions</label>
+                            <textarea class="form-control" id="medicationInstructions" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="savePrescription()">Save Prescription</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Details Modal -->
+    <div class="modal fade" id="patientDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Patient Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="patientDetailsBody">
+                    <!-- Patient details will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="doctorDashboardConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm action-modal-dialog">
+            <div class="modal-content action-modal-card">
+                <div class="modal-body action-modal-body">
+                    <div id="doctorDashboardConfirmBadge" class="action-modal-badge is-primary">
+                        <i class="bi bi-save-fill"></i>
+                    </div>
+                    <h5 id="doctorDashboardConfirmTitle" class="action-modal-title">Confirm Save</h5>
+                    <p id="doctorDashboardConfirmMessage" class="action-modal-message">Are you sure you want to save this information?</p>
+                </div>
+                <div class="modal-footer action-modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="resolveDoctorDashboardConfirm(false)">Cancel</button>
+                    <button type="button" id="doctorDashboardConfirmButton" class="btn btn-primary" onclick="resolveDoctorDashboardConfirm(true)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="doctorDashboardFeedbackModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm action-modal-dialog">
+            <div class="modal-content action-modal-card">
+                <div class="modal-body action-modal-body">
+                    <div id="doctorDashboardFeedbackBadge" class="action-modal-badge is-success">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <h5 id="doctorDashboardFeedbackTitle" class="action-modal-title">Saved</h5>
+                    <p id="doctorDashboardFeedbackMessage" class="action-modal-message">Information was saved successfully.</p>
+                </div>
+                <div class="modal-footer action-modal-footer">
+                    <button type="button" id="doctorDashboardFeedbackButton" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Shared Logout Script -->
+    <script src="../shared_logout.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="doctordashboard.js?v=20260409-1"></script>
+    <script>
+        // Load user info and check authentication on page load
+        window.addEventListener('load', async function() {
+            await loadUserInfo();
+            initLogout();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Time In/Out Logs - ClinicSense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="adminstafflogs.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="admindashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patient</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminappointment.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Appointment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminfinances.html" class="nav-link">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="manageuser.html" class="nav-link" id="manageUserBtn">
+                        <i class="bi bi-person-gear"></i>
+                        <span>Manage User</span>
+                    </a>
+                    <a href="#" class="logout-link" id="logoutBtn">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search" class="search-input">
+                </div>
+                <div class="header-actions">
+                    <button class="notification-btn">
+                        <i class="bi bi-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <div class="user-profile">
+                        <img src="../image/image 40.png" alt="User" class="user-avatar">
+                        <span class="user-name">Alex Estrellas</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Staff Time In/Out Logs</h1>
+                    <p class="page-subtitle">View staff time in and time out records</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="today">Today</button>
+                    <button class="filter-tab" data-filter="previous">Previous Days</button>
+                    <button class="filter-tab" data-filter="monthly">Monthly Summary</button>
+                </div>
+
+                <!-- Today's Activity -->
+                <div class="content-section active" id="todaySection">
+                    <div class="section-header">
+                        <h2 class="section-title">Today's Activity</h2>
+                        <div class="header-controls">
+                            <div class="date-display" id="todayDate"></div>
+                            <div class="filter-controls">
+                                <select id="statusFilter" class="status-filter" onchange="applyFilters()">
+                                    <option value="all">All Staff</option>
+                                    <option value="logged-in">Logged In</option>
+                                    <option value="logged-out">Logged Out</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card logs-card">
+                        <div class="card-body-custom">
+                            <div id="todayLogs">
+                                <!-- Today's logs will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Previous Days -->
+                <div class="content-section" id="previousSection">
+                    <div class="section-header">
+                        <h2 class="section-title">Previous Days</h2>
+                        <div class="header-controls">
+                            <div class="date-range-selector">
+                                <input type="date" id="startDate" class="date-input">
+                                <span class="date-separator">to</span>
+                                <input type="date" id="endDate" class="date-input">
+                                <button class="btn-filter" onclick="filterByDateRange()">Filter</button>
+                            </div>
+                            <div class="filter-controls">
+                                <select id="previousStatusFilter" class="status-filter" onchange="filterByDateRange()">
+                                    <option value="all">All Staff</option>
+                                    <option value="active">Active Staff Only</option>
+                                    <option value="logged-in">Logged In</option>
+                                    <option value="logged-out">Logged Out</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card logs-card">
+                        <div class="card-body-custom">
+                            <div id="previousLogs">
+                                <!-- Previous days logs will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Summary -->
+                <div class="content-section" id="monthlySection">
+                    <div class="section-header">
+                        <h2 class="section-title">Monthly Summary</h2>
+                        <div class="month-selector">
+                            <select id="monthSelect" class="month-select" onchange="loadMonthlySummary()">
+                                <!-- Months will be populated by JS -->
+                            </select>
+                            <select id="yearSelect" class="year-select" onchange="loadMonthlySummary()">
+                                <!-- Years will be populated by JS -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card logs-card">
+                        <div class="card-body-custom">
+                            <div id="monthlySummary">
+                                <!-- Monthly summary will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="adminstafflogs.js"></script>
+</body>
+</html>

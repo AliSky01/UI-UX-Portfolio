@@ -1,0 +1,423 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* Navigation Header */
+.navbar {
+    background-color: #ffffff;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.logo span {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-menu a.active {
+    color: #87CEEB;
+    border-bottom: 2px solid #87CEEB;
+    padding-bottom: 2px;
+}
+
+.nav-menu a:hover {
+    color: #87CEEB;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.login-btn {
+    background-color: #87CEEB;
+    color: #333;
+    padding: 10px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.login-btn:hover {
+    background-color: #6BB6D6;
+}
+
+.signup-btn {
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px 30px;
+    text-decoration: none;
+    border: 2px solid #87CEEB;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.signup-btn:hover {
+    background-color: #87CEEB;
+    color: #333;
+    border-color: #6BB6D6;
+}
+
+/* Hero Section */
+.hero {
+    height: 600px;
+    background-image: url('../image/grandmami.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-top: 80px;
+    filter: none;
+}
+
+.hero-overlay {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 80px;
+    position: relative;
+}
+
+.hero-content {
+    color: #ffffff;
+    max-width: 600px;
+}
+
+.hero-content h2 {
+    font-size: 18px;
+    color: #242020;
+    font-weight: 400;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tagline-cursive {
+    font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+    font-size: 32px;
+    color: #242020;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.hero-content h1 {
+    font-size: 56px;
+    color: #242020;
+    font-weight: 700;
+    line-height: 1.2;
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* About Us Section */
+.about {
+    background-color: #2c5f7f;
+    padding: 70px 40px 90px;
+}
+
+.about-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 16px;
+    margin-bottom: 34px;
+}
+
+.about-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.about-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.about-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 18px;
+    text-align: center;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.about-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    background: #f3f6fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 18px rgba(31, 59, 100, 0.12);
+}
+
+.about-icon i {
+    font-size: 30px;
+    color: #2b6cb0;
+}
+
+.about-card p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2933;
+    line-height: 1.6;
+}
+
+/* Footer */
+
+.footer {
+    background-color: #ffffff;
+    padding: 40px 40px 60px;
+    color: #1f2933;
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.footer-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #1f2933;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-logo img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+}
+
+.footer-column {
+    display: grid;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.contact-item .icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #242020;
+}
+
+.contact-item .icon i {
+    font-size: 18px;
+    color: #242020;
+}
+
+.contact-item p {
+    font-size: 15px;
+    color: #1f2933;
+    line-height: 1.6;
+}
+
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .nav-container {
+        padding: 0 20px;
+    }
+    
+    .nav-menu {
+        gap: 20px;
+    }
+    
+    .hero {
+        height: 500px;
+    }
+    
+    .hero-overlay {
+        padding: 0 40px;
+    }
+    
+    .hero-content h1 {
+        font-size: 42px;
+    }
+    
+    .tagline-cursive {
+        font-size: 28px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 15px;
+        font-size: 12px;
+    }
+    
+    .auth-buttons {
+        gap: 10px;
+    }
+    
+    .login-btn,
+    .signup-btn {
+        padding: 8px 20px;
+        font-size: 12px;
+    }
+    
+    .hero {
+        height: 400px;
+        margin-top: 70px;
+    }
+    
+    .hero-overlay {
+        padding: 0 20px;
+    }
+    
+    .hero-content h1 {
+        font-size: 32px;
+    }
+    
+    .tagline-cursive {
+        font-size: 24px;
+    }
+    
+    .hero-content h2 {
+        font-size: 16px;
+    }
+    
+    .about {
+        padding: 60px 20px;
+    }
+    
+    .about h2 {
+        font-size: 28px;
+    }
+    
+    .about p {
+        font-size: 14px;
+    }
+    
+    .footer {
+        padding: 40px 20px;
+    }
+    
+    .footer-logo img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .hero {
+        height: 300px;
+    }
+    
+    .hero-content h1 {
+        font-size: 24px;
+    }
+    
+    .tagline-cursive {
+        font-size: 20px;
+    }
+}

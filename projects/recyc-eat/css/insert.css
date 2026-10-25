@@ -1,0 +1,69 @@
+/* Insert Your Recyclable — page specific only. The orbit ring and all
+   tokens live in kiosk.css. */
+
+/* slightly larger than the default ring, and lighter dots so the
+   waiting state reads as calm rather than urgent */
+.insert-ring {
+  --ring: clamp(200px, 34vh, 320px);
+  --dot:  clamp(26px, 4.4vh, 44px);
+  --ring-dark:  #0e7c78;
+  --ring-mid:   #1aa197;
+  --ring-light: #83ded5;
+  cursor: pointer;
+}
+
+.insert-ring:focus-visible {
+  outline: 3px solid #0e7c78;
+  outline-offset: 6px;
+}
+
+.insert-total {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--green-600);
+}
+
+/* ===== STATUS LINE ===== */
+.insert-status {
+  margin: 0;
+  min-height: 1.6em;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.insert-status.is-error { color: #b03a39; }
+
+.redeem-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  max-width: 28rem;
+  text-align: center;
+}
+
+.redeem-choice__title {
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--text-xl);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--green-600);
+}
+
+.redeem-choice__sub {
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.redeem-choice__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3);
+}

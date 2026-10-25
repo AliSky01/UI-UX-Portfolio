@@ -1,0 +1,407 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.h-100 {
+    min-height: 100vh !important;
+}
+
+/* Image Section */
+.image-section {
+    background: linear-gradient(135deg, rgba(135, 206, 250, 0.3), rgba(255, 182, 193, 0.3));
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.image-section img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    filter: blur(2px);
+}
+
+/* Confirmation Section */
+.confirmation-section {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin-left: 50%;
+    width: 50%;
+    overflow-y: auto;
+}
+
+/* Header Section */
+.header-section {
+    width: 100%;
+    max-width: 600px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    flex-shrink: 0;
+}
+
+.logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.tagline {
+    font-size: 24px;
+    font-family: 'Brush Script MT', 'Lucida Handwriting', cursive;
+    color: #242020;
+    font-weight: 400;
+    flex: 1;
+}
+
+.header-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #ddd;
+    margin-top: 15px;
+}
+
+/* Confirmation Form */
+.confirmation-form {
+    width: 100%;
+    max-width: 600px;
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2c5f7f;
+    margin-bottom: 20px;
+}
+
+.instruction-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.instruction-text .email {
+    font-weight: 600;
+    color: #242020;
+}
+
+/* Code Input Boxes */
+.code-inputs {
+    margin: 30px 0;
+}
+
+.code-box {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #87CEEB;
+    border-radius: 8px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    background-color: #E3F2FD;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.code-box:focus {
+    outline: none;
+    border-color: #2196F3;
+    background-color: #BBDEFB;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+.code-box:invalid {
+    border-color: #2196F3;
+    background-color: #E3F2FD;
+}
+
+.code-box:valid {
+    border-color: #1976D2;
+    background-color: #BBDEFB;
+}
+
+/* Continue Button */
+.continue-btn {
+    background-color: #87CEEB;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.continue-btn:hover {
+    background-color: #6BB6D6;
+    color: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.continue-btn:active {
+    transform: translateY(0);
+}
+
+.continue-btn:focus {
+    background-color: #6BB6D6;
+    color: #333;
+    box-shadow: 0 0 0 0.2rem rgba(135, 206, 250, 0.5);
+}
+
+/* Resend Text */
+.resend-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 20px;
+}
+
+.resend-link {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.resend-link:hover {
+    color: #c9302c;
+    text-decoration: underline;
+}
+
+/* Notification Pop-up Styles */
+.notification-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.notification-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-content {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px 40px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.notification-popup.show .notification-content {
+    transform: scale(1);
+}
+
+.notification-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease;
+}
+
+.notification-popup.success .notification-icon {
+    background-color: #d4edda;
+    color: #28a745;
+}
+
+.notification-popup.error .notification-icon {
+    background-color: #f8d7da;
+    color: #dc3545;
+}
+
+.notification-message {
+    flex: 1;
+}
+
+.notification-message p {
+    margin: 0;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.notification-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.notification-close:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 991.98px) {
+    .image-section {
+        display: none !important;
+    }
+    
+    .confirmation-section {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .logo-img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .tagline {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .confirmation-section {
+        padding: 20px 15px;
+    }
+    
+    .form-title {
+        font-size: 24px;
+    }
+    
+    .instruction-text {
+        font-size: 14px;
+    }
+    
+    .code-box {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+    }
+    
+    .code-inputs {
+        gap: 10px !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .code-box {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .code-inputs {
+        gap: 8px !important;
+    }
+    
+    .notification-content {
+        padding: 25px 30px;
+        max-width: 90%;
+    }
+    
+    .notification-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+
+/* Animation for form elements */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.confirmation-form {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.code-inputs {
+    animation: fadeIn 0.5s ease-in-out 0.2s both;
+}
+
+/* Accessibility */
+.code-box:focus-visible {
+    outline: 2px solid #87CEEB;
+    outline-offset: 2px;
+}
+
+.continue-btn:focus-visible {
+    outline: 2px solid #87CEEB;
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .image-section {
+        display: none;
+    }
+    
+    .confirmation-section {
+        width: 100%;
+        margin-left: 0;
+    }
+}

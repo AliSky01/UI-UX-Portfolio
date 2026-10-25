@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Billing Form</title>
+  <link rel="stylesheet" href="adminexpenses.css" />
+</head>
+<body>
+  <main class="form-shell">
+    <section class="card">
+      <div class="running-summary">
+        <table>
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Month</th>
+              <th>Admission Date</th>
+              <th>Days</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="rbPatientName">—</td>
+              <td id="rbMonth">—</td>
+              <td id="rbAdmissionDate">—</td>
+              <td id="rbDays">0 days</td>
+              <td id="rbStatus">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sr-only">
+        <input id="patientId" type="hidden" />
+        <input id="patientName" type="hidden" />
+        <input id="patientType" type="hidden" />
+        <input id="subServiceType" type="hidden" />
+        <input id="admissionDate" type="hidden" />
+        <input id="dischargeDate" type="hidden" />
+        <input id="patientAge" type="hidden" />
+        <input id="admissionNo" type="hidden" />
+        <input id="roomNo" type="hidden" />
+        <input id="classification" type="hidden" />
+        <input id="attendingDoctor" type="hidden" />
+        <input id="hospitalizationPlan" type="hidden" />
+        <input id="diagnosis" type="hidden" />
+        <input id="patientAddress" type="hidden" />
+      </div>
+
+      <section class="block" id="particularsBlock">
+        <div class="section-head">
+          <h2>Particulars</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Rate</th>
+              <th>Days</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="autoChargeRows"></tbody>
+        </table>
+      </section>
+
+      <section class="block" id="doctorFeeBlock">
+        <div class="section-head">
+          <h2>Doctor's fee</h2>
+          <button id="addDoctorVisitBtn" class="btn-ghost" type="button">+ Add visit</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="doctorVisitRows"></tbody>
+        </table>
+      </section>
+
+      <section class="block" id="pharmacyBlock">
+        <div class="section-head">
+          <h2>Pharmacy items</h2>
+        </div>
+        <div class="pharmacy-inputs">
+          <input id="pharmacyNameInput" type="text" placeholder="Medicine name" />
+          <input id="pharmacyQtyInput" type="number" min="1" step="1" value="1" />
+          <input id="pharmacyPriceInput" type="number" min="0" step="0.01" placeholder="Price (₱)" />
+          <button id="addPharmacyBtn" class="btn-ghost" type="button">Add</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Medicine</th>
+              <th>Qty</th>
+              <th>Unit price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="pharmacyRows"></tbody>
+        </table>
+      </section>
+
+      <section class="block" id="summaryBlock">
+        <div class="summary summary--compact" id="runningBillSummary">
+          <p><span>Room fee</span><strong id="sumRoom">PHP 0.00</strong></p>
+          <p><span>Food fee</span><strong id="sumFood">PHP 0.00</strong></p>
+          <p><span>Miscellaneous</span><strong id="sumMisc">PHP 0.00</strong></p>
+          <p><span>Doctor's fee</span><strong id="sumDoctor">PHP 0.00</strong></p>
+          <p><span>Pharmacy</span><strong id="sumPharmacy">PHP 0.00</strong></p>
+          <p class="total"><span>Total running bill</span><strong id="sumTotal">PHP 0.00</strong></p>
+        </div>
+
+        <div class="form-actions form-actions--inline">
+          <label class="room-select">
+            <span>Room type:</span>
+            <select id="roomType">
+              <option value="Private">Private (PHP 1000/day)</option>
+              <option value="Ward">Ward (PHP 800/day)</option>
+            </select>
+          </label>
+          <div class="form-actions__buttons">
+            <button id="closeRunningBillBtn" class="btn-ghost" type="button">Close</button>
+            <button id="payInvoiceBtn" class="btn-primary-solid" type="button">Save billing</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="pay-modal" id="payModal" hidden>
+    <div class="pay-modal__backdrop" data-close-pay-modal="true"></div>
+    <div class="pay-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="payModalTitle">
+      <button type="button" class="pay-modal__close" id="closePayModalBtn" aria-label="Close payment popup">×</button>
+      <h2 id="payModalTitle">Payment Details</h2>
+
+      <div class="pay-grid">
+        <label>
+          <span>Patient Name</span>
+          <input id="payPatientName" type="text" readonly />
+        </label>
+        <label>
+          <span>Patient ID</span>
+          <input id="payPatientId" type="text" readonly />
+        </label>
+        <label>
+          <span>Patient Type</span>
+          <input id="payPatientType" type="text" readonly />
+        </label>
+        <label>
+          <span>Service Type</span>
+          <input id="payServiceType" type="text" readonly />
+        </label>
+        <label>
+          <span>Admission Date</span>
+          <input id="payAdmissionDate" type="text" readonly />
+        </label>
+        <label>
+          <span>Discharge Date</span>
+          <input id="payDischargeDate" type="text" readonly />
+        </label>
+        <label>
+          <span>Total Bill (PHP)</span>
+          <input id="payTotalBill" type="text" readonly />
+        </label>
+        <label>
+          <span>Amount to Pay (PHP)</span>
+          <input id="payAmountToPay" type="number" min="0" step="0.01" />
+        </label>
+        <label class="pay-span-2">
+          <span>Payment Method</span>
+          <select id="payPaymentMethod">
+            <option value="Cash">Cash</option>
+            <option value="Check">Check</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="pay-actions">
+        <button type="button" class="btn-ghost" id="cancelPayModalBtn">Cancel</button>
+        <button type="button" class="btn-primary-solid" id="confirmPayModalBtn">Confirm Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-modal" id="invoicePreviewModal" hidden>
+    <div class="preview-modal__backdrop" data-close-preview-modal="true"></div>
+    <div class="preview-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="invoicePreviewTitle">
+      <button type="button" class="preview-modal__close" id="closePreviewModalBtn" aria-label="Close invoice preview">×</button>
+
+      <div class="preview-modal__top">
+        <h2 id="invoicePreviewTitle">Preview</h2>
+        <div class="preview-modal__actions">
+          <button type="button" class="btn-ghost" id="downloadInvoiceBtn">Download Invoice</button>
+          <button type="button" class="btn-primary-solid" id="printInvoiceBtn">Print Invoice</button>
+        </div>
+      </div>
+
+      <div class="invoice-preview" id="invoicePreviewPrintArea">
+        <div class="invoice-preview__header">
+          <div class="invoice-preview__brand">
+            <img src="../image/logo.jpg" alt="Estrellas Homecare Clinic" class="invoice-preview__logo" />
+            <p>Estrellas Homecare Clinic</p>
+          </div>
+          <div class="invoice-preview__meta">
+            <h3>Invoice</h3>
+            <p id="previewPatientIdLine">Patient ID: -</p>
+            <p id="previewAdmissionDateLine">Admission Date: -</p>
+            <p id="previewDischargeDateLine">Discharge Date: -</p>
+          </div>
+        </div>
+
+        <div class="invoice-preview__recipient">
+          <h4>Recipient</h4>
+          <p id="previewRecipientName">-</p>
+          <p id="previewClassification">Classification: -</p>
+          <p id="previewHospitalizationPlan">Hospitalization Plan: -</p>
+          <p id="previewServiceType">Service Type: -</p>
+          <p id="previewDiagnosis">Diagnosis: -</p>
+        </div>
+
+        <table class="invoice-preview__table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Qty</th>
+              <th>Tax</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="invoicePreviewRows"></tbody>
+        </table>
+
+        <div class="invoice-preview__total">
+          <span>Total</span>
+          <strong id="invoicePreviewTotal">PHP 0.00</strong>
+        </div>
+
+        <p class="invoice-preview__note">Please make the payment within 15 days from the invoice date.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="adminexpenses.js?v=20260404a"></script>
+</body>
+</html>

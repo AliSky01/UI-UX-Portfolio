@@ -1,0 +1,87 @@
+/* Item Rejected — page specific only. Tokens and shared
+   components live in kiosk.css. */
+
+.reject-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.reject-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(44px, 7vh, 60px);
+  height: clamp(44px, 7vh, 60px);
+  border-radius: 50%;
+  background: var(--red-600);
+  color: #fff;
+  font-size: var(--text-xl);
+  font-weight: 900;
+  box-shadow: 0 6px 18px rgba(207, 70, 64, 0.32);
+}
+
+.reject-title { color: var(--red-600); }
+
+/* recolour the shared ring for the rejection state, and keep it small:
+   this screen also carries the reason list and two buttons */
+.reject-ring {
+  --ring: clamp(150px, 25vh, 240px);
+  --dot:  clamp(20px, 3.4vh, 32px);
+  --ring-dark:  var(--red-600);
+  --ring-mid:   var(--red-500);
+  --ring-light: var(--red-100);
+}
+
+/* ===== WHY IT WAS REJECTED ===== */
+.reject-reasons {
+  width: min(520px, 100%);
+  margin: 0;
+  padding: clamp(var(--sp-3), 2vh, var(--sp-4)) var(--sp-5);
+  background: var(--red-100);
+  border-color: rgba(207, 70, 64, 0.28);
+  text-align: left;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.reject-reasons li {
+  position: relative;
+  padding-left: var(--sp-5);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.reject-reasons li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--red-500);
+}
+
+/* ===== ACTIONS ===== */
+.reject-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .reject-actions { width: min(420px, 100%); }
+  .reject-actions .kiosk-btn { width: 100%; }
+}
+
+@media (max-height: 800px) {
+  .reject-reasons { gap: var(--sp-1); }
+  .reject-reasons li { font-size: var(--text-xs); }
+}

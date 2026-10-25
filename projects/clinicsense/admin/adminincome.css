@@ -1,0 +1,468 @@
+:root {
+  --surface: #ffffff;
+  --surface-alt: #f5f7fb;
+  --panel-border: #d6dee9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent: #1a7fb5;
+  --accent-strong: #0f5c8c;
+  --shadow-soft: 0 20px 35px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: #e7ecf4;
+  color: var(--text-primary);
+}
+
+.main-wrapper {
+  min-height: 100vh;
+  padding: 2.5rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.back-btn {
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  padding: 0.4rem 0.7rem;
+  font-size: 1rem;
+}
+
+.page-title-block {
+  flex: 1;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  margin: 0.15rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.add-btn {
+  border-radius: 0.85rem;
+  padding: 0.6rem 1.35rem;
+  font-weight: 500;
+}
+
+.summary-panel {
+  margin-bottom: 1.5rem;
+}
+
+.summary-banner {
+  background: linear-gradient(135deg, #1a7fb5, #12547c);
+  border-radius: 1rem;
+  padding: 1.6rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 15px 30px rgba(11, 38, 63, 0.15);
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+
+.summary-hero {
+  max-width: 420px;
+}
+
+.summary-label {
+  font-size: 0.95rem;
+  margin-bottom: 0.35rem;
+}
+
+.summary-amount {
+  margin: 0;
+  font-size: 2.75rem;
+  font-weight: 600;
+}
+
+.summary-note {
+  margin: 0.65rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.summary-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  min-width: 180px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-value {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+.stat-note {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.25rem;
+}
+
+.transactions-panel {
+  margin-top: 1rem;
+}
+
+.transactions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.transactions-header h5 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.transactions-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  width: 240px;
+}
+
+.search-field input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.filter-wrapper {
+  position: relative;
+}
+
+.btn-filter {
+  border-radius: 0.7rem;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  color: var(--text-secondary);
+  background: #fff;
+}
+
+.btn-filter.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.filter-popover {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 220px;
+  background: #fff;
+  border-radius: 0.85rem;
+  border: 1px solid var(--panel-border);
+  padding: 1rem;
+  z-index: 5;
+  box-shadow: var(--shadow-soft);
+}
+
+.filter-popover.show {
+  display: block;
+}
+
+.transactions-body {
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(340px, 1fr);
+  gap: 1.5rem;
+  box-shadow: 0 20px 35px rgba(15, 23, 42, 0.08);
+}
+
+.calendar-panel {
+  background: var(--surface-alt);
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  border: 1px solid var(--panel-border);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.calendar-nav {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--panel-border);
+  color: var(--text-secondary);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  text-align: center;
+}
+
+.calendar-weekdays span {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.calendar-dates {
+  margin-top: 0.75rem;
+}
+
+.calendar-date {
+  border: none;
+  background: transparent;
+  padding: 0.55rem 0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.calendar-date.empty {
+  pointer-events: none;
+  opacity: 0;
+  cursor: default;
+}
+
+.calendar-date.has-record {
+  background: #e6f1fb;
+  color: #185fa5;
+}
+
+.calendar-date.today {
+  border: 1px dashed rgba(15, 23, 42, 0.35);
+}
+
+.calendar-date.selected {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.65);
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border-radius: 2px;
+  margin-right: 0.4rem;
+}
+
+.legend-dot.has-record {
+  background: #ffd08c;
+  border: 1px solid #f1c16f;
+}
+
+.legend-dot.selected {
+  background: var(--accent);
+}
+
+.transaction-list-panel {
+  background: var(--surface-alt);
+  border-radius: 1.25rem;
+  border: 1px solid var(--panel-border);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 460px;
+}
+
+.transaction-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.transaction-total {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 0.25rem;
+}
+
+.transaction-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(99, 106, 122, 0.15);
+  gap: 1rem;
+}
+
+.transaction-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.transaction-title {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.transaction-meta {
+  margin-top: 0.25rem;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.category-badge.patient {
+  background: #e6f1fb;
+  color: #195ca6;
+}
+
+.category-badge.insurance {
+  background: #eeedfe;
+  color: #3c3489;
+}
+
+.category-badge.consultation {
+  background: #eaf3de;
+  color: #3b6d11;
+}
+
+.category-badge.service {
+  background: #fdf1df;
+  color: #6b3100;
+}
+
+.category-badge.donation {
+  background: #fcebeb;
+  color: #a32d2d;
+}
+
+.transaction-amount {
+  font-weight: 600;
+  color: var(--accent-strong);
+}
+
+.helper-text {
+  text-align: center;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .transactions-body {
+    grid-template-columns: 1fr;
+  }
+
+  .transaction-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .summary-banner,
+  .transactions-body,
+  .transaction-list-panel,
+  .calendar-panel {
+    padding: 1.25rem;
+  }
+
+  .search-field {
+    width: 100%;
+  }
+
+  .transactions-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

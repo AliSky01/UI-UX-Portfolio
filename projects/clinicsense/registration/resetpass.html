@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas - Reset Password</title>
+    <link rel="stylesheet" href="resetpass.css">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="../image/holdinghands.png" alt="Caring hands">
+        </div>
+        
+        <div class="reset-section">
+            <div class="logo">
+                <img src="../image/logo.jpg" alt="Estrellas Logo">
+            </div>
+            
+            <p class="tagline">Your Health is our Highly Priority</p>
+            
+            <div class="reset-form">
+                <h1>Reset your password</h1>
+                <p class="instruction">Forgot your password? Please enter the email you registered with the account and we'll send you a 6-digit code.</p>
+                
+                <form>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                        <small id="emailError" style="color: red; margin-top: 5px; display: none;"></small>
+                    </div>
+                    
+                    <button type="submit" class="reset-btn" id="submitBtn">Get 6-digit code</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const submitBtn  = document.getElementById('submitBtn');
+
+        emailInput.addEventListener('input', function() {
+            emailError.textContent       = '';
+            emailError.style.display     = 'none';
+            emailInput.style.borderColor = '';
+        });
+
+        document.querySelector('form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            if (!email || !email.includes('@')) {
+                emailError.textContent       = 'Please enter a valid email address';
+                emailError.style.display     = 'block';
+                emailInput.style.borderColor = 'red';
+                return;
+            }
+
+            submitBtn.disabled    = true;
+            submitBtn.textContent = 'Sending...';
+
+            const formData = new FormData();
+            formData.append('email', email);
+
+            try {
+                const response = await fetch('../php/forgot_password.php', { method: 'POST', body: formData });
+                const result   = await response.json();
+
+                if (result.success) {
+                    sessionStorage.setItem('reset_email', result.email);
+                    window.location.href = 'confirmationcode.html';
+                } else {
+                    emailError.textContent       = result.message;
+                    emailError.style.display     = 'block';
+                    emailInput.style.borderColor = 'red';
+                    submitBtn.disabled           = false;
+                    submitBtn.textContent        = 'Get 6-digit code';
+                }
+            } catch (error) {
+                emailError.textContent       = 'Something went wrong. Please try again.';
+                emailError.style.display     = 'block';
+                submitBtn.disabled           = false;
+                submitBtn.textContent        = 'Get 6-digit code';
+            }
+        });
+    </script>
+</body>
+</html>

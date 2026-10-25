@@ -1,0 +1,440 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.image-section {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(135, 206, 250, 0.3), rgba(255, 182, 193, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.account-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.logo {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 10px;
+}
+
+.logo h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.logo .subtitle {
+    font-size: 11px;
+    color: #e91e63;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.tagline {
+    font-size: 30px;
+    font-family: 'Brush Script MT', cursive;
+    color: #555;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.account-form {
+    width: 100%;
+    max-width: 450px;
+}
+
+.account-form h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2c5f7f;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #87CEEB;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* Password Wrapper */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+}
+
+.eye-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #666;
+    font-size: 20px;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eye-toggle:hover {
+    color: #333;
+}
+
+.eye-toggle:focus {
+    outline: none;
+}
+
+.eye-toggle i {
+    pointer-events: none;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 8px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+.progress-bar.weak {
+    background-color: #dc3545;
+}
+
+.progress-bar.medium {
+    background-color: #ffc107;
+}
+
+.progress-bar.strong {
+    background-color: #28a745;
+}
+
+.strength-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* Password Match Indicator */
+.password-match {
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.password-match.match {
+    color: #28a745;
+}
+
+.password-match.no-match {
+    color: #dc3545;
+}
+
+/* Success Notification Modal */
+.notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.notification-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-modal {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.notification-overlay.show .notification-modal {
+    transform: scale(1);
+}
+
+.notification-icon-success {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.notification-modal h2 {
+    color: #28a745;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.notification-modal p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.continue-login-btn {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.continue-login-btn:hover {
+    background-color: #4cae4c;
+    transform: translateY(-2px);
+}
+
+.continue-login-btn:active {
+    transform: translateY(0);
+}
+
+.remember-link {
+    text-align: right;
+    margin-bottom: 25px;
+    margin-top: -5px;
+}
+
+.remember-link a {
+    color: #666;
+    text-decoration: none;
+    font-size: 12px;
+    transition: color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.remember-link a:hover {
+    color: #87CEEB;
+}
+
+.create-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+    background-color: #4cae4c;
+}
+
+@media (max-width: 968px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .image-section {
+        display: none;
+    }
+    
+    .account-section {
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .account-section {
+        padding: 20px;
+    }
+    
+    .account-form {
+        max-width: 100%;
+    }
+}
+
+/* Notification Popup Styles */
+.notification-popup {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    min-width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+}
+
+.notification-popup.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification-popup.success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.notification-popup.error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.notification-icon {
+    font-size: 24px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.notification-message p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+@media (max-width: 640px) {
+    .notification-popup {
+        left: 10px;
+        right: 10px;
+        min-width: auto;
+        transform: translateY(-100px);
+    }
+    
+    .notification-popup.show {
+        transform: translateY(0);
+    }
+}

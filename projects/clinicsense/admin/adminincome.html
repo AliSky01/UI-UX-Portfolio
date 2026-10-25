@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Income Records - Estrellas Homecare Clinic</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="adminincome.css?v=3.1" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="content-wrapper">
+        <header class="page-header">
+          <button class="btn btn-light back-btn" type="button">
+            <i class="bi bi-arrow-left"></i>
+          </button>
+          <div class="page-title-block">
+            <h1 class="page-title">Income Records</h1>
+            <p class="page-subtitle">Manage all income transactions</p>
+          </div>
+          <button
+            class="btn btn-primary add-btn"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#addIncomeModal"
+          >
+            <i class="bi bi-plus-circle me-2"></i>Add Income
+          </button>
+        </header>
+
+        <section class="summary-panel">
+          <div class="summary-banner">
+            <div class="summary-hero">
+              <p class="summary-label">
+                Income as of <span id="summaryDate">—</span>
+              </p>
+              <h2 class="summary-amount" id="totalIncome">₱0.00</h2>
+              <p class="summary-note">
+                Keep track of every cash inflow so finance knows where the clinic stands.
+              </p>
+            </div>
+            <div class="summary-stats">
+              <div class="stat-card">
+                <div class="stat-label">This month</div>
+                <div class="stat-value" id="thisMonthTotal">₱0.00</div>
+                <div class="stat-note" id="thisMonthCount">0 transactions</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Last month</div>
+                <div class="stat-value" id="lastMonthTotal">₱0.00</div>
+                <div class="stat-note" id="lastMonthCount">0 transactions</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="transactions-panel">
+          <div class="transactions-header">
+            <h5>All income transactions</h5>
+            <div class="transactions-actions">
+              <div class="search-field">
+                <i class="bi bi-search"></i>
+                <input
+                  id="searchInput"
+                  type="text"
+                  placeholder="Search..."
+                  aria-label="Search incomes"
+                />
+              </div>
+              <div class="filter-wrapper">
+                <button
+                  id="filterBtn"
+                  class="btn btn-outline-secondary btn-filter"
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-filter me-1"></i>
+                  Filter
+                </button>
+                <div class="filter-popover shadow-sm" id="filterPopover">
+                  <label class="form-label mb-1" for="categoryFilter">Category</label>
+                  <select class="form-select form-select-sm mb-2" id="categoryFilter">
+                    <option value="">View by date</option>
+                    <option value="all-income">All income</option>
+                    <option value="Patient">Patient</option>
+                    <option value="Consultation">Consultation</option>
+                  </select>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-primary flex-fill" id="applyFilterBtn" type="button">
+                      Apply
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary flex-fill" id="clearFilterBtn" type="button">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="transactions-body">
+            <div class="calendar-panel">
+              <div class="calendar-header">
+                <button class="btn btn-sm calendar-nav" type="button" id="prevMonth">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <span class="calendar-month" id="calendarMonthLabel">May 2025</span>
+                <button class="btn btn-sm calendar-nav" type="button" id="nextMonth">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+              <div class="calendar-grid calendar-weekdays">
+                <span>Su</span>
+                <span>Mo</span>
+                <span>Tu</span>
+                <span>We</span>
+                <span>Th</span>
+                <span>Fr</span>
+                <span>Sa</span>
+              </div>
+              <div class="calendar-grid calendar-dates" id="calendarDates"></div>
+              <div class="calendar-legend">
+                <div>
+                  <span class="legend-dot has-record"></span>
+                  Has record
+                </div>
+                <div>
+                  <span class="legend-dot selected"></span>
+                  Selected
+                </div>
+              </div>
+            </div>
+            <div class="transaction-list-panel">
+              <div class="transaction-list-header">
+                <span id="transactionDateLabel">—</span>
+                <div class="transaction-total" id="transactionTotalAmount">Total: ₱0.00</div>
+              </div>
+              <div class="transaction-list" id="transactionList"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addIncomeModal" tabindex="-1" aria-labelledby="addIncomeModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addIncomeModalLabel">Add New Income</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addIncomeForm">
+              <div class="mb-3">
+                <label for="incomeDate" class="form-label">Date</label>
+                <input type="date" class="form-control" id="incomeDate" required />
+              </div>
+              <div class="mb-3">
+                <label for="incomeDescription" class="form-label">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="incomeDescription"
+                  placeholder="Enter description"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="incomeCategory" class="form-label">Category</label>
+                  <select class="form-select" id="incomeCategory" required>
+                    <option value="">Select category</option>
+                    <option value="Patient">Patient</option>
+                    <option value="Consultation">Consultation</option>
+                  </select>
+              </div>
+              <div class="mb-3">
+                <label for="incomeAmount" class="form-label">Amount (₱)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="incomeAmount"
+                  placeholder="0.00"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="saveIncomeBtn">Save Income</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="adminincome.js"></script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Congratulations - Redeem Reward</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/kiosk.css">
+  <link rel="stylesheet" href="../css/redeemready.css" />
+</head>
+<body>
+
+  <div class="leaf-layer" aria-hidden="true">
+    <span class="leaf leaf-1"></span>
+    <span class="leaf leaf-2"></span>
+    <span class="leaf leaf-3"></span>
+    <span class="leaf leaf-4"></span>
+    <span class="leaf leaf-5"></span>
+    <span class="leaf leaf-6"></span>
+  </div>
+  <div class="kiosk-backdrop" aria-hidden="true"></div>
+
+  <div class="kiosk-shell kiosk-shell--wide">
+    <header class="kiosk-header">
+      <img src="../images/logo.png" class="kiosk-logo" alt="EcoNova">
+    </header>
+
+    <main class="kiosk-main">
+      <ol class="kiosk-progress" aria-label="Recycling progress">
+        <li class="is-done"><span class="step-dot" aria-hidden="true">1</span>Prepare</li>
+        <li class="is-done"><span class="step-dot" aria-hidden="true">2</span>Insert</li>
+        <li class="is-current"><span class="step-dot" aria-hidden="true">3</span>Redeem</li>
+      </ol>
+
+      <div class="page-heading">
+        <h1 class="kiosk-title redeem-title" id="pageTitle">Choose your reward</h1>
+        <p class="kiosk-sub" id="pageSub">Button 1 is coil 1. Pick one item, then tap REDEEM.</p>
+      </div>
+
+      <div class="redeem-row">
+        <div class="kiosk-ring redeem-ring">
+          <div class="kiosk-ring__orbit" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="kiosk-ring__disc">
+            <span class="points-label">Total Points</span>
+            <span class="points-value">
+              <span id="totalPoints">0</span><span class="star" aria-hidden="true">★</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="reward-grid" id="rewardGrid" role="listbox" aria-label="Rewards by coil"></div>
+      </div>
+
+      <button class="kiosk-btn kiosk-btn--primary kiosk-btn--lg redeem-btn" id="redeemBtn" type="button" disabled>
+        <span aria-hidden="true">&#127873;</span>
+        <span id="redeemLabel">REDEEM</span>
+      </button>
+
+      <a class="kiosk-btn kiosk-btn--ghost redeem-keep" id="keepBtn" href="insert.html">
+        KEEP RECYCLING
+      </a>
+
+      <a class="kiosk-btn kiosk-btn--ghost redeem-print" id="printBtn" href="printreceipt.html">
+        PRINT QR RECEIPT
+      </a>
+
+      <p class="redeem-error" id="redeemMsg" role="alert" hidden></p>
+    </main>
+  </div>
+
+  <footer class="kiosk-info">
+    <span class="info-icon" aria-hidden="true">i</span>
+    <span id="kioskInfo">Collect your item from the tray below the screen.</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const coils = [
+      { sku: "DRINK-01", name: "Instant drink sachet", coilNumber: 1, qty: 24, pointCost: 60 },
+      { sku: "BISC-01", name: "Biscuits", coilNumber: 2, qty: 30, pointCost: 40 },
+      { sku: "SARD-01", name: "Canned sardines", coilNumber: 3, qty: 36, pointCost: 100 },
+      { sku: "TUNA-01", name: "Canned tuna", coilNumber: 4, qty: 36, pointCost: 136 }
+    ];
+
+    let total = parseInt(sessionStorage.getItem("totalPoints") || "0", 10);
+    if (isNaN(total) || total < 0) total = 0;
+    document.getElementById("totalPoints").textContent = String(total);
+
+    const grid = document.getElementById("rewardGrid");
+    const button = document.getElementById("redeemBtn");
+    const label = document.getElementById("redeemLabel");
+    const error = document.getElementById("redeemMsg");
+    let selectedSku = null;
+
+    function tileState(item) {
+      if (item.qty <= 0) return { disabled: true, note: "Out of stock" };
+      if (total < item.pointCost) return { disabled: true, note: "Need " + item.pointCost + " points" };
+      return { disabled: false, note: item.qty + " left" };
+    }
+
+    function renderTiles() {
+      grid.innerHTML = coils.map(function (item) {
+        const state = tileState(item);
+        const selected = !state.disabled && item.sku === selectedSku;
+        return '<button type="button" class="reward-tile' +
+          (state.disabled ? " is-disabled" : "") +
+          (selected ? " is-selected" : "") +
+          '" role="option" data-sku="' + item.sku + '"' +
+          (state.disabled ? " disabled" : "") + '>' +
+          '<span class="reward-tile__coil">Coil ' + item.coilNumber + '</span>' +
+          '<span class="reward-tile__name">' + item.name + '</span>' +
+          '<span class="reward-tile__cost">' + item.pointCost + ' points</span>' +
+          '<span class="reward-tile__note">' + state.note + '</span>' +
+          '</button>';
+      }).join("");
+
+      const selected = coils.find(function (item) {
+        return item.sku === selectedSku && !tileState(item).disabled;
+      });
+      button.disabled = false;
+      label.textContent = selected ? "REDEEM " + selected.name.toUpperCase() : "REDEEM";
+    }
+
+    grid.addEventListener("click", function (event) {
+      const tile = event.target.closest("[data-sku]");
+      if (!tile) return;
+      const item = coils.find(function (entry) { return entry.sku === tile.getAttribute("data-sku"); });
+      if (!item) return;
+      const state = tileState(item);
+      if (state.disabled) {
+        error.hidden = false;
+        error.textContent = state.note === "Out of stock"
+          ? item.name + " is out of stock."
+          : "You need " + item.pointCost + " points for " + item.name + ". Keep recycling to add more.";
+        return;
+      }
+      selectedSku = item.sku;
+      error.hidden = true;
+      renderTiles();
+    });
+
+    button.addEventListener("click", function () {
+      const item = coils.find(function (entry) { return entry.sku === selectedSku; });
+      if (!item || tileState(item).disabled) {
+        error.hidden = false;
+        error.textContent = "Pick a coil you can afford, or keep recycling to add points.";
+        return;
+      }
+      total = Math.max(0, total - item.pointCost);
+      sessionStorage.setItem("totalPoints", String(total));
+      sessionStorage.setItem("dispenseName", item.name);
+      sessionStorage.setItem("dispenseSku", item.sku);
+      sessionStorage.setItem("dispenseCoil", String(item.coilNumber));
+      window.location.href = "dispensingfood.html";
+    });
+
+    renderTiles();
+  </script>
+  </body>
+</html>

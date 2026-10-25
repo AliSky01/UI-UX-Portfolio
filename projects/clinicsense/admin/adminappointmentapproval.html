@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Details - ClinicSense</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="adminappointmentapproval.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="admindashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patient</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="adminappointment.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Appointment</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="adminfinances.html" class="nav-link">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Finance</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="manageuser.html" class="nav-link" id="manageUserBtn">
+                        <i class="bi bi-person-gear"></i>
+                        <span>Manage User</span>
+                    </a>
+                    <a href="#" class="logout-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="container-fluid">
+                    <div class="header-content" style="display: flex; justify-content: flex-end; align-items: center;">
+                        <i class="bi bi-bell notification-icon me-4"></i>
+                        <div class="user-box-content">
+                            <span class="user-greeting"><strong>Alex Estrellas</strong></span>
+                            <img src="../image/raven.jpg" alt="User Avatar" class="user-avatar">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Left Side - Patient List -->
+                        <div class="col-md-4 col-lg-3">
+                            <div class="patient-list-card">
+                                <div class="patient-list-header">
+                                    <h5 class="patient-list-title">Appointment</h5>
+                                    
+                                    <!-- Search Bar -->
+                                    <div class="search-box">
+                                        <i class="bi bi-search search-icon-small"></i>
+                                        <input type="text" class="form-control search-input-small" id="searchPatient" placeholder="Search by name...">
+                                    </div>
+
+                                    <!-- Status Filter -->
+                                    <select class="form-select status-filter-small" id="statusFilter">
+                                        <option selected>All Statuses</option>
+                                        <option>Confirmed</option>
+                                        <option>Pending</option>
+                                        <option>Cancelled</option>
+                                        <option>Complete</option>
+                                    </select>
+                                </div>
+
+                                <!-- Patient List -->
+                                <div class="patient-list-body">
+                                    <ul class="patient-list" id="patientList">
+                                        <li class="patient-list-item active" data-patient="Emilia Valdez">
+                                            <span class="status-dot status-complete"></span>
+                                            <span class="patient-item-name">Emilia Valdez</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Mariano Cataluña">
+                                            <span class="status-dot status-confirmed"></span>
+                                            <span class="patient-item-name">Mariano Cataluña</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Celia Siannone">
+                                            <span class="status-dot status-cancelled"></span>
+                                            <span class="patient-item-name">Celia Siannone</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Rogelio Malaunia">
+                                            <span class="status-dot status-confirmed"></span>
+                                            <span class="patient-item-name">Rogelio Malaunia</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Jovita Mendoza">
+                                            <span class="status-dot status-cancelled"></span>
+                                            <span class="patient-item-name">Jovita Mendoza</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Danielo Vergara">
+                                            <span class="status-dot status-confirmed"></span>
+                                            <span class="patient-item-name">Danielo Vergara</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Herminia Campos">
+                                            <span class="status-dot status-cancelled"></span>
+                                            <span class="patient-item-name">Herminia Campos</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Florencio Aguilando">
+                                            <span class="status-dot status-confirmed"></span>
+                                            <span class="patient-item-name">Florencio Aguilando</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Leticia Ordoñez">
+                                            <span class="status-dot status-cancelled"></span>
+                                            <span class="patient-item-name">Leticia Ordoñez</span>
+                                        </li>
+                                        <li class="patient-list-item" data-patient="Renato Villamor">
+                                            <span class="status-dot status-pending"></span>
+                                            <span class="patient-item-name">Renato Villamor</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side - Appointment Details -->
+                        <div class="col-md-8 col-lg-9">
+                            <!-- Page Title -->
+                            <div class="page-title-section">
+                                <h1 class="page-title">Appointment Details</h1>
+                                <button class="btn btn-back" onclick="window.location.href='calendar.html'">
+                                    <i class="bi bi-arrow-left"></i> Back
+                                </button>
+                            </div>
+
+                    <!-- Appointment Form Card -->
+                    <div class="card appointment-card">
+                        <div class="card-body">
+                            <!-- Patient Information -->
+                            <div class="form-section mb-4">
+                                <div class="section-header-with-badge">
+                                    <h6 class="section-title">Patient Information</h6>
+                                    <span class="badge status-badge-pending" id="statusBadge">Pending</span>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="patientFirstName" value="Emilia" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Middle Name</label>
+                                        <input type="text" class="form-control" id="patientMiddleName" value="Estrada" readonly>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="patientLastName" value="Valdez" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Age</label>
+                                        <input type="text" class="form-control" id="patientAge" value="80 years old" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Sex</label>
+                                        <select class="form-select" id="patientSex" disabled>
+                                            <option>Male</option>
+                                            <option selected>Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Reason for Appointment/ Symptoms <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="reasonForAppointment" rows="3" readonly>Experiencing memory loss, disorientation, and difficulty coordinating.</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Existing Diagnosis <span class="text-muted">(Optional)</span></label>
+                                        <select class="form-select" id="existingDiagnosis" disabled>
+                                            <option value="">Select diagnosis...</option>
+                                            <option>Schizoaffective Disorder</option>
+                                            <option selected>Alzheimer's Disease</option>
+                                            <option>Mild Dementia</option>
+                                            <option>Vascular Dementia</option>
+                                            <option>Bipolar Disorder</option>
+                                            <option>Parkinson's Disease</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Guardian Information -->
+                            <div class="form-section mb-4">
+                                <h6 class="section-title">Guardian Information</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="guardianFirstName" value="Ronny" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Middle Name</label>
+                                        <input type="text" class="form-control" id="guardianMiddleName" value="ADMIN" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="guardianLastName" value="ADMIN" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Contact Number</label>
+                                        <input type="tel" class="form-control" id="guardianContact" value="0988-363-3711" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Relation to Patient</label>
+                                        <select class="form-select" id="guardianRelation" disabled>
+                                            <option>Father</option>
+                                            <option selected>Mother</option>
+                                            <option>Sibling</option>
+                                            <option>Uncle</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Monthly Income Range</label>
+                                        <input type="text" class="form-control" id="incomeRange" value="₱50,000 - ₱60,000" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Appointment Details -->
+                            <div class="form-section">
+                                <h6 class="section-title">Appointment Details</h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Date</label>
+                                        <input type="date" class="form-control" id="appointmentDate" value="2025-05-28" readonly>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Time</label>
+                                        <input type="time" class="form-control" id="appointmentTime" value="08:30" readonly>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Notes</label>
+                                        <textarea class="form-control" id="appointmentNotes" rows="3" readonly>Patient presented treatment include lite moderate symptoms over the past week and after.by maintaining daily. increased routine. consider adjusting dosages based results and lab next visit.</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Assigned Doctor</label>
+                                        <div class="doctor-profile-bubble">
+                                            <img src="raven.jpg" alt="Doctor Avatar" class="doctor-avatar">
+                                            <span class="doctor-name">Alex Estrellas</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="action-buttons" id="primaryActions">
+                                <button type="button" class="btn btn-confirm" id="confirmBtn">Confirm</button>
+                                <button type="button" class="btn btn-complete" id="completeBtn">Complete</button>
+                                <button type="button" class="btn btn-cancel-appointment" id="cancelBtn">Cancel</button>
+                            </div>
+
+                            <!-- Admission Buttons (shown when status is Complete) -->
+                            <div class="action-buttons" id="admissionActions" style="display: none;">
+                                <button type="button" class="btn btn-admitted" id="admittedBtn">Admitted</button>
+                                <button type="button" class="btn btn-not-admitted" id="declineAdmissionBtn">Decline Admission</button>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Patient data with unique details for each patient
+        const patients = {
+            'Emilia Valdez': {
+                firstName: 'Emilia',
+                middleName: 'Estrada',
+                lastName: 'Valdez',
+                age: '80 years old',
+                sex: 'Female',
+                relationship: 'Parent(mother)',
+                diagnosis: "Alzheimer's Disease",
+                symptoms: "Experiencing memory loss, disorientation, and difficulty coordinating.",
+                date: '2026-01-28',
+                time: '08:30',
+                contact: '0988-363-3711',
+                status: 'Complete',
+                notes: 'Patient completed full assessment. Memory exercises recommended. Follow-up scheduled in 3 months.'
+            },
+            'Mariano Cataluña': {
+                firstName: 'Mariano',
+                middleName: '',
+                lastName: 'Cataluña',
+                age: '75 years old',
+                sex: 'Male',
+                relationship: 'Parent(father)',
+                diagnosis: 'Schizophrenia (Chronic)',
+                symptoms: 'Experiencing auditory hallucinations and social withdrawal. Medication compliance needs monitoring.',
+                date: '2026-01-27',
+                time: '10:00',
+                contact: '0973-287-7638',
+                status: 'Confirmed',
+                notes: 'Regular medication review required. Family support system in place.'
+            },
+            'Celia Siannone': {
+                firstName: 'Celia',
+                middleName: '',
+                lastName: 'Siannone',
+                age: '68 years old',
+                sex: 'Female',
+                relationship: 'Sibling(Brother)',
+                diagnosis: 'Mild Dementia',
+                symptoms: 'Mild cognitive decline observed. Difficulty with recent memory and planning tasks.',
+                date: '2026-01-26',
+                time: '21:00',
+                contact: '0950-438-2894',
+                status: 'Cancelled',
+                notes: 'Appointment cancelled by family. Rescheduling requested.'
+            },
+            'Rogelio Malaunia': {
+                firstName: 'Rogelio',
+                middleName: '',
+                lastName: 'Malaunia',
+                age: '72 years old',
+                sex: 'Male',
+                relationship: 'Parent(mother)',
+                diagnosis: 'Vascular Dementia',
+                symptoms: 'Memory problems following stroke. Difficulty with executive functions and language.',
+                date: '2026-01-24',
+                time: '10:00',
+                contact: '0973-287-7638',
+                status: 'Confirmed',
+                notes: 'Post-stroke cognitive assessment. Physical therapy coordination needed.'
+            },
+            'Jovita Mendoza': {
+                firstName: 'Jovita',
+                middleName: '',
+                lastName: 'Mendoza',
+                age: '65 years old',
+                sex: 'Female',
+                relationship: 'Sibling(Brother)',
+                diagnosis: 'Bipolar Disorder',
+                symptoms: 'Mood swings and energy fluctuations. Sleep pattern disturbances reported.',
+                date: '2026-01-20',
+                time: '21:00',
+                contact: '0950-438-2894',
+                status: 'Cancelled',
+                notes: 'Patient requested cancellation. Will contact for rescheduling.'
+            },
+            'Danielo Vergara': {
+                firstName: 'Danielo',
+                middleName: '',
+                lastName: 'Vergara',
+                age: '70 years old',
+                sex: 'Male',
+                relationship: 'Parent(mother)',
+                diagnosis: 'Mild Dementia',
+                symptoms: 'Early stage dementia symptoms. Occasional confusion and forgetfulness.',
+                date: '2026-01-18',
+                time: '09:00',
+                contact: '0973-287-7638',
+                status: 'Confirmed',
+                notes: 'Early intervention program recommended. Family education provided.'
+            },
+            'Herminia Campos': {
+                firstName: 'Herminia',
+                middleName: '',
+                lastName: 'Campos',
+                age: '62 years old',
+                sex: 'Female',
+                relationship: 'Sibling(Brother)',
+                diagnosis: "Alzheimer's Disease",
+                symptoms: 'Progressive memory loss. Difficulty recognizing family members and managing daily activities.',
+                date: '2026-01-14',
+                time: '21:00',
+                contact: '0950-438-2894',
+                status: 'Cancelled',
+                notes: 'Family emergency - appointment cancelled. Will reschedule when available.'
+            },
+            'Florencio Aguilando': {
+                firstName: 'Florencio',
+                middleName: '',
+                lastName: 'Aguilando',
+                age: '78 years old',
+                sex: 'Male',
+                relationship: 'Parent(father)',
+                diagnosis: "Parkinson's Disease",
+                symptoms: 'Tremors, stiffness, and balance issues. Motor function decline observed.',
+                date: '2026-01-10',
+                time: '10:00',
+                contact: '0973-287-7638',
+                status: 'Confirmed',
+                notes: 'Neurological assessment completed. Medication adjustment recommended.'
+            },
+            'Leticia Ordoñez': {
+                firstName: 'Leticia',
+                middleName: '',
+                lastName: 'Ordoñez',
+                age: '66 years old',
+                sex: 'Female',
+                relationship: 'Sibling(Brother)',
+                diagnosis: 'Bipolar Disorder',
+                symptoms: 'Severe mood episodes. Medication side effects reported. Therapy compliance issues.',
+                date: '2026-01-08',
+                time: '21:00',
+                contact: '0950-438-2894',
+                status: 'Cancelled',
+                notes: 'Patient unavailable. Guardian requested rescheduling.'
+            },
+            'Renato Villamor': {
+                firstName: 'Renato',
+                middleName: '',
+                lastName: 'Villamor',
+                age: '81 years old',
+                sex: 'Male',
+                relationship: 'Uncle',
+                diagnosis: "Alzheimer's Disease",
+                symptoms: 'Advanced memory loss. Wandering behavior and confusion. Requires constant supervision.',
+                date: '2026-01-03',
+                time: '11:30',
+                contact: '0896-267-3846',
+                status: 'Pending',
+                notes: 'Initial consultation pending. Comprehensive assessment needed.'
+            }
+        };
+
+        // Function to update form with patient data
+        function loadPatientData(patientName) {
+            if (patients[patientName]) {
+                const patient = patients[patientName];
+                
+                // Update patient information
+                document.getElementById('patientFirstName').value = patient.firstName;
+                document.getElementById('patientMiddleName').value = patient.middleName || '';
+                document.getElementById('patientLastName').value = patient.lastName;
+                document.getElementById('patientAge').value = patient.age;
+                document.getElementById('patientSex').value = patient.sex;
+                document.getElementById('reasonForAppointment').value = patient.symptoms;
+                
+                // Update diagnosis dropdown
+                const diagnosisSelect = document.getElementById('existingDiagnosis');
+                // Find and select the matching diagnosis option
+                for (let option of diagnosisSelect.options) {
+                    if (option.text === patient.diagnosis) {
+                        diagnosisSelect.selectedIndex = option.index;
+                        break;
+                    }
+                }
+                
+                // Update guardian information
+                document.getElementById('guardianContact').value = patient.contact;
+                const relationSelect = document.getElementById('guardianRelation');
+                // Map relationship values to select options
+                let relationValue = '';
+                if (patient.relationship.toLowerCase().includes('mother')) {
+                    relationValue = 'Mother';
+                } else if (patient.relationship.toLowerCase().includes('father')) {
+                    relationValue = 'Father';
+                } else if (patient.relationship.toLowerCase().includes('sibling')) {
+                    relationValue = 'Sibling';
+                } else if (patient.relationship.toLowerCase().includes('uncle')) {
+                    relationValue = 'Uncle';
+                } else {
+                    relationValue = 'Other';
+                }
+                // Set the selected option
+                for (let option of relationSelect.options) {
+                    if (option.text === relationValue) {
+                        relationSelect.selectedIndex = option.index;
+                        break;
+                    }
+                }
+                
+                // Update appointment details
+                document.getElementById('appointmentDate').value = patient.date;
+                document.getElementById('appointmentTime').value = patient.time;
+                document.getElementById('appointmentNotes').value = patient.notes;
+                
+                // Update status badge
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = patient.status;
+                statusBadge.className = 'badge';
+                
+                switch(patient.status.toLowerCase()) {
+                    case 'complete':
+                        statusBadge.className = 'badge status-badge-complete';
+                        break;
+                    case 'confirmed':
+                        statusBadge.className = 'badge status-badge-confirmed';
+                        break;
+                    case 'cancelled':
+                        statusBadge.className = 'badge status-badge-cancelled';
+                        break;
+                    case 'pending':
+                        statusBadge.className = 'badge status-badge-pending';
+                        break;
+                }
+                
+                // Update button visibility based on status
+                const confirmBtn = document.getElementById('confirmBtn');
+                const completeBtn = document.getElementById('completeBtn');
+                const cancelBtn = document.getElementById('cancelBtn');
+                const primaryActions = document.getElementById('primaryActions');
+                const admissionActions = document.getElementById('admissionActions');
+                
+                // Hardcoded status check - frontend logic only
+                const status = patient.status;
+                
+                if (status === 'Pending') {
+                    // Show Confirm button only
+                    primaryActions.style.display = 'flex';
+                    admissionActions.style.display = 'none';
+                    confirmBtn.style.display = 'inline-block';
+                    completeBtn.style.display = 'none';
+                    cancelBtn.style.display = 'inline-block';
+                } else if (status === 'Confirmed') {
+                    // Hide Confirm, show Complete button
+                    primaryActions.style.display = 'flex';
+                    admissionActions.style.display = 'none';
+                    confirmBtn.style.display = 'none';
+                    completeBtn.style.display = 'inline-block';
+                    cancelBtn.style.display = 'inline-block';
+                } else if (status === 'Cancelled') {
+                    // Hide all buttons when status is Cancelled
+                    primaryActions.style.display = 'none';
+                    admissionActions.style.display = 'none';
+                } else if (status === 'Complete') {
+                    // Show Admitted and Decline Admission buttons
+                    primaryActions.style.display = 'none';
+                    admissionActions.style.display = 'flex';
+                } else {
+                    // Default: hide all
+                    primaryActions.style.display = 'none';
+                    admissionActions.style.display = 'none';
+                }
+                
+                // Update active state in patient list
+                document.querySelectorAll('.patient-list-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.dataset.patient === patientName) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Add click handlers to patient list items
+        document.querySelectorAll('.patient-list-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const patientName = this.dataset.patient;
+                loadPatientData(patientName);
+            });
+        });
+
+        // Load initial patient data (Emilia Valdez)
+        loadPatientData('Emilia Valdez');
+    </script>
+</body>
+</html>

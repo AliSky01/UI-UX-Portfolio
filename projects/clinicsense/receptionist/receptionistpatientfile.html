@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient File - ClinicSense</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="receptionistpatientfile.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." style="width: 100%; height: auto;">
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="receptionistdashboard.html" class="nav-link">
+                            <i class="bi bi-house-door"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="receptionistpatientfile.html" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="calendar.html" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <a href="Settings.html" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="logout-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="container-fluid">
+                    <div class="header-content" style="display: flex; justify-content: flex-end; align-items: center;">
+                        <div class="header-user">
+                            <i class="bi bi-bell notification-icon me-4"></i>
+                            <div class="user-box-content">
+                                <span class="user-greeting"><strong id="headerName">Loading...</strong></span>
+                                <div class="user-avatar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- Left Side - Patient List -->
+                        <div class="col-md-3">
+                            <div class="patient-list-card">
+                                <div class="patient-list-header">
+                                    <h5 class="patient-list-title">Patient</h5>
+                                    
+
+                                    <!-- Search Bar -->
+                                    <div class="search-box">
+                                        <input type="text" class="form-control search-input-small" id="searchPatient" placeholder="Search by patient ID, name...">
+                                    </div>
+                                </div>
+
+                                <!-- Patient List -->
+                                <div class="patient-list-body">
+                                    <ul class="patient-list" id="patientList">
+                                        <li class="patient-list-item">
+                                            <span class="patient-item-name">Loading patients...</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side - Patient Details -->
+                        <div class="col-md-9">
+                            <!-- Patient Profile Header -->
+                            <div class="patient-profile-header">
+                                <div class="profile-main">
+                                    <div class="profile-info-section">
+                                        <h2 class="patient-name-large" id="patientName">Loading patient...</h2>
+                                        <div class="admission-info">
+                                            <div class="admission-item">
+                                                <span class="admission-label">Status:</span>
+                                                <span class="admission-value" id="patientStatusValue">--</span>
+                                            </div>
+                                            <div class="admission-item">
+                                                <span class="admission-label">Guardian:</span>
+                                                <span class="admission-value" id="patientGuardianValue">--</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tabs -->
+                                <ul class="patient-tabs">
+                                    <li class="tab-item active">
+                                        <a href="#" class="tab-link">Patient Info</a>
+                                    </li>
+                                    <li class="tab-item">
+                                        <a href="#" class="tab-link">External Medicine</a>
+                                    </li>
+                                    <li class="tab-item">
+                                        <a href="#" class="tab-link">Belongings</a>
+                                    </li>
+                                    <li class="tab-item">
+                                        <a href="#" class="tab-link">Visitors</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Patient Info Tab Content -->
+                            <div id="patientInfoTab" class="tab-content active">
+                            <!-- Personal Information -->
+                            <div class="card info-card">
+                                <div class="card-body">
+                                    <h6 class="section-title">PERSONAL</h6>
+                                    <div class="personal-grid">
+                                        <div class="personal-row">
+                                            <span class="personal-label">First Name</span>
+                                            <span class="personal-value" id="detailFirstName">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Last Name</span>
+                                            <span class="personal-value" id="detailLastName">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Middle Name</span>
+                                            <span class="personal-value" id="detailMiddleName">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Date of Birth</span>
+                                            <span class="personal-value" id="detailBirthdate">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Age</span>
+                                            <span class="personal-value" id="detailAge">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Sex</span>
+                                            <span class="personal-value" id="detailSex">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Civil Status</span>
+                                            <span class="personal-value" id="detailCivilStatus">--</span>
+                                        </div>
+                                        <div class="personal-row">
+                                            <span class="personal-label">Address</span>
+                                            <span class="personal-value" id="detailAddress">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- End Patient Info Tab -->
+
+                            <!-- External Medicine Tab Content -->
+                            <div id="externalMedicineTab" class="tab-content">
+                                <div class="card info-card">
+                                    <div class="card-body">
+                                        <div class="section-header-with-button">
+                                            <h6 class="section-title">EXTERNAL MEDICINE</h6>
+                                            <button class="btn btn-add-new" onclick="openExternalMedicineModal()">
+                                                <i class="bi bi-plus-circle"></i> Add new
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table external-medicine-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Date</th>
+                                                        <th>Medicine & Dosage</th>
+                                                        <th>Quantity</th>
+                                                        <th>Received by</th>
+                                                        <th>Sent by</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="externalMedicineTableBody">
+                                                    <tr>
+                                                        <td colspan="6">Loading external medicine records...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End External Medicine Tab -->
+
+                            <!-- Belongings Tab Content -->
+                            <div id="belongingsTab" class="tab-content">
+                                <div class="card info-card">
+                                    <div class="card-body">
+                                        <div class="section-header-with-button">
+                                            <h6 class="section-title">BELONGINGS</h6>
+                                            <button class="btn btn-add-new" onclick="openBelongingsModal()">
+                                                <i class="bi bi-plus-circle"></i> Add new
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table external-medicine-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Date</th>
+                                                        <th>Item</th>
+                                                        <th>Quantity</th>
+                                                        <th>Received by</th>
+                                                        <th>Sent by</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="belongingsTableBody">
+                                                    <tr>
+                                                        <td colspan="6">Loading belongings records...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Belongings Tab -->
+
+                            <!-- Visitors Tab Content -->
+                            <div id="visitorsTab" class="tab-content">
+                                <div class="card info-card">
+                                    <div class="card-body">
+                                        <div class="section-header-with-button">
+                                            <h6 class="section-title">VISITORS</h6>
+                                            <button class="btn btn-add-new" onclick="openVisitorsModal()">
+                                                <i class="bi bi-plus-circle"></i> Add new
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table external-medicine-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Time</th>
+                                                        <th>Date</th>
+                                                        <th>Name</th>
+                                                        <th>Relationship</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="visitorsTableBody">
+                                                    <tr>
+                                                        <td colspan="4">Loading visitor records...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Visitors Tab -->
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared_logout.js"></script>
+    <!-- Custom JS -->
+    <script>
+        const patientListElement = document.getElementById('patientList');
+        const searchPatientInput = document.getElementById('searchPatient');
+        const patientNameElement = document.getElementById('patientName');
+        const patientStatusValueElement = document.getElementById('patientStatusValue');
+        const patientGuardianValueElement = document.getElementById('patientGuardianValue');
+        const detailFirstNameElement = document.getElementById('detailFirstName');
+        const detailLastNameElement = document.getElementById('detailLastName');
+        const detailMiddleNameElement = document.getElementById('detailMiddleName');
+        const detailBirthdateElement = document.getElementById('detailBirthdate');
+        const detailAgeElement = document.getElementById('detailAge');
+        const detailSexElement = document.getElementById('detailSex');
+        const detailCivilStatusElement = document.getElementById('detailCivilStatus');
+        const detailAddressElement = document.getElementById('detailAddress');
+        const externalMedicineTableBody = document.getElementById('externalMedicineTableBody');
+        const belongingsTableBody = document.getElementById('belongingsTableBody');
+        const visitorsTableBody = document.getElementById('visitorsTableBody');
+
+        let allPatients = [];
+        let selectedPatientId = null;
+
+        function normalizeValue(value, fallback = 'Not available') {
+            if (value === null || value === undefined) {
+                return fallback;
+            }
+
+            const text = String(value).trim();
+            if (!text || text.toLowerCase() === 'n/a' || text.toLowerCase() === 'null') {
+                return fallback;
+            }
+
+            return text;
+        }
+
+        function formatSex(value) {
+            const normalized = normalizeValue(value);
+            if (normalized === 'Not available') {
+                return normalized;
+            }
+
+            if (normalized.toLowerCase() === 'm') {
+                return 'Male';
+            }
+
+            if (normalized.toLowerCase() === 'f') {
+                return 'Female';
+            }
+
+            return normalized;
+        }
+
+        function formatStatus(value) {
+            const normalized = normalizeValue(value, 'Active');
+            return normalized.charAt(0).toUpperCase() + normalized.slice(1).toLowerCase();
+        }
+
+        function formatBirthdate(value) {
+            const normalized = normalizeValue(value);
+            if (normalized === 'Not available') {
+                return normalized;
+            }
+
+            const date = new Date(normalized);
+            if (Number.isNaN(date.getTime())) {
+                return normalized;
+            }
+
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function formatAge(value) {
+            const normalized = normalizeValue(value);
+            if (normalized === 'Not available') {
+                return normalized;
+            }
+
+            const ageNumber = Number(normalized);
+            if (Number.isFinite(ageNumber) && ageNumber > 0) {
+                return `${ageNumber} years old`;
+            }
+
+            return normalized;
+        }
+
+        function formatDisplayDate(value) {
+            const normalized = normalizeValue(value);
+            if (normalized === 'Not available') {
+                return normalized;
+            }
+
+            const date = new Date(normalized);
+            if (Number.isNaN(date.getTime())) {
+                return normalized;
+            }
+
+            return date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+
+        function getPatientDisplayName(patient) {
+            const fullName = [patient.firstName, patient.middleName, patient.lastName]
+                .map(value => normalizeValue(value, ''))
+                .filter(Boolean)
+                .join(' ')
+                .trim();
+
+            return fullName || normalizeValue(patient.name, 'Unnamed patient');
+        }
+
+        function resetPatientDetails(message = 'Select a patient to view information.') {
+            patientNameElement.textContent = 'No patient selected';
+            patientStatusValueElement.textContent = '--';
+            patientGuardianValueElement.textContent = '--';
+            detailFirstNameElement.textContent = '--';
+            detailLastNameElement.textContent = '--';
+            detailMiddleNameElement.textContent = '--';
+            detailBirthdateElement.textContent = '--';
+            detailAgeElement.textContent = '--';
+            detailSexElement.textContent = '--';
+            detailCivilStatusElement.textContent = '--';
+            detailAddressElement.textContent = '--';
+            renderExternalMedicineRecords([], 'Select a patient to view external medicine records.');
+            renderBelongingsRecords([], 'Select a patient to view belongings records.');
+            renderVisitorRecords([], 'Select a patient to view visitor records.');
+        }
+
+        function updatePatientDetails(patient) {
+            if (!patient) {
+                resetPatientDetails();
+                return;
+            }
+
+            patientNameElement.textContent = getPatientDisplayName(patient);
+            patientStatusValueElement.textContent = formatStatus(patient.status);
+            patientGuardianValueElement.textContent = normalizeValue(patient.guardian);
+            detailFirstNameElement.textContent = normalizeValue(patient.firstName);
+            detailLastNameElement.textContent = normalizeValue(patient.lastName);
+            detailMiddleNameElement.textContent = normalizeValue(patient.middleName);
+            detailBirthdateElement.textContent = formatBirthdate(patient.birthdate);
+            detailAgeElement.textContent = formatAge(patient.age);
+            detailSexElement.textContent = formatSex(patient.sex);
+            detailCivilStatusElement.textContent = normalizeValue(patient.civilStatus);
+            detailAddressElement.textContent = normalizeValue(patient.address);
+        }
+
+        function updateActivePatientListState() {
+            document.querySelectorAll('.patient-list-item').forEach(item => {
+                const isActive = item.dataset.patientId === String(selectedPatientId);
+                item.classList.toggle('active', isActive);
+                const radio = item.querySelector('.patient-radio');
+                if (radio) {
+                    radio.checked = isActive;
+                }
+            });
+        }
+
+        function renderExternalMedicineRecords(records, emptyMessage = 'No external medicine records found.') {
+            externalMedicineTableBody.innerHTML = '';
+
+            if (!records.length) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="6">${emptyMessage}</td>`;
+                externalMedicineTableBody.appendChild(emptyRow);
+                return;
+            }
+
+            records.forEach((record, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${formatDisplayDate(record.med_date)}</td>
+                    <td>${normalizeValue(record.medicine)}</td>
+                    <td>${normalizeValue(record.quantity)}</td>
+                    <td>${normalizeValue(record.received_by, '')}</td>
+                    <td>${normalizeValue(record.sent_by, '')}</td>
+                `;
+                externalMedicineTableBody.appendChild(row);
+            });
+        }
+
+        function renderBelongingsRecords(records, emptyMessage = 'No belongings records found.') {
+            belongingsTableBody.innerHTML = '';
+
+            if (!records.length) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="6">${emptyMessage}</td>`;
+                belongingsTableBody.appendChild(emptyRow);
+                return;
+            }
+
+            records.forEach((record, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${formatDisplayDate(record.belongings_date)}</td>
+                    <td>${normalizeValue(record.item)}</td>
+                    <td>${normalizeValue(record.quantity)}</td>
+                    <td>${normalizeValue(record.received_by, '')}</td>
+                    <td>${normalizeValue(record.sent_by, '')}</td>
+                `;
+                belongingsTableBody.appendChild(row);
+            });
+        }
+
+        function renderVisitorRecords(records, emptyMessage = 'No visitor records found.') {
+            visitorsTableBody.innerHTML = '';
+
+            if (!records.length) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="4">${emptyMessage}</td>`;
+                visitorsTableBody.appendChild(emptyRow);
+                return;
+            }
+
+            records.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${normalizeValue(record.visit_time, '')}</td>
+                    <td>${formatDisplayDate(record.visit_date)}</td>
+                    <td>${normalizeValue(record.visitor_name)}</td>
+                    <td>${normalizeValue(record.relationship)}</td>
+                `;
+                visitorsTableBody.appendChild(row);
+            });
+        }
+
+        async function loadExternalMedicineRecords(patientId) {
+            if (!patientId) {
+                renderExternalMedicineRecords([], 'Select a patient to view external medicine records.');
+                return;
+            }
+
+            renderExternalMedicineRecords([], 'Loading external medicine records...');
+
+            try {
+                const params = new URLSearchParams({ patient_id: String(patientId) });
+                const response = await fetch(`../php/patient_external_meds.php?${params.toString()}`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to load external medicine records.');
+                }
+
+                renderExternalMedicineRecords(Array.isArray(data.records) ? data.records : []);
+            } catch (error) {
+                console.error('Failed to load external medicine records:', error);
+                renderExternalMedicineRecords([], 'Unable to load external medicine records.');
+            }
+        }
+
+        async function loadBelongingsRecords(patientId) {
+            if (!patientId) {
+                renderBelongingsRecords([], 'Select a patient to view belongings records.');
+                return;
+            }
+
+            renderBelongingsRecords([], 'Loading belongings records...');
+
+            try {
+                const params = new URLSearchParams({ patient_id: String(patientId) });
+                const response = await fetch(`../php/patient_belongings.php?${params.toString()}`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to load belongings records.');
+                }
+
+                renderBelongingsRecords(Array.isArray(data.records) ? data.records : []);
+            } catch (error) {
+                console.error('Failed to load belongings records:', error);
+                renderBelongingsRecords([], 'Unable to load belongings records.');
+            }
+        }
+
+        async function loadVisitorRecords(patientId) {
+            if (!patientId) {
+                renderVisitorRecords([], 'Select a patient to view visitor records.');
+                return;
+            }
+
+            renderVisitorRecords([], 'Loading visitor records...');
+
+            try {
+                const params = new URLSearchParams({ patient_id: String(patientId) });
+                const response = await fetch(`../php/patient_visitors.php?${params.toString()}`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to load visitor records.');
+                }
+
+                renderVisitorRecords(Array.isArray(data.records) ? data.records : []);
+            } catch (error) {
+                console.error('Failed to load visitor records:', error);
+                renderVisitorRecords([], 'Unable to load visitor records.');
+            }
+        }
+
+        function selectPatient(patientId) {
+            selectedPatientId = String(patientId);
+            const selectedPatient = allPatients.find(patient => String(patient.id) === selectedPatientId) || null;
+            updatePatientDetails(selectedPatient);
+            updateActivePatientListState();
+            loadExternalMedicineRecords(selectedPatientId);
+            loadBelongingsRecords(selectedPatientId);
+            loadVisitorRecords(selectedPatientId);
+        }
+
+        function renderPatientList(patients) {
+            patientListElement.innerHTML = '';
+
+            if (!patients.length) {
+                const emptyItem = document.createElement('li');
+                emptyItem.className = 'patient-list-item';
+                emptyItem.innerHTML = '<span class="patient-item-name">No patients found.</span>';
+                patientListElement.appendChild(emptyItem);
+                resetPatientDetails('No patient records are available.');
+                return;
+            }
+
+            patients.forEach(patient => {
+                const listItem = document.createElement('li');
+                listItem.className = 'patient-list-item';
+                listItem.dataset.patientId = String(patient.id);
+                listItem.dataset.search = [
+                    patient.id,
+                    patient.name,
+                    patient.firstName,
+                    patient.middleName,
+                    patient.lastName
+                ].map(value => normalizeValue(value, '').toLowerCase()).join(' ');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'patientRadio';
+                radio.className = 'patient-radio';
+
+                const name = document.createElement('span');
+                name.className = 'patient-item-name';
+                name.textContent = normalizeValue(patient.name, getPatientDisplayName(patient));
+
+                listItem.appendChild(radio);
+                listItem.appendChild(name);
+
+                listItem.addEventListener('click', function() {
+                    selectPatient(patient.id);
+                });
+
+                radio.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    selectPatient(patient.id);
+                });
+
+                patientListElement.appendChild(listItem);
+            });
+
+            const visibleSelected = patients.some(patient => String(patient.id) === String(selectedPatientId));
+            if (visibleSelected) {
+                updateActivePatientListState();
+            } else {
+                selectPatient(patients[0].id);
+            }
+        }
+
+        function filterPatients() {
+            const searchTerm = searchPatientInput.value.trim().toLowerCase();
+            if (!searchTerm) {
+                renderPatientList(allPatients);
+                return;
+            }
+
+            const filteredPatients = allPatients.filter(patient => {
+                const searchValue = [
+                    patient.id,
+                    patient.name,
+                    patient.firstName,
+                    patient.middleName,
+                    patient.lastName
+                ].map(value => normalizeValue(value, '').toLowerCase()).join(' ');
+
+                return searchValue.includes(searchTerm);
+            });
+
+            renderPatientList(filteredPatients);
+        }
+
+        async function loadPatientsFromDatabase() {
+            try {
+                const response = await fetch('../php/get_doctor_patients.php?status=admitted', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to load patients.');
+                }
+
+                allPatients = Array.isArray(data.patients) ? data.patients : [];
+                renderPatientList(allPatients);
+            } catch (error) {
+                console.error('Failed to load patients:', error);
+                patientListElement.innerHTML = '<li class="patient-list-item"><span class="patient-item-name">Unable to load patients.</span></li>';
+                resetPatientDetails('Unable to load patient information.');
+            }
+        }
+
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Tab navigation
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
+                this.closest('.tab-item').classList.add('active');
+
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                const tabText = this.textContent.trim();
+                if (tabText === 'Patient Info') {
+                    document.getElementById('patientInfoTab').classList.add('active');
+                } else if (tabText === 'External Medicine') {
+                    document.getElementById('externalMedicineTab').classList.add('active');
+                } else if (tabText === 'Belongings') {
+                    document.getElementById('belongingsTab').classList.add('active');
+                } else if (tabText === 'Visitors') {
+                    document.getElementById('visitorsTab').classList.add('active');
+                }
+            });
+        });
+
+        function initializePatientFilePage() {
+            searchPatientInput?.addEventListener('input', filterPatients);
+
+            resetPatientDetails('Loading patient information...');
+            loadPatientsFromDatabase();
+
+            document.getElementById('externalMedicineForm')?.addEventListener('submit', handleExternalMedicineSubmit);
+            document.getElementById('belongingsForm')?.addEventListener('submit', handleBelongingsSubmit);
+            document.getElementById('visitorsForm')?.addEventListener('submit', handleVisitorsSubmit);
+        }
+
+        let patientFileConfirmResolver = null;
+
+        function getPatientFileModalVariant(variant) {
+            const variants = {
+                primary: {
+                    badgeClass: 'action-modal-badge is-primary',
+                    iconClass: 'bi bi-save-fill',
+                    buttonClass: 'btn btn-primary'
+                },
+                success: {
+                    badgeClass: 'action-modal-badge is-success',
+                    iconClass: 'bi bi-check-circle-fill',
+                    buttonClass: 'btn btn-success'
+                },
+                warning: {
+                    badgeClass: 'action-modal-badge is-warning',
+                    iconClass: 'bi bi-exclamation-triangle-fill',
+                    buttonClass: 'btn btn-warning text-dark'
+                },
+                danger: {
+                    badgeClass: 'action-modal-badge is-danger',
+                    iconClass: 'bi bi-x-circle-fill',
+                    buttonClass: 'btn btn-danger'
+                }
+            };
+
+            return variants[variant] || variants.primary;
+        }
+
+        function showPatientFileFeedback(message, title = 'Notice', variant = 'success') {
+            const modal = document.getElementById('patientFileFeedbackModal');
+            if (!modal) {
+                return;
+            }
+
+            const config = getPatientFileModalVariant(variant);
+            document.getElementById('patientFileFeedbackTitle').textContent = title;
+            document.getElementById('patientFileFeedbackMessage').textContent = message;
+
+            const badge = document.getElementById('patientFileFeedbackBadge');
+            badge.className = config.badgeClass;
+            badge.innerHTML = `<i class="${config.iconClass}"></i>`;
+
+            const button = document.getElementById('patientFileFeedbackButton');
+            button.className = config.buttonClass;
+            button.textContent = 'OK';
+
+            modal.style.display = 'flex';
+        }
+
+        function closePatientFileFeedbackModal() {
+            const modal = document.getElementById('patientFileFeedbackModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function showPatientFileConfirm(message, title = 'Confirm Save', variant = 'primary') {
+            const modal = document.getElementById('patientFileConfirmModal');
+            if (!modal) {
+                return Promise.resolve(false);
+            }
+
+            if (typeof patientFileConfirmResolver === 'function') {
+                patientFileConfirmResolver(false);
+            }
+
+            const config = getPatientFileModalVariant(variant);
+            document.getElementById('patientFileConfirmTitle').textContent = title;
+            document.getElementById('patientFileConfirmMessage').textContent = message;
+
+            const badge = document.getElementById('patientFileConfirmBadge');
+            badge.className = config.badgeClass;
+            badge.innerHTML = `<i class="${config.iconClass}"></i>`;
+
+            const confirmButton = document.getElementById('patientFileConfirmButton');
+            confirmButton.className = config.buttonClass;
+            confirmButton.textContent = 'Save';
+
+            modal.style.display = 'flex';
+
+            return new Promise(resolve => {
+                patientFileConfirmResolver = resolve;
+            });
+        }
+
+        function closePatientFileConfirmModal(result = false) {
+            const modal = document.getElementById('patientFileConfirmModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+
+            if (typeof patientFileConfirmResolver === 'function') {
+                const resolve = patientFileConfirmResolver;
+                patientFileConfirmResolver = null;
+                resolve(result);
+            }
+        }
+
+        // External Medicine Modal Functions
+        function openExternalMedicineModal() {
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const modal = document.getElementById('externalMedicineModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('medicineDate').valueAsDate = new Date();
+            }
+        }
+
+        function closeExternalMedicineModal() {
+            const modal = document.getElementById('externalMedicineModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            const form = document.getElementById('externalMedicineForm');
+            if (form) {
+                form.reset();
+            }
+        }
+
+        // Belongings Modal Functions
+        function openBelongingsModal() {
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const modal = document.getElementById('belongingsModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('belongingsDate').valueAsDate = new Date();
+            }
+        }
+
+        function closeBelongingsModal() {
+            const modal = document.getElementById('belongingsModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            const form = document.getElementById('belongingsForm');
+            if (form) {
+                form.reset();
+            }
+        }
+
+        // Visitors Modal Functions
+        function openVisitorsModal() {
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const modal = document.getElementById('visitorsModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('visitorDate').valueAsDate = new Date();
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const timeFromInput = document.getElementById('visitorTimeFrom');
+                const timeToInput = document.getElementById('visitorTimeTo');
+
+                if (timeFromInput) {
+                    timeFromInput.value = `${hours}:${minutes}`;
+                }
+
+                if (timeToInput) {
+                    const toTime = new Date(now.getTime() + 60 * 60 * 1000);
+                    const toHours = String(toTime.getHours()).padStart(2, '0');
+                    const toMinutes = String(toTime.getMinutes()).padStart(2, '0');
+                    timeToInput.value = `${toHours}:${toMinutes}`;
+                }
+            }
+        }
+
+        function closeVisitorsModal() {
+            const modal = document.getElementById('visitorsModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            const form = document.getElementById('visitorsForm');
+            if (form) {
+                form.reset();
+            }
+        }
+
+        // Form submission handlers
+        async function handleExternalMedicineSubmit(e) {
+            e.preventDefault();
+
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const payload = {
+                patient_id: selectedPatientId,
+                date: document.getElementById('medicineDate').value,
+                medicine: document.getElementById('medicineDosage').value.trim(),
+                quantity: document.getElementById('medicineQuantity').value.trim(),
+                received_by: document.getElementById('medicineReceivedBy').value.trim(),
+                sent_by: document.getElementById('medicineSentBy').value.trim()
+            };
+
+            if (!payload.date || !payload.medicine || !payload.quantity) {
+                showPatientFileFeedback('Please fill in the date, medicine, and quantity.', 'Missing Information', 'warning');
+                return;
+            }
+
+            const shouldSave = await showPatientFileConfirm(
+                'Are you sure you want to save this external medicine information?',
+                'Save External Medicine',
+                'primary'
+            );
+
+            if (!shouldSave) {
+                return;
+            }
+
+            try {
+                const response = await fetch('../php/patient_external_meds.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to save external medicine record.');
+                }
+
+                renderExternalMedicineRecords(Array.isArray(data.records) ? data.records : []);
+                closeExternalMedicineModal();
+                showPatientFileFeedback('External medicine information was saved successfully.', 'Saved', 'success');
+            } catch (error) {
+                console.error('Failed to save external medicine record:', error);
+                showPatientFileFeedback(error.message || 'Unable to save external medicine record.', 'Save Failed', 'danger');
+            }
+        }
+
+        async function handleBelongingsSubmit(e) {
+            e.preventDefault();
+
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const payload = {
+                patient_id: selectedPatientId,
+                date: document.getElementById('belongingsDate').value,
+                item: document.getElementById('belongingsItem').value.trim(),
+                quantity: document.getElementById('belongingsQuantity').value.trim(),
+                received_by: document.getElementById('belongingsReceivedBy').value.trim(),
+                sent_by: document.getElementById('belongingsSentBy').value.trim()
+            };
+
+            if (!payload.date || !payload.item || !payload.quantity) {
+                showPatientFileFeedback('Please fill in the date, item, and quantity.', 'Missing Information', 'warning');
+                return;
+            }
+
+            const shouldSave = await showPatientFileConfirm(
+                'Are you sure you want to save these belongings information?',
+                'Save Belongings',
+                'primary'
+            );
+
+            if (!shouldSave) {
+                return;
+            }
+
+            try {
+                const response = await fetch('../php/patient_belongings.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to save belongings record.');
+                }
+
+                renderBelongingsRecords(Array.isArray(data.records) ? data.records : []);
+                closeBelongingsModal();
+                showPatientFileFeedback('Belongings information was saved successfully.', 'Saved', 'success');
+            } catch (error) {
+                console.error('Failed to save belongings record:', error);
+                showPatientFileFeedback(error.message || 'Unable to save belongings record.', 'Save Failed', 'danger');
+            }
+        }
+
+        async function handleVisitorsSubmit(e) {
+            e.preventDefault();
+
+            if (!selectedPatientId) {
+                showPatientFileFeedback('Please select a patient first.', 'Select Patient', 'warning');
+                return;
+            }
+
+            const payload = {
+                patient_id: selectedPatientId,
+                date: document.getElementById('visitorDate').value,
+                time_from: document.getElementById('visitorTimeFrom').value,
+                time_to: document.getElementById('visitorTimeTo').value,
+                name: document.getElementById('visitorName').value.trim(),
+                relationship: document.getElementById('visitorRelationship').value.trim()
+            };
+
+            if (!payload.date || !payload.time_from || !payload.time_to || !payload.name || !payload.relationship) {
+                showPatientFileFeedback('Please fill in the date, time, name, and relationship.', 'Missing Information', 'warning');
+                return;
+            }
+
+            const shouldSave = await showPatientFileConfirm(
+                'Are you sure you want to save this visitor information?',
+                'Save Visitor',
+                'primary'
+            );
+
+            if (!shouldSave) {
+                return;
+            }
+
+            try {
+                const response = await fetch('../php/patient_visitors.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to save visitor record.');
+                }
+
+                renderVisitorRecords(Array.isArray(data.records) ? data.records : []);
+                closeVisitorsModal();
+                showPatientFileFeedback('Visitor information was saved successfully.', 'Saved', 'success');
+            } catch (error) {
+                console.error('Failed to save visitor record:', error);
+                showPatientFileFeedback(error.message || 'Unable to save visitor record.', 'Save Failed', 'danger');
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializePatientFilePage, { once: true });
+        } else {
+            initializePatientFilePage();
+        }
+    </script>
+
+    <!-- External Medicine Modal -->
+    <div id="externalMedicineModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add External Medicine</h5>
+                <button type="button" class="btn-close" onclick="closeExternalMedicineModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <form id="externalMedicineForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="medicineDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Medicine & Dosage</label>
+                        <input type="text" class="form-control" id="medicineDosage" placeholder="e.g., Amlodipine 10 mg" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="medicineQuantity" placeholder="e.g., 10 tabs" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Received by</label>
+                        <input type="text" class="form-control" id="medicineReceivedBy" placeholder="e.g., Nurse Rachel Mendoza">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sent by</label>
+                        <input type="text" class="form-control" id="medicineSentBy" placeholder="e.g., Son">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeExternalMedicineModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Belongings Modal -->
+    <div id="belongingsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Belongings</h5>
+                <button type="button" class="btn-close" onclick="closeBelongingsModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <form id="belongingsForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="belongingsDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Item</label>
+                        <input type="text" class="form-control" id="belongingsItem" placeholder="e.g., White Shirts" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="belongingsQuantity" placeholder="e.g., 3 pcs" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Received by</label>
+                        <input type="text" class="form-control" id="belongingsReceivedBy" placeholder="e.g., Receptionist Jam">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sent by</label>
+                        <input type="text" class="form-control" id="belongingsSentBy" placeholder="e.g., Son">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeBelongingsModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Visitors Modal -->
+    <div id="visitorsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Visitor</h5>
+                <button type="button" class="btn-close" onclick="closeVisitorsModal()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <form id="visitorsForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" id="visitorDate" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Time From</label>
+                            <input type="time" class="form-control" id="visitorTimeFrom" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Time To</label>
+                            <input type="time" class="form-control" id="visitorTimeTo" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" id="visitorName" placeholder="e.g., Rossy Alberto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Relationship</label>
+                        <input type="text" class="form-control" id="visitorRelationship" placeholder="e.g., Son" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeVisitorsModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="patientFileConfirmModal" class="modal-overlay" style="display: none;" onclick="if (event.target === this) closePatientFileConfirmModal(false)">
+        <div class="modal-content action-dialog">
+            <div class="action-modal-body">
+                <div id="patientFileConfirmBadge" class="action-modal-badge is-primary">
+                    <i class="bi bi-save-fill"></i>
+                </div>
+                <h5 id="patientFileConfirmTitle" class="action-modal-title">Confirm Save</h5>
+                <p id="patientFileConfirmMessage" class="action-modal-message">Are you sure you want to save this information?</p>
+            </div>
+            <div class="modal-footer action-modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closePatientFileConfirmModal(false)">Cancel</button>
+                <button type="button" id="patientFileConfirmButton" class="btn btn-primary" onclick="closePatientFileConfirmModal(true)">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="patientFileFeedbackModal" class="modal-overlay" style="display: none;" onclick="if (event.target === this) closePatientFileFeedbackModal()">
+        <div class="modal-content action-dialog">
+            <div class="action-modal-body">
+                <div id="patientFileFeedbackBadge" class="action-modal-badge is-success">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <h5 id="patientFileFeedbackTitle" class="action-modal-title">Saved</h5>
+                <p id="patientFileFeedbackMessage" class="action-modal-message">Information was saved successfully.</p>
+            </div>
+            <div class="modal-footer action-modal-footer">
+                <button type="button" id="patientFileFeedbackButton" class="btn btn-success" onclick="closePatientFileFeedbackModal()">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

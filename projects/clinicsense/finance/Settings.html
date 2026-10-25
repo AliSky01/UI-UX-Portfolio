@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Estrellas Homecare Clinic</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center g-0 py-2">
+                <div class="col-md-6">
+                    <a href="finances.html" class="header-logo-link">
+                        <div class="header-logo d-flex align-items-center gap-3">
+                            <img src="../image/logo.jpg" alt="Estrellas Logo" class="logo-img">
+                            <div>
+                                <h4 class="logo-text mb-0">ESTRELLAS</h4>
+                                <p class="logo-subtext mb-0">HOMECARE CLINIC, INC.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="header-user d-flex align-items-center justify-content-end gap-3 pe-4">
+                        <div class="notification-wrapper position-relative">
+                            <i class="bi bi-bell notification-icon"></i>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </div>
+                        <div class="user-menu-wrapper position-relative">
+                            <div class="user-box-content" onclick="toggleUserMenu(event)">
+                                <span class="user-greeting" id="userGreeting"><strong id="headerName">Finance</strong></span>
+                                <div class="user-avatar"></div>
+                            </div>
+                            <div class="user-dropdown-menu" id="userDropdown">
+                                <a href="Settings.html" class="dropdown-item">
+                                    <i class="bi bi-gear"></i> Settings
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" id="logoutBtn" class="dropdown-item">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-divider"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="settings-container">
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- Sidebar Navigation -->
+                <div class="col-lg-3">
+                    <div class="settings-sidebar">
+                        <div class="settings-nav">
+                            <button class="settings-nav-item active" onclick="showSection('account')">
+                                <i class="bi bi-person-circle"></i>
+                                <span>Account Settings</span>
+                            </button>
+                            <button class="settings-nav-item" onclick="showSection('notifications')">
+                                <i class="bi bi-bell"></i>
+                                <span>Notifications</span>
+                            </button>
+                            <button class="settings-nav-item" onclick="showSection('privacy')">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>Privacy & Security</span>
+                            </button>
+                            <button class="settings-nav-item" onclick="showSection('preferences')">
+                                <i class="bi bi-sliders"></i>
+                                <span>Preferences</span>
+                            </button>
+                            <button class="settings-nav-item" onclick="showSection('help')">
+                                <i class="bi bi-question-circle"></i>
+                                <span>Help & Support</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="col-lg-9">
+                    <div class="settings-content">
+                        <!-- Account Settings Section -->
+                        <section id="account" class="settings-section active">
+                            <h2 class="section-title">Account Settings</h2>
+                            
+                            <div class="settings-group">
+                                <label class="settings-label">Full Name</label>
+                                <input type="text" class="form-control settings-input" id="fullName">
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Email Address</label>
+                                <input type="email" class="form-control settings-input" id="emailAddress">
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Phone Number</label>
+                                <input type="tel" class="form-control settings-input" id="phoneNumber">
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Department</label>
+                                <input type="text" class="form-control settings-input" id="department">
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Change Password</label>
+                                <button class="btn btn-secondary btn-sm">
+                                    <i class="bi bi-key"></i> Change Password
+                                </button>
+                            </div>
+
+                            <div class="settings-actions">
+                                <button class="btn btn-primary">Save Changes</button>
+                                <button class="btn btn-light">Cancel</button>
+                            </div>
+                        </section>
+
+                        <!-- Notifications Section -->
+                        <section id="notifications" class="settings-section">
+                            <h2 class="section-title">Notification Settings</h2>
+
+                            <div class="settings-toggle-group">
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <h4>Email Notifications</h4>
+                                        <p>Receive email notifications for important updates</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                                    </div>
+                                </div>
+
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <h4>Financial Reports</h4>
+                                        <p>Get notifications about financial transactions and reports</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="financialReports" checked>
+                                    </div>
+                                </div>
+
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <h4>SMS Notifications</h4>
+                                        <p>Receive SMS updates on your phone</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="smsNotif">
+                                    </div>
+                                </div>
+
+                                <div class="toggle-item">
+                                    <div class="toggle-info">
+                                        <h4>System Updates</h4>
+                                        <p>Notify about system maintenance and updates</p>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="systemUpdates" checked>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="settings-actions">
+                                <button class="btn btn-primary">Save Preferences</button>
+                            </div>
+                        </section>
+
+                        <!-- Privacy & Security Section -->
+                        <section id="privacy" class="settings-section">
+                            <h2 class="section-title">Privacy & Security</h2>
+
+                            <div class="settings-group">
+                                <h4 class="subsection-title">Two-Factor Authentication</h4>
+                                <p class="settings-description">Add an extra layer of security to your account</p>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-shield-check"></i> Enable 2FA
+                                </button>
+                            </div>
+
+                            <hr class="settings-divider">
+
+                            <div class="settings-group">
+                                <h4 class="subsection-title">Login History</h4>
+                                <p class="settings-description">View your recent login activity</p>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-clock-history"></i> View History
+                                </button>
+                            </div>
+
+                            <hr class="settings-divider">
+
+                            <div class="settings-group">
+                                <h4 class="subsection-title">Active Sessions</h4>
+                                <p class="settings-description">Manage devices and sessions where you're logged in</p>
+                                <div class="active-session">
+                                    <div>
+                                        <p class="session-device">Current Session</p>
+                                        <p class="session-info">Last active: Now</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="settings-divider">
+
+                            <div class="settings-group">
+                                <h4 class="subsection-title">Data & Privacy</h4>
+                                <p class="settings-description">Manage your data and privacy preferences</p>
+                                <button class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-download"></i> Download My Data
+                                </button>
+                            </div>
+                        </section>
+
+                        <!-- Preferences Section -->
+                        <section id="preferences" class="settings-section">
+                            <h2 class="section-title">Preferences</h2>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Theme</label>
+                                <select class="form-control settings-input">
+                                    <option>Light Mode</option>
+                                    <option>Dark Mode</option>
+                                    <option>Auto (System Default)</option>
+                                </select>
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Language</label>
+                                <select class="form-control settings-input">
+                                    <option>English</option>
+                                    <option>Filipino (Tagalog)</option>
+                                    <option>Spanish</option>
+                                </select>
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Time Zone</label>
+                                <select class="form-control settings-input">
+                                    <option>UTC+8:00 (Philippine Standard Time)</option>
+                                    <option>UTC+0:00 (GMT)</option>
+                                    <option>UTC-8:00 (PST)</option>
+                                </select>
+                            </div>
+
+                            <div class="settings-group">
+                                <label class="settings-label">Date Format</label>
+                                <select class="form-control settings-input">
+                                    <option>MM/DD/YYYY</option>
+                                    <option>DD/MM/YYYY</option>
+                                    <option>YYYY-MM-DD</option>
+                                </select>
+                            </div>
+
+                            <div class="settings-actions">
+                                <button class="btn btn-primary">Save Preferences</button>
+                            </div>
+                        </section>
+
+                        <!-- Help & Support Section -->
+                        <section id="help" class="settings-section">
+                            <h2 class="section-title">Help & Support</h2>
+
+                            <div class="help-grid">
+                                <div class="help-card">
+                                    <i class="bi bi-book"></i>
+                                    <h4>Documentation</h4>
+                                    <p>Browse our help guides and documentation</p>
+                                    <a href="#" class="help-link">View Docs <i class="bi bi-arrow-right"></i></a>
+                                </div>
+
+                                <div class="help-card">
+                                    <i class="bi bi-chat-dots"></i>
+                                    <h4>Contact Support</h4>
+                                    <p>Get help from our support team</p>
+                                    <a href="#" class="help-link">Contact Us <i class="bi bi-arrow-right"></i></a>
+                                </div>
+
+                                <div class="help-card">
+                                    <i class="bi bi-question-circle"></i>
+                                    <h4>FAQs</h4>
+                                    <p>Find answers to common questions</p>
+                                    <a href="#" class="help-link">View FAQs <i class="bi bi-arrow-right"></i></a>
+                                </div>
+
+                                <div class="help-card">
+                                    <i class="bi bi-bug"></i>
+                                    <h4>Report a Bug</h4>
+                                    <p>Report issues or suggest improvements</p>
+                                    <a href="#" class="help-link">Report <i class="bi bi-arrow-right"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="settings-group mt-4">
+                                <h4 class="subsection-title">Account Status</h4>
+                                <p class="settings-description">Status: <strong style="color: #28a745;">Active</strong></p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../shared_logout.js"></script>
+    <script>
+        // Load user info on page load
+        window.addEventListener('load', loadUserInfo);
+        
+        // Toggle user menu dropdown
+        function toggleUserMenu(event) {
+            event.preventDefault();
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenuWrapper = document.querySelector('.user-menu-wrapper');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userMenuWrapper && !userMenuWrapper.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Settings section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav items
+            document.querySelectorAll('.settings-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.add('active');
+            }
+
+            // Add active class to clicked nav item
+            event.target.closest('.settings-nav-item').classList.add('active');
+        }
+
+        // Initialize logout
+        window.addEventListener('load', initLogout);
+    </script>
+</body>
+</html>

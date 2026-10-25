@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient File - ClinicSense</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="patientprofile.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="content-wrapper">
+            <header class="dashboard-header">
+                <div class="container-fluid">
+                    <div class="header-content">
+                        <div class="header-logo-section">
+                            <div class="header-logo-container">
+                                <div class="header-logo-circle">
+                                    <img src="../image/logo.jpg" alt="ESTRELLAS HOMECARE CLINIC, INC." class="header-logo-img">
+                                </div>
+                                <div class="header-logo-text">
+                                    <div class="header-logo-name">ESTRELLAS</div>
+                                    <div class="header-logo-subtitle">HOMECARE CLINIC, INC.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-user">
+                            <i class="bi bi-bell notification-icon me-4"></i>
+                            <div class="user-menu-wrapper position-relative">
+                                <div class="user-box-content" onclick="toggleUserMenu(event)">
+                                    <span class="user-greeting"><strong id="headerName">Loading...</strong></span>
+                                    <div class="user-avatar"></div>
+                                </div>
+                                <div class="user-dropdown-menu" id="userDropdown">
+                                    <a href="AccountProfile.html" class="dropdown-item">
+                                        <i class="bi bi-person"></i> Profile
+                                    </a>
+                                    <a href="Settings.html" class="dropdown-item">
+                                        <i class="bi bi-gear"></i> Settings
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a href="#" class="dropdown-item" id="logoutBtn">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="header-divider"></div>
+
+            <main class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn-back" id="backBtn">
+                                <i class="bi bi-arrow-left"></i>
+                                <span>Back</span>
+                            </button>
+
+                            <div class="card info-card" id="pageStatusCard" hidden>
+                                <div class="card-body">
+                                    <p class="status-message" id="pageStatusMessage">Loading patient file...</p>
+                                </div>
+                            </div>
+
+                            <div id="patientContent" hidden>
+                                <div class="patient-switcher-card" id="patientSwitcherCard" hidden>
+                                    <label for="patientSelector" class="patient-switcher-label">Linked Admitted Patient</label>
+                                    <select id="patientSelector" class="patient-selector"></select>
+                                </div>
+
+                                <div class="patient-profile-header">
+                                    <div class="profile-main">
+                                        <div class="profile-left">
+                                            <div class="profile-info-section">
+                                                <h2 class="patient-name-large" id="patientNameLarge">
+                                                    <span class="name-line">Patient</span>
+                                                </h2>
+                                                <p class="patient-diagnosis" id="patientDiagnosisSummary">Loading diagnosis...</p>
+                                            </div>
+                                        </div>
+                                        <div class="profile-right">
+                                            <div class="admission-info">
+                                                <div class="admission-item">
+                                                    <span class="admission-label">Admission Date:</span>
+                                                    <span class="admission-value" id="admissionDateValue">Not recorded</span>
+                                                </div>
+                                                <div class="admission-item">
+                                                    <span class="admission-label">Admission Time:</span>
+                                                    <span class="admission-value" id="admissionTimeValue">Not recorded</span>
+                                                </div>
+                                                <div class="admission-item">
+                                                    <span class="admission-label">Attending Physician:</span>
+                                                    <span class="admission-value" id="attendingPhysicianValue">Doctor on record</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="patient-tabs">
+                                        <li class="tab-item active">
+                                            <a href="#" class="tab-link" data-tab-target="patientInfoTab">Patient Info</a>
+                                        </li>
+                                        <li class="tab-item">
+                                            <a href="#" class="tab-link" data-tab-target="prescriptionTab">Prescription</a>
+                                        </li>
+                                        <li class="tab-item">
+                                            <a href="#" class="tab-link" data-tab-target="externalMedicineTab">External Medicine</a>
+                                        </li>
+                                        <li class="tab-item">
+                                            <a href="#" class="tab-link" data-tab-target="belongingsTab">Belongings</a>
+                                        </li>
+                                        <li class="tab-item">
+                                            <a href="#" class="tab-link" data-tab-target="visitorsTab">Visitors</a>
+                                        </li>
+                                        <li class="tab-item">
+                                            <a href="#" class="tab-link" data-tab-target="billsTab">Bills</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div id="patientInfoTab" class="tab-content active">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">DIAGNOSIS</h6>
+                                            <div class="row g-3" id="diagnosesContainer">
+                                                <div class="col-12">
+                                                    <p class="info-empty">Loading diagnoses...</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">PERSONAL</h6>
+                                            <div class="personal-grid">
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Date of Birth</span>
+                                                    <span class="personal-value" id="personalBirthdate">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Age</span>
+                                                    <span class="personal-value" id="personalAge">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Sex</span>
+                                                    <span class="personal-value" id="personalSex">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Civil Status</span>
+                                                    <span class="personal-value" id="personalCivilStatus">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Address</span>
+                                                    <span class="personal-value" id="personalAddress">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Religion</span>
+                                                    <span class="personal-value" id="personalReligion">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Hobbies</span>
+                                                    <span class="personal-value" id="personalHobbies">Not specified</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Previous Occupation</span>
+                                                    <span class="personal-value" id="personalPreviousOccupation">Not specified</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">VITALS</h6>
+                                            <div class="personal-grid" id="vitalsSection">
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Blood Pressure</span>
+                                                    <span class="personal-value" id="vitalBP">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Pulse Rate</span>
+                                                    <span class="personal-value" id="vitalPulse">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Temperature</span>
+                                                    <span class="personal-value" id="vitalTemp">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Weight</span>
+                                                    <span class="personal-value" id="vitalWeight">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Height</span>
+                                                    <span class="personal-value" id="vitalHeight">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Respiratory Rate</span>
+                                                    <span class="personal-value" id="vitalRespiratory">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Oxygen Saturation</span>
+                                                    <span class="personal-value" id="vitalO2">Not recorded</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Last Updated</span>
+                                                    <span class="personal-value" id="vitalLastUpdated">Not recorded</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">MENTAL STATUS AND BEHAVIORAL OBSERVATIONS</h6>
+                                            <ul class="mental-status-list" id="mentalStatusList">
+                                                <li class="mental-status-empty">Loading observations...</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">MEDICAL HISTORY</h6>
+
+                                            <div class="medical-subsection">
+                                                <h6 class="medical-subsection-title">CHRONIC CONDITION</h6>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Chronic Condition</span>
+                                                    <span class="personal-value" id="chronicConditionValue">Not specified</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="medical-subsection">
+                                                <h6 class="medical-subsection-title">PSYCHIATRIC CONDITION</h6>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Psychiatric Condition</span>
+                                                    <span class="personal-value" id="psychiatricConditionValue">None reported</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="medical-subsection">
+                                                <h6 class="medical-subsection-title">COMMON ALLERGIES</h6>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Food Allergy</span>
+                                                    <span class="personal-value" id="foodAllergyValue">None reported</span>
+                                                </div>
+                                                <div class="personal-row">
+                                                    <span class="personal-label">Medical Allergy</span>
+                                                    <span class="personal-value" id="medicalAllergyValue">None reported</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="card info-card family-card">
+                                                <div class="card-body">
+                                                    <h6 class="section-title">FAMILY PSYCHIATRIC HISTORY</h6>
+                                                    <div class="family-side">
+                                                        <label class="family-radio-label">
+                                                            <span class="family-radio-text">PATERNAL SIDE:</span>
+                                                            <span class="family-value" id="familyPsychPaternal">None reported</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="family-side">
+                                                        <label class="family-radio-label">
+                                                            <span class="family-radio-text">MATERNAL SIDE:</span>
+                                                            <span class="family-value" id="familyPsychMaternal">None reported</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card info-card family-card">
+                                                <div class="card-body">
+                                                    <h6 class="section-title">FAMILY MEDICAL HISTORY</h6>
+                                                    <div class="family-side">
+                                                        <label class="family-radio-label">
+                                                            <span class="family-radio-text">PATERNAL SIDE:</span>
+                                                            <span class="family-value" id="familyMedicalPaternal">None reported</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="family-side">
+                                                        <label class="family-radio-label">
+                                                            <span class="family-radio-text">MATERNAL SIDE:</span>
+                                                            <span class="family-value" id="familyMedicalMaternal">None reported</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="prescriptionTab" class="tab-content">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <div class="section-header-with-button">
+                                                <h6 class="section-title">MEDICINE INTAKE</h6>
+                                            </div>
+                                            <div class="medicine-intake-cards" id="medicineIntakeList">
+                                                <p class="info-empty">Loading medicine intake...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <div class="section-header-with-button">
+                                                <h6 class="section-title">PRESCRIPTION</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table prescription-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Prescribed by</th>
+                                                            <th>Medicine</th>
+                                                            <th>Dosage</th>
+                                                            <th>Frequency</th>
+                                                            <th>Date</th>
+                                                            <th>Duration</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="prescriptionTableBody">
+                                                        <tr>
+                                                            <td colspan="6" class="table-empty-cell">Loading prescriptions...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="externalMedicineTab" class="tab-content">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <div class="section-header-with-button">
+                                                <h6 class="section-title">EXTERNAL MEDICINE</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table external-medicine-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Date</th>
+                                                            <th>Medicine &amp; Dosage</th>
+                                                            <th>Quantity</th>
+                                                            <th>Received by</th>
+                                                            <th>Sent by</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="externalMedicineTableBody">
+                                                        <tr>
+                                                            <td colspan="6" class="table-empty-cell">Loading external medicine...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="belongingsTab" class="tab-content">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <div class="section-header-with-button">
+                                                <h6 class="section-title">BELONGINGS</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table external-medicine-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Date</th>
+                                                            <th>Item</th>
+                                                            <th>Quantity</th>
+                                                            <th>Received by</th>
+                                                            <th>Sent by</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="belongingsTableBody">
+                                                        <tr>
+                                                            <td colspan="6" class="table-empty-cell">Loading belongings...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="visitorsTab" class="tab-content">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <div class="section-header-with-button">
+                                                <h6 class="section-title">VISITORS</h6>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table external-medicine-table visitors-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Time</th>
+                                                            <th>Date</th>
+                                                            <th>Name</th>
+                                                            <th>Relationship</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="visitorsTableBody">
+                                                        <tr>
+                                                            <td colspan="4" class="table-empty-cell">Loading visitors...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="billsTab" class="tab-content">
+                                    <div class="card info-card">
+                                        <div class="card-body">
+                                            <h6 class="section-title">BILLING STATEMENT</h6>
+                                            <div class="balance-card">
+                                                <div class="card-body">
+                                                    <p class="balance-label" id="guardianBalanceLabel">Balance as of --:</p>
+                                                    <h1 class="balance-amount" id="guardianBalanceAmount">Php 0.00</h1>
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="billing-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>MONTH</th>
+                                                            <th>DUE DATE</th>
+                                                            <th>AMOUNT</th>
+                                                            <th>STATUS</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="guardianBillingTableBody">
+                                                        <tr>
+                                                            <td colspan="4" class="text-center text-muted py-3">Loading billing records...</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="../demo-data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../shared_logout.js"></script>
+    <script src="patientprofile.js"></script>
+</body>
+</html>

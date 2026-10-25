@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrellas - Register</title>
+    <link rel="stylesheet" href="registrationform2.css">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="../image/holdinghands.png" alt="Caring hands">
+        </div>
+        
+        <div class="register-section">
+            <div class="header-section">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="../image/logo.jpg" alt="Estrellas Logo">
+                    </div>
+                    <p class="tagline">Your Health is our Highly Priority</p>
+                </div>
+            </div>
+            
+            <div class="register-form">
+                <h1>Register</h1>
+                
+                <form id="registrationForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstname">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstname" placeholder="" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="middlename">Middle Name</label>
+                            <input type="text" id="middlename" placeholder="">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastname">Last Name <span class="required">*</span></label>
+                        <input type="text" id="lastname" placeholder="" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <div class="date-inputs">
+                            <select id="month" required>
+                                <option value="">MM</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                            
+                            <select id="day" required>
+                                <option value="">DD</option>
+                                <option value="01">1</option>
+                                <option value="02">2</option>
+                                <option value="03">3</option>
+                                <option value="04">4</option>
+                                <option value="05">5</option>
+                                <option value="06">6</option>
+                                <option value="07">7</option>
+                                <option value="08">8</option>
+                                <option value="09">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                            
+                            <select id="year" required>
+                                <option value="">YYYY</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gender">Gender <span class="required">*</span></label>
+                            <div id="genderField">
+                                <select id="gender" required>
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact">Contact Number <span class="required">*</span></label>
+                            <input type="tel" id="contact" placeholder="ex_09123456789" inputmode="numeric" maxlength="11" pattern="\\d{11}" oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11)" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" placeholder="ex_JuanDela@gmail.com" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span>→</span>
+                    </button>
+                </form>
+                <p class="login-redirect">Already have an account? <a href="Login1stpage.html">Log in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Pop-up -->
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-content">
+            <div class="notification-icon">
+                <span id="notificationIcon">✓</span>
+            </div>
+            <div class="notification-message">
+                <p id="notificationText">Message here</p>
+            </div>
+            <button class="notification-close" id="notificationClose">×</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+
+        function showNotification(message, type = 'success') {
+            const popup = document.getElementById('notificationPopup');
+            document.getElementById('notificationText').textContent = message;
+            document.getElementById('notificationIcon').textContent = type === 'success' ? '✓' : '!';
+            popup.classList.toggle('success', type === 'success');
+            popup.classList.toggle('error', type !== 'success');
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4000);
+        }
+
+        document.getElementById('notificationClose').addEventListener('click', () => {
+            document.getElementById('notificationPopup').classList.remove('show');
+        });
+
+        const yearSelect = document.getElementById('year');
+        yearSelect.innerHTML = '<option value="">YYYY</option>';
+        for (let y = new Date().getFullYear(); y >= 1900; y--) {
+            const opt = document.createElement('option');
+            opt.value = y;
+            opt.textContent = y;
+            yearSelect.appendChild(opt);
+        }
+
+        const genderField = document.getElementById('genderField');
+
+        // gender is a simple select (Male/Female) — no 'Other' handling required.
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const firstname  = document.getElementById('firstname').value.trim();
+            const middlename = document.getElementById('middlename').value.trim();
+            const lastname   = document.getElementById('lastname').value.trim();
+            const month      = document.getElementById('month').value;
+            const day        = document.getElementById('day').value;
+            const year       = document.getElementById('year').value;
+            const gender     = document.getElementById('gender').value.trim();
+            const contact    = document.getElementById('contact').value.trim();
+            const email      = document.getElementById('email').value.trim();
+
+            if (!firstname || !lastname || !month || !day || !year || !gender || !contact || !email) {
+                showNotification('Please fill out all required fields', 'error');
+                return;
+            }
+
+
+            const cleanContact = contact.replace(/\D/g, '');
+            if (!/^\d{11}$/.test(cleanContact)) {
+                showNotification('Please enter a valid 11-digit contact number', 'error');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('firstname',  firstname);
+            formData.append('middlename', middlename);
+            formData.append('lastname',   lastname);
+            formData.append('birthdate',  `${year}-${month}-${day}`);
+            formData.append('gender', gender);
+            formData.append('contact',    cleanContact);
+            formData.append('email',      email);
+
+            try {
+                const response = await fetch('../php/send_code.php', { method: 'POST', body: formData });
+                const result   = await response.json();
+
+                if (result.success) {
+                    sessionStorage.setItem('reg_email', result.email);
+                    window.location.href = '../registration/confirmcode2.html';
+                } else {
+                    showNotification(result.message, 'error');
+                }
+            } catch (error) {
+                showNotification('Something went wrong: ' + error.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>

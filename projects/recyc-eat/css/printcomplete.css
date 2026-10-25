@@ -1,0 +1,281 @@
+/* Printing Complete — closing screen with the paper receipt summary.
+   Layout tokens and shared components live in kiosk.css.
+   The receipt sets one font-size from viewport height and sizes its
+   own parts in em, so the whole slip scales instead of overflowing. */
+
+/* ── two-panel layout ──────────────────────────────────────── */
+.done-columns {
+  display: grid;
+  grid-template-columns: 1fr minmax(270px, 330px);
+  align-items: center;
+  gap: clamp(var(--sp-3), 2.5vw, var(--sp-5));
+  width: 100%;
+  text-align: left;
+}
+
+/* ── thank-you panel ───────────────────────────────────────── */
+.thanks {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-2);
+  padding: clamp(var(--sp-3), 2vh, var(--sp-5));
+}
+
+.thanks__art {
+  grid-row: 1 / span 3;
+  width: clamp(72px, 11vh, 130px);
+  height: auto;
+}
+
+.thanks__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--teal-700);
+}
+
+.thanks__copy {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+
+.thanks__note {
+  grid-column: 2;
+  margin: 0;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  border-left: 4px solid var(--green-600);
+  background: var(--green-100);
+  font-size: var(--text-xs);
+  color: var(--teal-700);
+  line-height: 1.4;
+}
+
+.thanks__note strong {
+  display: block;
+  color: var(--green-700);
+}
+
+/* ── receipt panel: styled like real thermal paper ─────────── */
+.receipt {
+  /* every size below is em, so this one line scales the slip.
+     the floor keeps the smallest label (0.85em) above 12px */
+  font-size: clamp(0.9rem, 1.6vh, 1.05rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  padding: 1.1em 1.2em;
+  background: #fff;
+  border: 2px dashed var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-2);
+}
+
+.receipt__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  text-align: center;
+}
+
+.receipt__logo {
+  height: 2em;
+  width: auto;
+}
+
+.receipt__head strong {
+  font-size: 1.3em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--teal-700);
+}
+
+.receipt__head span {
+  font-size: 0.85em;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.receipt__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  margin: 0;
+}
+
+.receipt__meta > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8em;
+}
+
+.receipt__meta dt {
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.receipt__meta dd {
+  margin: 0;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--teal-700);
+  text-align: right;
+}
+
+/* voucher IDs are easier to read back in a monospace face */
+.receipt__id {
+  font-family: ui-monospace, "SFMono-Regular", "Consolas", monospace;
+  overflow-wrap: anywhere;
+}
+
+.receipt__rule {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--border) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.receipt__block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.receipt__label {
+  font-size: 0.85em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.receipt__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.receipt__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8em;
+  font-size: 0.95em;
+  color: var(--teal-700);
+}
+
+.receipt__item span:last-child {
+  font-weight: 700;
+  color: var(--green-700);
+}
+
+.receipt__empty {
+  margin: 0;
+  font-size: 0.95em;
+  color: var(--muted);
+}
+
+.receipt__sum {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8em;
+  font-size: 0.95em;
+  color: var(--muted);
+}
+
+.receipt__sum--total {
+  font-size: 1.1em;
+  font-weight: 800;
+  color: var(--teal-700);
+}
+
+.receipt__sum--total span:last-child {
+  color: var(--green-700);
+}
+
+/* ── QR block ──────────────────────────────────────────────── */
+.receipt__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.6em;
+  border: 1px dashed var(--border);
+  border-radius: var(--r-sm);
+  text-align: center;
+}
+
+.qr-display {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: clamp(72px, 11vh, 116px);
+  height: clamp(72px, 11vh, 116px);
+  padding: 5px;
+  background: #fff;
+  border-radius: var(--r-sm);
+}
+
+/* the generated canvas is 160px, so let CSS scale it down cleanly */
+.qr-display canvas,
+.qr-display img {
+  width: 100%;
+  height: 100%;
+}
+
+.receipt__hint {
+  margin: 0;
+  font-size: 0.85em;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.receipt__foot {
+  text-align: center;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--green-700);
+}
+
+/* ── narrower screens: stack the panels ────────────────────── */
+@media (max-width: 900px) {
+  .done-columns {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .thanks {
+    grid-template-columns: auto 1fr;
+    text-align: left;
+  }
+
+  .thanks__art { width: clamp(64px, 9vh, 96px); }
+}
+
+/* short screens: drop the lines the page already says elsewhere.
+   text only ever hides — it never shrinks below the 0.85em floor */
+@media (max-height: 800px) {
+  .thanks__copy,
+  .receipt__head span,
+  .receipt__hint { display: none; }
+
+  .receipt { gap: 0.55em; }
+}
+
+@media (max-height: 700px) {
+  .thanks__note { display: none; }
+  .receipt { gap: 0.55em; }
+}

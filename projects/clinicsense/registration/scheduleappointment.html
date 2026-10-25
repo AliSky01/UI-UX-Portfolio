@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Appointment - Estrellas Homecare Clinic Inc.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="scheduleappointment.css">
+</head>
+<body style="background-image: url('../image/holdinghands.png'); background-size: cover; background-position: center; background-attachment: fixed; min-height: 100vh;">
+    <div class="header-logo">
+        <div class="logo-container">
+            <img src="../image/logo.jpg" alt="Estrellas Logo" class="logo-img">
+            <div class="logo-text">
+                <div class="logo-main">ESTRELLAS</div>
+                <div class="logo-sub">HOMECARE CLINIC INC.</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-back" onclick="window.history.back()" title="Go back">
+        <i class="bi bi-arrow-left"></i>
+        <span>Back</span>
+    </button>
+
+    <div class="container-fluid main-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                
+                <div class="card progress-card mb-4">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">Schedule Appointment</h1>
+                        <div class="progress-steps">
+                            <div class="step active" data-step="1">
+                                <div class="step-circle"><span class="step-number">1</span></div>
+                                <div class="step-content">
+                                    <div class="step-title">Patient Information</div>
+                                    <div class="step-description">Fill up patient information</div>
+                                </div>
+                                <div class="step-connector"></div>
+                            </div>
+                            <div class="step" data-step="2">
+                                <div class="step-circle"><span class="step-number">2</span></div>
+                                <div class="step-content">
+                                    <div class="step-title">Guardian Information</div>
+                                    <div class="step-description">Your account details</div>
+                                </div>
+                                <div class="step-connector"></div>
+                            </div>
+                            <div class="step" data-step="3">
+                                <div class="step-circle"><span class="step-number">3</span></div>
+                                <div class="step-content">
+                                    <div class="step-title">Appointment Details</div>
+                                    <div class="step-description">Select date & time</div>
+                                </div>
+                                <div class="step-connector"></div>
+                            </div>
+                            <div class="step" data-step="4">
+                                <div class="step-circle"><span class="step-number">4</span></div>
+                                <div class="step-content">
+                                    <div class="step-title">Review & Confirm</div>
+                                    <div class="step-description">Check details before submitting</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Patient Information -->
+                <div class="card form-card" id="step1">
+                    <div class="card-body">
+                        <h2 class="form-title mb-4">Patient Information</h2>
+                        <form id="appointmentForm">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="firstName" class="form-label">First Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="middleName" class="form-label">Middle Name</label>
+                                    <input type="text" class="form-control" id="middleName">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="lastName" class="form-label">Last Name <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="age" class="form-label">Age <span class="required">*</span></label>
+                                    <input type="number" class="form-control" id="age" min="0" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="sex" class="form-label">Sex <span class="required">*</span></label>
+                                    <select class="form-select" id="sex" required>
+                                        <option value="">Select</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label for="patientAddress" class="form-label">Address <span class="required">*</span></label>
+                                    <input type="text" class="form-control" id="patientAddress" placeholder="Street, City, Province" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reason" class="form-label">Reason for Appointment / Symptoms <span class="required">*</span></label>
+                                <textarea class="form-control" id="reason" rows="3" placeholder="Enter symptoms or reasons for appointment..." required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="diagnosis" class="form-label">Past Laboratories / Existing Diagnosis</label>
+                                <input type="text" class="form-control" id="diagnosis">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Attachment</label>
+                                <p class="attachment-description">Attach supporting document e.g., doctor's note, medical report, Prescription that indicates the diagnosed condition.</p>
+                                <div class="file-upload-area">
+                                    <input type="file" class="file-input" id="attachment" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                    <label for="attachment" class="file-upload-label">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </label>
+                                    <div class="file-name-display" id="fileName"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="button" class="btn btn-primary next-btn" onclick="nextStep()">
+                                    Next <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 2: Guardian Information -->
+                <div class="card form-card d-none" id="step2">
+                    <div class="card-body">
+                        <h2 class="form-title mb-4">Guardian Information</h2>
+                        <p class="text-muted mb-4"><i class="bi bi-info-circle"></i> Name and contact are pulled from your account. Please fill in the remaining fields.</p>
+
+                        <form id="guardianForm">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="guardianFirstName" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Middle Name</label>
+                                    <input type="text" class="form-control" id="guardianMiddleName" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="guardianLastName" readonly>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" id="guardianContact" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="guardianAddress" class="form-label">Guardian Address <span class="required">*</span></label>
+                                <input type="text" class="form-control" id="guardianAddress" placeholder="Street, City, Province" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="guardianRelation" class="form-label">Relationship to Patient <span class="required">*</span></label>
+                                <select class="form-select" id="guardianRelation" required>
+                                    <option value="">Select</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="spouse">Spouse</option>
+                                    <option value="sibling">Sibling</option>
+                                    <option value="child">Child</option>
+                                        <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+
+                            
+
+                            <div class="mb-3">
+                                <label for="guardianIncome" class="form-label">Monthly Income Range <span class="required">*</span></label>
+                                <select class="form-select" id="guardianIncome" required>
+                                    <option value="">Select</option>
+                                    <option value="below-10000">Below ₱10,000</option>
+                                    <option value="10000-20000">₱10,000 - ₱20,000</option>
+                                    <option value="20000-30000">₱20,000 - ₱30,000</option>
+                                    <option value="30000-50000">₱30,000 - ₱50,000</option>
+                                    <option value="50000-75000">₱50,000 - ₱75,000</option>
+                                    <option value="75000-100000">₱75,000 - ₱100,000</option>
+                                    <option value="above-100000">Above ₱100,000</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" onclick="prevStep()">
+                                    <i class="bi bi-arrow-left"></i> Previous
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                                    Next <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 3: Appointment Details -->
+                <div class="card form-card d-none" id="step3">
+                    <div class="card-body">
+                        <h2 class="form-title mb-4">Appointment Details</h2>
+                        <form id="appointmentDetailsForm">
+                            <div class="mb-3">
+                                <label class="form-label">Available Schedule <span class="required">*</span></label>
+                                <select class="form-select" id="availableSchedule" required>
+                                    <option value="">Loading schedules...</option>
+                                </select>
+                                <small class="text-muted">Only available slots are shown.</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="appointmentType" class="form-label">Appointment Type <span class="required">*</span></label>
+                                <select class="form-select" id="appointmentType" required>
+                                    <option value="">Select</option>
+                                    <option value="consultation">Consultation</option>
+                                    <option value="follow-up">Follow-up</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Additional Notes</label>
+                                <textarea class="form-control" id="notes" rows="4" placeholder="Any additional information or special requests..."></textarea>
+                            </div>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-outline-secondary" onclick="prevStep()">
+                                    <i class="bi bi-arrow-left"></i> Previous
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep()">
+                                    Next <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Confirm -->
+                <div class="card form-card d-none" id="step4">
+                    <div class="card-body">
+                        <h2 class="form-title mb-4">Review & Confirm</h2>
+                        <div class="review-section">
+                            <h5 class="review-section-title">Patient Information</h5>
+                            <div class="review-content" id="reviewPatient"></div>
+                            <h5 class="review-section-title mt-4">Guardian Information</h5>
+                            <div class="review-content" id="reviewGuardian"></div>
+                            <h5 class="review-section-title mt-4">Appointment Details</h5>
+                            <div class="review-content" id="reviewAppointment"></div>
+                        </div>
+                        <div class="mb-4 mt-4">
+                            <label class="form-label">Notes (Optional)</label>
+                            <div class="notes-display" id="reviewNotes"></div>
+                        </div>
+                        <div class="disclaimer-section mb-4">
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="policyAgreement" required>
+                                <label class="form-check-label" for="policyAgreement">
+                                    I acknowledge that I have read, understood, and agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#appointmentPoliciesModal">Appointment policies and conditions.</a>
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="incomeAgreement" required>
+                                <label class="form-check-label" for="incomeAgreement">
+                                    I understand and accept that the monthly income information I have declared will be used exclusively for assessment, verification, and eligibility determination purposes.
+                                </label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="consultationFeeAgreement" required>
+                                <label class="form-check-label" for="consultationFeeAgreement">
+                                    I acknowledge that there is a ₱1,000 consultation fee.
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary" onclick="prevStep()">
+                                <i class="bi bi-arrow-left"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-success btn-lg" onclick="submitAppointment()">
+                                <i class="bi bi-check-circle"></i> Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scheduleappointment.js"></script>
+    <!-- Appointment Policies Modal -->
+    <div class="modal fade" id="appointmentPoliciesModal" tabindex="-1" aria-labelledby="appointmentPoliciesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentPoliciesModalLabel">Appointment Policies and Conditions</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5>Appointment Booking</h5>
+                    <ul>
+                        <li>Appointments may be scheduled through the ClinicSense web-based system by the patient or authorized guardian.</li>
+                        <li>All bookings are subject to availability and must be reviewed and approved by the clinic’s receptionist or administrator.</li>
+                        <li>Patients must provide complete and accurate information when scheduling an appointment.</li>
+                    </ul>
+
+                    <h5>Consultation Fee</h5>
+                    <ul>
+                        <li>A ₱1,000 consultation fee is required for every scheduled appointment.</li>
+                        <li>Payment will be made at the clinic.</li>
+                        <li>Appointments may not be finalized without acknowledgment of the consultation fee.</li>
+                    </ul>
+
+                    <h5>Guardian Salary Verification</h5>
+                    <ul>
+                        <li>Guardians may be required to provide proof of financial capacity (e.g., salary or income details) for verification purposes.</li>
+                        <li>This ensures that the patient’s medical care, treatment, and related expenses can be properly supported.</li>
+                        <li>All submitted financial information will be handled with strict confidentiality.</li>
+                    </ul>
+
+                    <h5>Confirmation of Appointment</h5>
+                    <ul>
+                        <li>Appointments are considered confirmed only after approval by the clinic.</li>
+                        <li>A notification will be sent once the appointment is approved or if further adjustments are required.</li>
+                    </ul>
+
+                    <h5>Arrival and Grace Period</h5>
+                    <ul>
+                        <li>Patients are advised to arrive at least 10–15 minutes before their scheduled appointment.</li>
+                        <li>A grace period of 20–30 minutes is given. Failure to arrive within this timeframe may result in:</li>
+                        <ul>
+                            <li>Automatic cancellation or voiding of the appointment</li>
+                            <li>Reassignment of the slot to another patient</li>
+                        </ul>
+                    </ul>
+
+                    <h5>Cancellation and Rescheduling</h5>
+                    <ul>
+                        <li>Cancellation or rescheduling must be done at least 24 hours before the appointment.</li>
+                        <li>Requests are subject to availability and clinic approval.</li>
+                        <li>Late cancellations may affect future bookings.</li>
+                    </ul>
+
+                    <h5>No-Show Policy</h5>
+                    <ul>
+                        <li>Patients who fail to attend their appointment without prior notice will be marked as “No-Show.”</li>
+                        <li>Repeated no-shows may lead to:</li>
+                        <ul>
+                            <li>Temporary restriction from booking</li>
+                            <li>Requirement for manual approval of future appointments</li>
+                        </ul>
+                    </ul>
+
+                    <h5>Appointment Modifications</h5>
+                    <ul>
+                        <li>The clinic reserves the right to reschedule or cancel appointments due to emergencies, doctor or staff unavailability, or operational concerns.</li>
+                        <li>Patients will be notified promptly in such cases.</li>
+                    </ul>
+
+                    <h5>Guardian Responsibility</h5>
+                    <ul>
+                        <li>Guardians booking on behalf of patients must ensure that all submitted details are correct and that the patient is available on the scheduled date and time.</li>
+                        <li>Guardians may also monitor appointment status and updates through the system.</li>
+                    </ul>
+
+                    <h5>Data Privacy and Confidentiality</h5>
+                    <ul>
+                        <li>All personal and medical information provided during appointment booking is handled in compliance with data privacy regulations.</li>
+                        <li>Information is accessible only to authorized clinic personnel.</li>
+                    </ul>
+
+                    <h5>Compliance with Clinic Rules</h5>
+                    <ul>
+                        <li>Patients and guardians are expected to follow clinic protocols and policies during visits.</li>
+                        <li>Failure to comply may result in denial of service or cancellation of appointments.</li>
+                    </ul>
+
+                    <p class="text-muted small">This document summarizes the clinic's booking policies and conditions. For questions or the full legal text, contact the clinic administration.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Result Modal (used instead of alert) -->
+    <div class="modal fade" id="appointmentResultModal" tabindex="-1" aria-labelledby="appointmentResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentResultModalLabel">Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="appointmentResultModalBody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
